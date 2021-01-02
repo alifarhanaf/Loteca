@@ -22,8 +22,8 @@ class RoundController extends Controller
             return new SingleRound($rounds);
         }else{ 
             return response()->json([
-                'response' => 'No Record Found',404
-            ]);
+                'response' => 'No Record Found',
+            ],404);
             // return response($reponse,404); 
         }
         
