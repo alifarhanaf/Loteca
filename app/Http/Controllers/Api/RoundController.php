@@ -20,8 +20,9 @@ class RoundController extends Controller
         $rounds = Round::where('id',1)->first();
         if($rounds){
             return new SingleRound($rounds);
-        }else{
-            return 'No Record Found';
+        }else{ 
+            $reponse = 'No Record Found';
+            return response($reponse,404); 
         }
         
     }
