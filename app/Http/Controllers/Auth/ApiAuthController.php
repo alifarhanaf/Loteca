@@ -17,6 +17,7 @@ class ApiAuthController extends Controller
             'name' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:users',
             'password' => 'required|string|min:6',
+            'role' => 'required'
         ]);
         if ($validator->fails())
         {
@@ -31,6 +32,7 @@ class ApiAuthController extends Controller
         $user->email = request('email');
         $user->password = request('password');
         $user->remember_token = request('remember_token');
+        $user->roles = request('role');
         $user->save();
 
         // return $user;
@@ -52,7 +54,17 @@ class ApiAuthController extends Controller
         if ($user) {
             if (Hash::check($request->password, $user->password)) {
                 $token = $user->createToken('Laravel Password Grant Client')->accessToken;
-                $response = ['token' => $token];
+                if($user->roles == 1){
+                    $role = 'User';
+                }else if ($user->roles == 2){
+                    $role = 'vendor';
+                }else if($user->roles == 3){
+                    $role = 'manager';
+                }
+                $response = [
+                            'role' => $role,
+                            'token' => $token,
+                            ];
                 return response($response, 200);
             } else {
                 $response = ["message" => "Password mismatch"];
