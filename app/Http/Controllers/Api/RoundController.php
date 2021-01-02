@@ -18,7 +18,12 @@ class RoundController extends Controller
     public function index()
     {
         $rounds = Round::where('id',1)->first();
-        return new SingleRound($rounds);
+        if($rounds){
+            return new SingleRound($rounds);
+        }else{
+            return 'No Record Found';
+        }
+        
     }
 
     /**
