@@ -18,6 +18,7 @@ class CreateGamesTable extends Migration
             $table->string('name');
             $table->string('team_a');
             $table->string('team_b');
+            $table->string('happening_date');
             $table->timestamps();
         });
     }

@@ -1,7 +1,10 @@
 <?php
 
+use App\Models\Round;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Resources\RoundCollection as RoundResource;
+use App\Http\Resources\Round as SingleRoundResource;
 
 /*
 |--------------------------------------------------------------------------
@@ -14,6 +17,26 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
+Route::post('/login', 'Auth\ApiAuthController@login')->name('login.api');
+Route::post('/register','Auth\ApiAuthController@register')->name('register.api');
+Route::post('/logout', 'Auth\ApiAuthController@logout')->name('logout.api');
+
+Route::middleware('auth:api')->group( function(){
+    // Route::get('/user', 'Auth\ApiAuthController@user')->name('user.info');
+    Route::get('/mainRound','Api\RoundController@index');
+
+
+
+});
+
+Route::group(['namespace'=>'Api'],function (){
+Route::get('/roundx','RoundController@index');
+Route::get('/rounds', function () {
+    return new RoundResource(Round::all());
+    
+});
+Route::get('/round', function () {
+    return new SingleRoundResource(Round::find(1));
+    
+});
 });
