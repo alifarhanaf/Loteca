@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Models\Round;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
 use App\Http\Resources\RoundCollection;
 use App\Http\Resources\Round as SingleRound;
 
@@ -17,15 +18,29 @@ class RoundController extends Controller
      */
     public function index()
     {
-        $rounds = Round::where('id',1)->first();
-        if($rounds){
-            return new SingleRound($rounds);
-        }else{ 
-            return response()->json([
-                'response' => 'No Record Found',
-            ],404);
-            // return response($reponse,404); 
-        }
+        $round = Round::where('id',1)->first();
+        $games = $round->games;
+        $user = Auth::user();
+        $packages = $round->packages;
+        $roundComplete = array(
+            'name' => $round->name,
+            'starting_date' => $round->starting_date,
+            'ending_date' => $round->ending_date,
+            'created_at' => $round->created_at,
+            'updated_at' => $round->updated_at,
+            'packages' => $packages,
+            'games' => $games,
+
+        );
+        $data = array( 
+            "status"=>200,
+            "response"=>"true",
+            'user' => $user,
+            "round"=> $roundComplete,
+         );
+         return response()->json($data,200);
+
+        
         
     }
 

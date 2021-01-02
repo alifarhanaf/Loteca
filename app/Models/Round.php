@@ -10,4 +10,9 @@ class Round extends Model
     {
         return $this->belongsToMany('App\Models\Game');
     }
+    
+    public function packages()
+    {
+        return $this->hasMany('App\Models\Package');
+    }
 }
