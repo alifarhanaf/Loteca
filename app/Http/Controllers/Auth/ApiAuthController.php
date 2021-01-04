@@ -21,12 +21,20 @@ class ApiAuthController extends Controller
         ]);
         if ($validator->fails())
         {
-            return response(['errors'=>$validator->errors()->all()], 422);
+            $errors = array(
+                'errors' => $validator->errors()->all()
+            );
+            
+            $data = array( 
+                "status"=>422,
+                "response"=>"false",
+                "message" => "Errors Found",
+                "data" => $errors,
+             );
+             return response()->json($data,422);
         }
         $request['password']=Hash::make($request['password']);
         $request['remember_token'] = Str::random(10);
-        // dd($request->all());
-        // $user = User::create($request->toArray());
         $user = new User();
         $user->name = request('name');
         $user->email = request('email');
@@ -34,11 +42,26 @@ class ApiAuthController extends Controller
         $user->remember_token = request('remember_token');
         $user->roles = request('role');
         $user->save();
-
+        if($user->roles == 1){
+            $role = 'User';
+        }else if ($user->roles == 2){
+            $role = 'Agent';
+        }else if($user->roles == 3){
+            $role = 'Manager';
+        }
         // return $user;
         $token = $user->createToken('Laravel Password Grant Client')->accessToken;
-        $response = ['token' => $token];
-        return response($response, 200);
+        $data = array( 
+            "status"=>201,
+            "response"=>"true",
+            "message" => "User Registered Successfully",
+            'data' => array(
+                'role' => $role,
+                'token' => $token,
+                'user' => $user,
+            ),
+         );
+         return response()->json($data,201);
     }
 
     public function login (Request $request) {
@@ -48,7 +71,16 @@ class ApiAuthController extends Controller
         ]);
         if ($validator->fails())
         {
-            return response(['errors'=>$validator->errors()->all()], 422);
+            $errors = array(
+                'errors' => $validator->errors()->all()
+            );
+            $data = array( 
+                "status"=>422,
+                "response"=>"false",
+                "message" => "Errors Found",
+                "data" => $errors,
+             );
+             return response()->json($data,422);
         }
         $user = User::where('email', $request->email)->first();
         if ($user) {
@@ -57,22 +89,37 @@ class ApiAuthController extends Controller
                 if($user->roles == 1){
                     $role = 'User';
                 }else if ($user->roles == 2){
-                    $role = 'vendor';
+                    $role = 'Agent';
                 }else if($user->roles == 3){
-                    $role = 'manager';
+                    $role = 'Manager';
                 }
-                $response = [
-                            'role' => $role,
-                            'token' => $token,
-                            ];
-                return response($response, 200);
+
+                $data = array( 
+                    "status"=>200,
+                    "response"=>"true",
+                    "message" => "Successfully Logged In",
+                    "data" => array(
+                        'role' => $role,
+                        'token' => $token,
+                        'user' => $user,
+                    ),
+                 );
+                 return response()->json($data,200);
             } else {
-                $response = ["message" => "Password mismatch"];
-                return response($response, 422);
+                $data = array( 
+                    "status"=>422,
+                    "response"=>"false",
+                    "message" => "Password Mismatch",
+                 );
+                 return response()->json($data,422);
             }
         } else {
-            $response = ["message" =>'User does not exist'];
-            return response($response, 422);
+            $data = array( 
+                "status"=>404,
+                "response"=>"false",
+                "message" => "User does not exist",
+             );
+             return response()->json($data,404);
         }
     }
     public function logout (Request $request) {

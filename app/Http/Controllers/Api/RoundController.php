@@ -35,7 +35,8 @@ class RoundController extends Controller
         $data = array( 
             "status"=>200,
             "response"=>"true",
-            'user' => $user,
+            "message" => "Success",
+            "user" => $user,
             "round"=> $roundComplete,
          );
          return response()->json($data,200);
