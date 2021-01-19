@@ -23,8 +23,8 @@ Route::post('/logout', 'Auth\ApiAuthController@logout')->name('logout.api');
 
 Route::middleware('auth:api')->group( function(){
     // Route::get('/user', 'Auth\ApiAuthController@user')->name('user.info');
-    Route::get('/mainRound','Api\RoundController@index');
-
+    Route::post('/mainRound','Api\RoundController@index');
+    Route::post('/submitResult','Api\RoundController@sb');
 
 
 });

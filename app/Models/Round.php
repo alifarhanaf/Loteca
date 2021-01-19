@@ -15,4 +15,7 @@ class Round extends Model
     {
         return $this->hasMany('App\Models\Package');
     }
+    public function users(){
+        return $this->belongsToMany('App\User');
+    }
 }
