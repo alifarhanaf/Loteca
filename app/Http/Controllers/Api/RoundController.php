@@ -33,8 +33,13 @@ class RoundController extends Controller
                 array_push($arr,$rads->id);
             }
             // return $arr;
+            if(empty($arr)){
+                $bid = false;
+            }else{
+
             
             $result = array_search("$round->id",$arr);
+            // return $result;
             // return $result;
             if($result >= 0 || $result != '' ){
                 $bid = true;
@@ -42,6 +47,9 @@ class RoundController extends Controller
             }else{
                 $bid = false;
             }
+
+        }
+        
         }  else{
             $bid = false;
         }
