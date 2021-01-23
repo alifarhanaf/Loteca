@@ -10,4 +10,8 @@ class Game extends Model
     {
         return $this->belongsToMany('App\Models\Round');
     }
+    public function results()
+    {
+        return $this->hasMany('App\Models\Result');
+    }
 }

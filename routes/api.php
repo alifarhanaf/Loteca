@@ -25,6 +25,7 @@ Route::middleware('auth:api')->group( function(){
     // Route::get('/user', 'Auth\ApiAuthController@user')->name('user.info');
     Route::get('/mainRound','Api\RoundController@index');
     Route::post('/submitResult','Api\RoundController@sb');
+    Route::get('/lastRoundResult', 'Api\RoundController@llr');
 
 
 });

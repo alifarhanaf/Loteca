@@ -124,43 +124,43 @@ class RoundController extends Controller
                  return response()->json($data,409);
                 // return $bid;
             }else{
-                $user->rounds()->attach($request->round_id);
+                // $user->rounds()->attach($request->round_id);
 
-                foreach($request->answer as $As){
-                    DB::table('bid_results')->insert([
-                        'round_id' => $request->round_id ,
-                        'user_id' => Auth::user()->id,
-                        'game_id' => $As['gameid'],
-                        'answer' => $As['result'],
+                // foreach($request->answer as $As){
+                //     DB::table('bid_results')->insert([
+                //         'round_id' => $request->round_id ,
+                //         'user_id' => Auth::user()->id,
+                //         'game_id' => $As['gameid'],
+                //         'answer' => $As['result'],
     
-                    ]);
-                }
-                $userAnswers = DB::table('bid_results')
-                    ->where('user_id', $user->id)
-                    ->where('round_id', $request->round_id)->get();
-                    $round = Round::where('id',$request->round_id)->first();
-                    $games = $round->games;
-                    $packages = $round->packages;
+                //     ]);
+                // }
+                // $userAnswers = DB::table('bid_results')
+                //     ->where('user_id', $user->id)
+                //     ->where('round_id', $request->round_id)->get();
+                //     $round = Round::where('id',$request->round_id)->first();
+                //     $games = $round->games;
+                //     $packages = $round->packages;
 
-                    $roundComplete = array(
-                        'name' => $round->name,
-                        'starting_date' => $round->starting_date,
-                        'ending_date' => $round->ending_date,
-                        'created_at' => $round->created_at,
-                        'updated_at' => $round->updated_at,
-                        'packages' => $packages,
-                        'games' => $games,
+                //     $roundComplete = array(
+                //         'name' => $round->name,
+                //         'starting_date' => $round->starting_date,
+                //         'ending_date' => $round->ending_date,
+                //         'created_at' => $round->created_at,
+                //         'updated_at' => $round->updated_at,
+                //         'packages' => $packages,
+                //         'games' => $games,
             
-                    );
+                //     );
 
                 $data = array( 
                     "status"=>200,
                     "response"=>"true",
                     "message" => "Record Inserted",
                     "bid" => true,
-                    "user" => $user,
-                    "round" => $roundComplete,
-                    "userAnswers" => $userAnswers,
+                    // "user" => $user,
+                    // "round" => $roundComplete,
+                    // "userAnswers" => $userAnswers,
 
 
                     
@@ -177,6 +177,37 @@ class RoundController extends Controller
 
 
 
+    }
+
+    public function llr(){
+        $round = Round::where('id',1)->first(); 
+        if($round){
+            $games = $round->games;
+            // return $games[0]->results;
+            $arr = [];
+            for($i=0;$i<count($games);$i++){
+                $arr[$i]['id'] = $games[$i]->id;
+                $arr[$i]['team_a'] = $games[$i]->team_a;
+                $arr[$i]['team_b'] = $games[$i]->team_b;
+                $arr[$i]['winner'] = $games[$i]->results[0]->Answer;
+
+            }
+            $data = array( 
+                "status"=>200,
+                "response"=>"true",
+                "message" => "Result Received",
+                
+                "answers" => $arr,
+                "round" => $round,
+
+
+                
+             );
+            
+           
+            return $data;
+
+        }
     }
 
     /**
