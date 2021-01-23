@@ -17,9 +17,9 @@ class RoundController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(Request $request)
+    public function index()
     {
-        $round = Round::where('id',$request->id)->first();
+        $round = Round::where('id',1)->first();
         
         if($round){
 
@@ -34,7 +34,7 @@ class RoundController extends Controller
             }
             // return $arr;
             
-            $result = array_search("$request->id",$arr);
+            $result = array_search("$round->id",$arr);
             // return $result;
             if($result >= 0 || $result != '' ){
                 $bid = true;
@@ -47,6 +47,7 @@ class RoundController extends Controller
         }
         $packages = $round->packages;
         $roundComplete = array(
+            'id' => $round->id,
             'name' => $round->name,
             'starting_date' => $round->starting_date,
             'ending_date' => $round->ending_date,
@@ -59,7 +60,7 @@ class RoundController extends Controller
         if($bid == true){
             $userAnswers = DB::table('bid_results')
             ->where('user_id', $user->id)
-            ->where('round_id', $request->id)->get();
+            ->where('round_id', $round->id)->get();
         }else {
             $userAnswers = "No Bet Yet";
         }
@@ -91,7 +92,7 @@ class RoundController extends Controller
     }
 
     public function sb(Request $request){
-        // return($request->all());
+        return($request->all());
 
         $user = Auth::user();
         
