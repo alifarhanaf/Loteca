@@ -100,7 +100,7 @@ class RoundController extends Controller
     }
 
     public function sb(Request $request){
-        return($request->all());
+        // return($request->all());
 
         $user = Auth::user();
         
@@ -109,9 +109,6 @@ class RoundController extends Controller
             foreach($user->rounds as $rads){
                 array_push($arr,$rads->id);
             }
-            // return $arr;
-            // return $arr;
-            
             $result = array_search("$request->round_id",$arr);
             // return $result;
             if($result >= 0 || $result != '' ){
@@ -157,7 +154,7 @@ class RoundController extends Controller
                     "status"=>200,
                     "response"=>"true",
                     "message" => "Record Inserted",
-                    "bid" => true,
+                    // "bid" => true,
                     // "user" => $user,
                     // "round" => $roundComplete,
                     // "userAnswers" => $userAnswers,
@@ -165,14 +162,26 @@ class RoundController extends Controller
 
                     
                  );
-                 return response()->json($data,409);
+                 return response()->json($data,201);
 
                 
 
                 
             }
-        }  else{
-            $bid = false;
+        } else{
+            $data = array( 
+                "status"=>200,
+                "response"=>"true",
+                "message" => "Record Inserted",
+                // "bid" => true,
+                // "user" => $user,
+                // "round" => $roundComplete,
+                // "userAnswers" => $userAnswers,
+
+
+                
+             );
+             return response()->json($data,201);
         }
 
 
