@@ -109,6 +109,8 @@ class RoundController extends Controller
             foreach($user->rounds as $rads){
                 array_push($arr,$rads->id);
             }
+            if(!empty($arr)){
+            
             $result = array_search("$request->round_id",$arr);
             // return $result;
             if($result >= 0 || $result != '' ){
@@ -183,6 +185,7 @@ class RoundController extends Controller
              );
              return response()->json($data,201);
         }
+    }
 
 
 
