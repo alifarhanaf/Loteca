@@ -101,19 +101,27 @@ class RoundController extends Controller
 
     public function sb(Request $request){
         // return($request->all());
+        $selected_answers = explode(",",$request->selected_answers);
+        $game_ids = explode(",",$request->game_ids);
+        $round_id = $request->round_id;
+        $package_id = $request->package_id;
+    
+        // $ids = array("1","2","3");
 
         $user = Auth::user();
         
-        if($user->rounds){
+        if(count($user->rounds) > 0){
             $arr = [];
             foreach($user->rounds as $rads){
                 array_push($arr,$rads->id);
             }
+            // return $arr;
             if(!empty($arr)){
+                // $arr = array('3','1','3');
             
-            $result = array_search("$request->round_id",$arr);
+            // $result = array_search("$round_id",$arr);
             // return $result;
-            if($result >= 0 || $result != '' ){
+            if(in_array("$round_id", $arr)){
                 $data = array( 
                     "status"=>409,
                     "response"=>"true",
@@ -123,62 +131,104 @@ class RoundController extends Controller
                  return response()->json($data,409);
                 // return $bid;
             }else{
-                // $user->rounds()->attach($request->round_id);
-
-                // foreach($request->answer as $As){
-                //     DB::table('bid_results')->insert([
-                //         'round_id' => $request->round_id ,
-                //         'user_id' => Auth::user()->id,
-                //         'game_id' => $As['gameid'],
-                //         'answer' => $As['result'],
-    
-                //     ]);
-                // }
-                // $userAnswers = DB::table('bid_results')
-                //     ->where('user_id', $user->id)
-                //     ->where('round_id', $request->round_id)->get();
-                //     $round = Round::where('id',$request->round_id)->first();
-                //     $games = $round->games;
-                //     $packages = $round->packages;
-
-                //     $roundComplete = array(
-                //         'name' => $round->name,
-                //         'starting_date' => $round->starting_date,
-                //         'ending_date' => $round->ending_date,
-                //         'created_at' => $round->created_at,
-                //         'updated_at' => $round->updated_at,
-                //         'packages' => $packages,
-                //         'games' => $games,
+                $round = Round::where('id',$round_id)->first();
+                $ct = count($round->games);
+                // return $ct;
+                $user->rounds()->attach($round_id);
+                
+                for($i=0;$i<count($round->games);$i++){
+                    DB::table('bid_results')->insert([
+                                'round_id' => $round_id ,
+                                'user_id' => Auth::user()->id,
+                                'game_id' => $game_ids[$i],
+                                'answer' => $selected_answers[$i],
+                                'package_id' => $package_id,
             
-                //     );
+                            ]);
 
-                $data = array( 
-                    "status"=>200,
-                    "response"=>"true",
-                    "message" => "Record Inserted",
-                    // "bid" => true,
-                    // "user" => $user,
-                    // "round" => $roundComplete,
-                    // "userAnswers" => $userAnswers,
+                }
+                $userAnswers = DB::table('bid_results')
+                    ->where('user_id', $user->id)
+                    ->where('round_id', $round_id)->get();
+                    $round = Round::where('id',$round_id)->first();
+                    $games = $round->games;
+                    $packages = $round->packages;
+
+                    $roundComplete = array(
+                        'id'=> $round->id,
+                        'name' => $round->name,
+                        'starting_date' => $round->starting_date,
+                        'ending_date' => $round->ending_date,
+                        'created_at' => $round->created_at,
+                        'updated_at' => $round->updated_at,
+                        'packages' => $packages,
+                        'games' => $games,
+            
+                    );
+
+            $data = array( 
+                "status"=>200,
+                "response"=>"true",
+                "message" => "Record Inserted",
+                "bid" => true,
+                "user" => $user,
+                "round" => $roundComplete,
+                "userAnswers" => $userAnswers,
 
 
-                    
-                 );
-                 return response()->json($data,201);
+                
+             );
+             return response()->json($data,201);
 
                 
 
                 
             }
         } else{
+
+            $round = Round::where('id',$round_id)->first();
+                $ct = count($round->games);
+                // return $ct;
+                $user->rounds()->attach($round_id);
+                
+                for($i=0;$i<count($round->games);$i++){
+                    DB::table('bid_results')->insert([
+                                'round_id' => $round_id ,
+                                'user_id' => Auth::user()->id,
+                                'game_id' => $game_ids[$i],
+                                'answer' => $selected_answers[$i],
+                                'package_id' => $package_id,
+            
+                            ]);
+
+                }
+                $userAnswers = DB::table('bid_results')
+                    ->where('user_id', $user->id)
+                    ->where('round_id', $round_id)->get();
+                    $round = Round::where('id',$round_id)->first();
+                    $games = $round->games;
+                    $packages = $round->packages;
+
+                    $roundComplete = array(
+                        'id'=> $round->id,
+                        'name' => $round->name,
+                        'starting_date' => $round->starting_date,
+                        'ending_date' => $round->ending_date,
+                        'created_at' => $round->created_at,
+                        'updated_at' => $round->updated_at,
+                        'packages' => $packages,
+                        'games' => $games,
+            
+                    );
+
             $data = array( 
                 "status"=>200,
                 "response"=>"true",
                 "message" => "Record Inserted",
-                // "bid" => true,
-                // "user" => $user,
-                // "round" => $roundComplete,
-                // "userAnswers" => $userAnswers,
+                "bid" => true,
+                "user" => $user,
+                "round" => $roundComplete,
+                "userAnswers" => $userAnswers,
 
 
                 
@@ -186,6 +236,54 @@ class RoundController extends Controller
              return response()->json($data,201);
         }
     }
+    $round = Round::where('id',$round_id)->first();
+                $ct = count($round->games);
+                // return $ct;
+                $user->rounds()->attach($round_id);
+                
+                for($i=0;$i<count($round->games);$i++){
+                    DB::table('bid_results')->insert([
+                                'round_id' => $round_id ,
+                                'user_id' => Auth::user()->id,
+                                'game_id' => $game_ids[$i],
+                                'answer' => $selected_answers[$i],
+                                'package_id' => $package_id,
+            
+                            ]);
+
+                }
+                $userAnswers = DB::table('bid_results')
+                    ->where('user_id', $user->id)
+                    ->where('round_id', $round_id)->get();
+                    $round = Round::where('id',$round_id)->first();
+                    $games = $round->games;
+                    $packages = $round->packages;
+
+                    $roundComplete = array(
+                        'id'=> $round->id,
+                        'name' => $round->name,
+                        'starting_date' => $round->starting_date,
+                        'ending_date' => $round->ending_date,
+                        'created_at' => $round->created_at,
+                        'updated_at' => $round->updated_at,
+                        'packages' => $packages,
+                        'games' => $games,
+            
+                    );
+
+            $data = array( 
+                "status"=>200,
+                "response"=>"true",
+                "message" => "Record Inserted",
+                "bid" => true,
+                "user" => $user,
+                "round" => $roundComplete,
+                "userAnswers" => $userAnswers,
+
+
+                
+             );
+             return response()->json($data,201);
 
 
 
