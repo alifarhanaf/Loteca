@@ -26,6 +26,7 @@ Route::middleware('auth:api')->group( function(){
     Route::get('/mainRound','Api\RoundController@index');
     Route::post('/submitResult','Api\RoundController@sb');
     Route::get('/lastRoundResult', 'Api\RoundController@llr');
+    Route::get('/leagues', 'Api\RoundController@leagues');
 
 
 });

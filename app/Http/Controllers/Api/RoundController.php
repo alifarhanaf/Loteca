@@ -315,9 +315,27 @@ class RoundController extends Controller
              );
             
            
-            return $data;
+            return response()->json($data,200);
 
         }
+    } 
+    public function leagues(){
+        $closedLeagues = Round::all();
+        $ActiveLeagues = Round::all();
+        $ParticipatedLeagues = Round::all();
+        $data = array( 
+            "status"=>200,
+            "response"=>"true",
+            "message" => "Result Received",
+            "activeLeagues" => $ActiveLeagues,
+            "closedLeagues" => $closedLeagues,
+            "participatedLeagues" => $ParticipatedLeagues,
+         );
+        
+
+         return response()->json($data,200);
+
+
     }
 
     /**
