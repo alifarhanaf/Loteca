@@ -16,6 +16,7 @@ use App\Http\Resources\Round as SingleRoundResource;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
+Route::get('/leaderBoard', 'Api\RoundController@leaderBoard');
 
 Route::post('/login', 'Auth\ApiAuthController@login')->name('login.api');
 Route::post('/register','Auth\ApiAuthController@register')->name('register.api');

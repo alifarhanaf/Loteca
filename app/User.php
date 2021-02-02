@@ -41,4 +41,8 @@ class User extends Authenticatable
     public function rounds(){
         return $this->belongsToMany('App\Models\Round');
     }
+    public function images()
+    {
+        return $this->hasMany('App\Models\Image');
+    }
 }

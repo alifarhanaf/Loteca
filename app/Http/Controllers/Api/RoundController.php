@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\User;
 use App\Models\Round;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -337,7 +338,30 @@ class RoundController extends Controller
 
 
     }
+    public function leaderBoard(){
+        $users = User::all();
+        for($i=0;$i<count($users);$i++){
+            if(count($users[$i]->images)>0){
+                $users[$i]['image'] = $users[$i]->images[0]->url;
+                $users[$i]['Winning Coins'] = 500;
+            }else{
+                $users[$i]['image'] = null;
+                $users[$i]['Winning Coins'] = 700;
+            }
+            
+        }
+        // $a = $users[0]->images[0]->url;
+        $data = array( 
+            "status"=>200,
+            "response"=>"true",
+            "message" => "Result Received",
+            "leaderBoard" => $users,
+            
+         );
+        
 
+         return response()->json($data,200);   
+    }
     /**
      * Show the form for creating a new resource.
      *
