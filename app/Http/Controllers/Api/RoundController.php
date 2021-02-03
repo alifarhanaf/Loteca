@@ -355,7 +355,9 @@ class RoundController extends Controller
             "status"=>200,
             "response"=>"true",
             "message" => "Result Received",
-            "leaderBoard" => $users,
+            "leaderBoardMonthly" => $users,
+            "leaderBoardAllTime" => $users,
+
             
          );
         
