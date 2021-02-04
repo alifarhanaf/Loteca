@@ -364,6 +364,36 @@ class RoundController extends Controller
 
          return response()->json($data,200);   
     }
+
+    public function agents(){
+        $users = User::all();
+        for($i=0;$i<count($users);$i++){
+
+            if(count($users[$i]->images)>0){
+                $users[$i]->contacts;
+                $users[$i]['image'] = $users[$i]->images[0]->url;
+                
+            }else{
+                $users[$i]['image'] = null;
+                $users[$i]->contacts;
+            }
+            
+        }
+        // $a = $users[0]->images[0]->url;
+        $data = array( 
+            "status"=>200,
+            "response"=>"true",
+            "message" => "Result Received",
+            "leaderBoardMonthly" => $users,
+            "leaderBoardAllTime" => $users,
+
+            
+         );
+        
+
+         return response()->json($data,200);   
+    }
+
     /**
      * Show the form for creating a new resource.
      *
