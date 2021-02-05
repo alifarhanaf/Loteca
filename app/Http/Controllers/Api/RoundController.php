@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\User;
+use Carbon\Carbon;
 use App\Models\Round;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -20,41 +21,36 @@ class RoundController extends Controller
      */
     public function index()
     {
-        $round = Round::where('id',1)->first();
+        // $round = Round::where('id',1)->first();
+        $now = Carbon::now();
+         $now->toDateString();
+        //  return $now;
+        $round = Round::where('starting_date', '<=', $now)
+        ->where('ending_date', '>=', $now)->where('tag','original')
+        ->first();
         
         if($round){
-
-        
         $games = $round->games;
         $user = Auth::user();
-        
-        if($user->rounds){
+        $packages = $round->packages;
+        if(count($user->rounds)>0){
             $arr = [];
-            foreach($user->rounds as $rads){
-                array_push($arr,$rads->id);
-            }
-            // return $arr;
-            if(empty($arr)){
-                $bid = false;
-            }else{
-
-            
-            $result = array_search("$round->id",$arr);
-            // return $result;
-            // return $result;
-            if($result >= 0 || $result != '' ){
-                $bid = true;
-                // return $bid;
-            }else{
-                $bid = false;
-            }
-
+        foreach($user->rounds as $rads){
+            array_push($arr,$rads->id);
         }
-        
-        }  else{
+        if(empty($arr)){
+            $bid = false;
+        }else{
+            $result = array_search("$round->id",$arr);
+        if($result >= 0 || $result != '' ){
+            $bid = true;
+        }else{
             $bid = false;
         }
-        $packages = $round->packages;
+        }
+        }else{
+            $bid = false;
+        }
         $roundComplete = array(
             'id' => $round->id,
             'name' => $round->name,
@@ -88,7 +84,7 @@ class RoundController extends Controller
             $data = array( 
                 "status"=>404,
                 "response"=>"true",
-                "message" => "Record Not Found",
+                "message" => "No Round is Live",
                 
                 
              );
@@ -291,9 +287,9 @@ class RoundController extends Controller
     }
 
     public function llr(){
-        $round = Round::where('id',1)->first(); 
-        if($round){
-            $games = $round->games;
+        $round = Round::where('status',0)->orderBy('ending_date', 'DESC')->get(); 
+        if(count($round)>0){
+            $games = $round[0]->games;
             // return $games[0]->results;
             $arr = [];
             for($i=0;$i<count($games);$i++){
@@ -309,7 +305,20 @@ class RoundController extends Controller
                 "message" => "Result Received",
                 
                 "answers" => $arr,
-                "round" => $round,
+                "round" => $round[0],
+
+
+                
+             );
+            
+           
+            return response()->json($data,200);
+
+        }else{
+            $data = array( 
+                "status"=>404,
+                "response"=>"true",
+                "message" => "No Round Played Yet",
 
 
                 

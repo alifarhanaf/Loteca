@@ -16,8 +16,8 @@ use App\Http\Resources\Round as SingleRoundResource;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
+// Route::get('/mainRound','Api\RoundController@index');
 
-Route::get('/agents', 'Api\RoundController@agents');
 Route::post('/login', 'Auth\ApiAuthController@login')->name('login.api');
 Route::post('/register','Auth\ApiAuthController@register')->name('register.api');
 Route::post('/logout', 'Auth\ApiAuthController@logout')->name('logout.api');
@@ -29,6 +29,9 @@ Route::middleware('auth:api')->group( function(){
     Route::get('/lastRoundResult', 'Api\RoundController@llr');
     Route::get('/leagues', 'Api\RoundController@leagues');
     Route::get('/leaderBoard', 'Api\RoundController@leaderBoard');
+    Route::get('/agents', 'Api\RoundController@agents');
+    Route::post('/myleague', 'Api\MyLeagueController@index');
+    
 
 
 });

@@ -16,7 +16,7 @@ class CreatePackagesTable extends Migration
         Schema::create('packages', function (Blueprint $table) {
             $table->id();
             $table->text('participation_fee');
-            $table->text('accumulative Price');
+            $table->text('accumulative_price');
             $table->bigInteger('round_id')->unsigned();
             $table->foreign('round_id')->references('id')->on('rounds')
             ->onDelete('cascade');
