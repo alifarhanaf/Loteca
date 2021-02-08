@@ -2,12 +2,14 @@
 
 namespace App\Http\Controllers\Auth;
 
-use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
 use App\User;
+use App\Models\Image;
+use App\Models\Contact;
+use Illuminate\Support\Str;
+use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
-use Illuminate\Support\Str;
 
 
 class ApiAuthController extends Controller
@@ -16,6 +18,8 @@ class ApiAuthController extends Controller
         $validator = Validator::make($request->all(), [
             'name' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:users',
+            'phone' => 'required|string|max:255',
+            'whatsapp_phone' => 'required|string|max:255',
             'password' => 'required|string|min:6',
             'role' => 'required'
         ]);
@@ -42,6 +46,21 @@ class ApiAuthController extends Controller
         $user->remember_token = request('remember_token');
         $user->roles = request('role');
         $user->save();
+        // dd($request->role);
+       
+            // dd('Hi');
+            $contact = New Contact();
+            $contact->phone = $request->phone;
+            $contact->whatsapp = $request->whatsapp_phone;
+            $contact->email = $request->email;
+            $contact->user()->associate($user);
+            $contact->save();
+
+            $image =  New Image();
+            $image->url = 'https://i.pinimg.com/originals/51/f6/fb/51f6fb256629fc755b8870c801092942.png';
+            $image->user()->associate($user);
+            $image->save();
+        
         if($user->roles == 1){
             $role = 'User';
         }else if ($user->roles == 2){
@@ -93,6 +112,8 @@ class ApiAuthController extends Controller
                 }else if($user->roles == 3){
                     $role = 'Manager';
                 }
+                $user->contacts;
+                $user->images;
 
                 $data = array( 
                     "status"=>200,
