@@ -172,7 +172,7 @@ class RoundController extends Controller
                             "response" => "true",
                             "message" => "Record Inserted",
                             "bid" => true,
-                            "user" => $user,
+                            "user" => Auth::user(),
                             "round" => $roundComplete,
                             "userAnswers" => $userAnswers,
 
@@ -240,7 +240,7 @@ class RoundController extends Controller
                     "response" => "true",
                     "message" => "Record Inserted",
                     "bid" => true,
-                    "user" => $user,
+                    "user" => Auth::user(),
                     "round" => $roundComplete,
                     "userAnswers" => $userAnswers,
 
@@ -305,7 +305,7 @@ class RoundController extends Controller
             "response" => "true",
             "message" => "Record Inserted",
             "bid" => true,
-            "user" => $user,
+            "user" => Auth::user(),
             "round" => $roundComplete,
             "userAnswers" => $userAnswers,
 
