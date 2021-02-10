@@ -25,15 +25,15 @@ class ApiAuthController extends Controller
         ]);
         if ($validator->fails())
         {
-            $errors = array(
-                'errors' => $validator->errors()->all()
-            );
+            // $errors = array(
+            //     'message' => $validator->errors()->all()
+            // );
             
             $data = array( 
                 "status"=>422,
                 "response"=>"false",
-                "message" => "Errors Found",
-                "data" => $errors,
+                "message" => $validator->errors()->all()[0],
+                // "data" => $errors,
              );
              return response()->json($data,422);
         }
@@ -43,6 +43,7 @@ class ApiAuthController extends Controller
         $user->name = request('name');
         $user->email = request('email');
         $user->password = request('password');
+        $user->coins = '500';
         $user->remember_token = request('remember_token');
         $user->roles = request('role');
         $user->save();
@@ -96,8 +97,8 @@ class ApiAuthController extends Controller
             $data = array( 
                 "status"=>422,
                 "response"=>"false",
-                "message" => "Errors Found",
-                "data" => $errors,
+                "message" => $validator->errors()->all()[0],
+                // "data" => $errors,
              );
              return response()->json($data,422);
         }
