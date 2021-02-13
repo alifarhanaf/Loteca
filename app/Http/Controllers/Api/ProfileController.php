@@ -12,8 +12,8 @@ class ProfileController extends Controller
 {
     public function updateUser(){
 
-        // $user = Auth::user();
-        $user = User::find(1);
+        $user = Auth::user();
+        // $user = User::find(1);
         // return $user;
         $contact = $user->contacts;
         // return $contact;
