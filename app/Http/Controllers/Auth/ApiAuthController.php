@@ -150,9 +150,15 @@ class ApiAuthController extends Controller
         $response = ['message' => 'You have been successfully logged out!'];
         return response($response, 200);
     }
-    public function user(){
-        $user = User::find(1);
-        return $user;
-    }
+    // public function updateUser(){
+
+    //     $user = Auth::user();
+    //     $flight = Flight::find(1);
+
+    //     $flight->name = 'Paris to London';
+
+    //     $flight->save();
+    //     return $user;
+    // }
     
 }
