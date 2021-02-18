@@ -55,7 +55,7 @@ class CoinController extends Controller
                 "response" => "true",
                 "message" => "Coins Sent Successfully" ,
                 );
-                return response()->json($data,209);
+                return response()->json($data,200);
 
         }else{
             $data = array(
