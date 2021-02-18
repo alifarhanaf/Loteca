@@ -68,23 +68,7 @@ class AdminDashboardController extends Controller
         }
     
 
-        $comission = array (
-            "comission1" => $comission1,
-            "comission2" => $comission2,
-            "comission3" => $comission3,
-            "comission4" => $comission4,
-
-        );
-        $history = array(
-            "history1" => $history1,
-            "history2" => $history2,
-            "history3" => $history3,
-            "history4" => $history4,
-        );
-        // return $comission;
-
-        // return $history;
-        // return $user;
+     
         $daily_data = array (
             "sales" => $total_sales1,
             "comission" => $comission1,
@@ -105,14 +89,19 @@ class AdminDashboardController extends Controller
             
         );
         $data = array(
+        "status"=>200,
+        "response"=>"true",
+        "message" => "Successfully Updated",
+        "data" => array(
             "daily_data" => $daily_data,
             "weekly_data" => $weekly_data,
             "monthly_data" => $monthly_data,
             "all_time_data" => $all_time_data,
             "user" => $user,
 
+        )
         );
-        return $data;
+        return response()->json($data,200);
         }
 
     }
