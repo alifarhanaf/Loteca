@@ -91,7 +91,7 @@ class AdminDashboardController extends Controller
         $data = array(
         "status"=>200,
         "response"=>"true",
-        "message" => "Successfully Updated",
+        "message" => "Success",
         "data" => array(
             "daily_data" => $daily_data,
             "weekly_data" => $weekly_data,
