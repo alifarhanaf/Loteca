@@ -10,7 +10,7 @@ class CoinController extends Controller
 {
     public function index(Request $request){
         $user =  User::where('email',$request->email)->first();
-        if (count($user) > 0 ){
+        if ($user ){
             $user->contacts;
             $data = array(
             "status"=>200,
