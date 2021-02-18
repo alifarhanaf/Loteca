@@ -33,6 +33,8 @@ Route::middleware('auth:api')->group( function(){
     Route::get('/agents', 'Api\RoundController@agents');
     Route::post('/myleague', 'Api\MyLeagueController@index');
     Route::post('/updateProfile', 'Api\ProfileController@updateUser')->name('profileUpdate.api');
+    Route::get('/adminDashBoard','Api\AdminDashboardController@index');
+    
     
 
 

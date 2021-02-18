@@ -43,10 +43,14 @@ class User extends Authenticatable
     }
     public function images()
     {
-        return $this->hasMany('App\Models\Image');
+        return $this->hasOne('App\Models\Image');
     }
     public function contacts()
     {
-        return $this->hasMany('App\Models\Contact');
+        return $this->hasOne('App\Models\Contact');
+    }
+    public function comissions()
+    {
+        return $this->hasOne('App\Models\Comission');
     }
 }
