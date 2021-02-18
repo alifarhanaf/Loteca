@@ -35,6 +35,7 @@ Route::middleware('auth:api')->group( function(){
     Route::post('/updateProfile', 'Api\ProfileController@updateUser')->name('profileUpdate.api');
     Route::get('/agentDashBoard','Api\AdminDashboardController@index');
     Route::post('/userRecord','Api\CoinController@index');
+    Route::post('/sendCoins','Api\CoinController@sendCoins');
     
     
 
