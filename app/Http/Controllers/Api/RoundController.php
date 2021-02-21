@@ -83,7 +83,7 @@ class RoundController extends Controller
         } else {
             $data = array(
                 "status" => 404,
-                "response" => "true",
+                "response" => "false",
                 "message" => "No Round is Live",
 
 
