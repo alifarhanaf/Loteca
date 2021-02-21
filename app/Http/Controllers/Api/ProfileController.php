@@ -15,7 +15,7 @@ class ProfileController extends Controller
         // dd($request->image);
 
         $user = Auth::user();
-        $user->images;
+        
         // $user = User::find(1);
         // return $user;
         $contact = $user->contacts;
