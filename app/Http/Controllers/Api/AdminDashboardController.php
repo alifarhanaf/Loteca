@@ -27,7 +27,7 @@ class AdminDashboardController extends Controller
             $cc = $h1->sent_coins;
             $ac = ($cc * $com_percentage)/100;
             $comission1 = $comission1 + $ac;
-            $comission1 = round($comission1, 2);
+            $comission1 = round($comission1, 1);
 
         }
        
@@ -42,7 +42,7 @@ class AdminDashboardController extends Controller
             $cc = $h2->sent_coins;
             $ac = ($cc * $com_percentage)/100;
             $comission2 = $comission2 + $ac;
-            $comission2 = round($comission2, 2);
+            $comission2 = round($comission2, 1);
 
 
         }
@@ -56,7 +56,7 @@ class AdminDashboardController extends Controller
             $cc = $h3->sent_coins;
             $ac = ($cc * $com_percentage)/100;
             $comission3 = $comission3 + $ac;
-            $comission3 = round($comission3, 2);
+            $comission3 = round($comission3, 1);
 
         }
 
@@ -68,7 +68,7 @@ class AdminDashboardController extends Controller
             $cc = $h4->sent_coins;
             $ac = ($cc * $com_percentage)/100;
             $comission4 = $comission4 + $ac;
-            $comission4 = round($comission4, 2);
+            $comission4 = round($comission4, 1);
 
         }
     
