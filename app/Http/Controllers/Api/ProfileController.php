@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\User;
+use App\Models\Image;
 use App\Models\Contact;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -10,12 +11,15 @@ use Illuminate\Support\Facades\Auth;
 
 class ProfileController extends Controller
 {
-    public function updateUser(){
+    public function updateUser(Request $request){
+        // dd($request->image);
 
         $user = Auth::user();
+        $user->images;
         // $user = User::find(1);
         // return $user;
         $contact = $user->contacts;
+
         // return $contact;
         $user = User::find($user->id);
         $user->name = request('name');
@@ -28,6 +32,16 @@ class ProfileController extends Controller
         $contact->whatsapp = request('whatsapp');
         $contact->email = request('email');
         $contact->save();
+
+        $imageName = time().'.'.$request->image->extension();  
+        $path = base_path() . '/public/storage/UserImages/';
+        $pathsave =  '/storage/UserImages/';
+        $request->image->move($path, $imageName);
+        $imageurl = $pathsave.$imageName;
+        $image = new Image();
+        $image->url =$imageurl;
+        $image->user_id = Auth::user()->id;
+        $image->save();
 
         $data = array( 
             "status"=>200,
