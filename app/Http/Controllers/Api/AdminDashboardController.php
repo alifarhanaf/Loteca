@@ -88,7 +88,7 @@ class AdminDashboardController extends Controller
             "comission" => $comission4,
             
         );
-        $user->images;
+        
         $data = array(
         "status"=>200,
         "response"=>"true",
