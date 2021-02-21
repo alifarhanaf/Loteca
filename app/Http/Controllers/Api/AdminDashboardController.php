@@ -13,7 +13,7 @@ class AdminDashboardController extends Controller
     public function index(){
         $user =  Auth::user();
         $user->contacts;
-        // $user->images;
+        $user->images;
         // return $user->roles;
         if($user->roles == '2'){
             $com_percentage = $user->comissions->comission_percentage;
