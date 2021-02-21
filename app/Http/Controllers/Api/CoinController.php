@@ -14,6 +14,7 @@ class CoinController extends Controller
         $user =  User::where('email',$request->email)->first();
         if ($user ){
             $user->contacts;
+            $user->images;
             $data = array(
             "status"=>200,
             "response"=>"true",
