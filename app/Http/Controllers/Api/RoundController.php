@@ -369,8 +369,8 @@ class RoundController extends Controller
     }
     public function leagues()
     {
-        $closedLeagues = Round::where('status', 2)->orderBy('ending_date', 'DESC')->get();
-        $ActiveLeagues = Round::where('status', 1)->orderBy('ending_date', 'DESC')->get();;
+        $closedLeagues = Round::where('status', 2)->where('creator_id', Auth::user()->id)->orderBy('ending_date', 'DESC')->get();
+        $ActiveLeagues = Round::where('status', 1)->where('creator_id', Auth::user()->id)->orderBy('ending_date', 'DESC')->get();;
         $ParticipatedLeagues = Round::all();
         $data = array(
             "status" => 200,
