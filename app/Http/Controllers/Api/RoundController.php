@@ -107,7 +107,7 @@ class RoundController extends Controller
                 $arr[$i]['id'] = $games[$i]->id;
                 $arr[$i]['team_a'] = $games[$i]->team_a;
                 $arr[$i]['team_b'] = $games[$i]->team_b;
-                $arr[$i]['winner'] = $games[$i]->results[0]->Answer;
+                $arr[$i]['winner'] = $games[$i]->results->Answer;
             }
             $data = array(
                 "status" => 200,
