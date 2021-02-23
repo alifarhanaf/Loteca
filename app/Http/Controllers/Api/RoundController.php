@@ -98,9 +98,9 @@ class RoundController extends Controller
 
     public function llr()
     {
-        $round = Round::where('status', 0)->orderBy('ending_date', 'DESC')->first();
+        $round = Round::where('status', 0)->orderBy('ending_date', 'DESC')->get();
         if (count($round) > 0) {
-            $games = $round->games;
+            $games = $round[0]->games;
             // return $games[0]->results;
             $arr = [];
             for ($i = 0; $i < count($games); $i++) {
@@ -115,7 +115,7 @@ class RoundController extends Controller
                 "message" => "Result Received",
 
                 "answers" => $arr,
-                "round" => $round,
+                "round" => $round[0],
 
 
 
