@@ -19,6 +19,7 @@ Route::get('/create_game','Web\DashboardController@createGame')->name('create_ga
 Route::get('/game_grid','Web\DashboardController@gameGrid')->name('game_grid');
 
 
+
 Route::get('/', function () {
     return view('welcome');
 });

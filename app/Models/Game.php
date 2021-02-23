@@ -12,6 +12,6 @@ class Game extends Model
     }
     public function results()
     {
-        return $this->hasMany('App\Models\Result');
+        return $this->hasOne('App\Models\Result');
     }
 }

@@ -6,6 +6,7 @@ use Carbon\Carbon;
 use App\Models\Round;
 use App\Models\Package;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 
@@ -72,6 +73,77 @@ class MyLeagueController extends Controller
             "round"=> $roundComplete,
          );
          return response()->json($data,200);
+    }
+
+    public function activeLeague(Request $request)
+    {
+        $round_id = $request->round_id;
+        // $round = Round::where('id',1)->first();
+        // $now = Carbon::now();
+        // $now->toDateString();
+        //  return $now;
+        $round = Round::where('id', $round_id)->first();
+
+        if ($round) {
+            $games = $round->games;
+            $user = Auth::user();
+            $packages = $round->packages;
+            if (count($user->rounds) > 0) {
+                $arr = [];
+                foreach ($user->rounds as $rads) {
+                    array_push($arr, $rads->id);
+                }
+                if (empty($arr)) {
+                    $bid = false;
+                } else {
+                    $result = array_search("$round->id", $arr);
+                    if ($result >= 0 || $result != '') {
+                        $bid = true;
+                    } else {
+                        $bid = false;
+                    }
+                }
+            } else {
+                $bid = false;
+            }
+            $roundComplete = array(
+                'id' => $round->id,
+                'name' => $round->name,
+                'starting_date' => $round->starting_date,
+                'ending_date' => $round->ending_date,
+                'created_at' => $round->created_at,
+                'updated_at' => $round->updated_at,
+                'packages' => $packages,
+                'games' => $games,
+
+            );
+            if ($bid == true) {
+                $userAnswers = DB::table('bid_results')
+                    ->where('user_id', $user->id)
+                    ->where('round_id', $round->id)->get();
+            } else {
+                $userAnswers = "No Bet Yet";
+            }
+            $data = array(
+                "status" => 200,
+                "response" => "true",
+                "message" => "Success",
+                "bid" => $bid,
+                "user" => $user,
+                "round" => $roundComplete,
+                "userAnswers" => $userAnswers,
+            );
+            return response()->json($data, 200);
+        } else {
+            $data = array(
+                "status" => 404,
+                "response" => "false",
+                "message" => "No Round is Live",
+
+
+            );
+            return response()->json($data, 404);
+        }
     }
 
 

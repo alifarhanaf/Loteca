@@ -53,4 +53,8 @@ class User extends Authenticatable
     {
         return $this->hasOne('App\Models\Comission');
     }
+    public function points()
+    {
+        return $this->hasOne('App\Models\Point');
+    }
 }

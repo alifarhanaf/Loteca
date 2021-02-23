@@ -16,7 +16,10 @@ use App\Http\Resources\Round as SingleRoundResource;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
-// Route::get('/mainRound','Api\RoundController@index');
+// Route::get('/winner','Api\LeaderBoardController@winner');
+// Route::get('/leaderBoard', 'Api\RoundController@leaderBoard');
+// Route::post('/closedLeague', 'Api\LeaderBoardController@closedLeague');
+// Route::post('/activeLeague', 'Api\MyLeagueController@activeLeague');
 
 Route::post('/login', 'Auth\ApiAuthController@login')->name('login.api');
 Route::post('/register','Auth\ApiAuthController@register')->name('register.api');
@@ -28,16 +31,19 @@ Route::post('/logout', 'Auth\ApiAuthController@logout')->name('logout.api');
 Route::middleware('auth:api')->group( function(){
     // Route::get('/user', 'Auth\ApiAuthController@user')->name('user.info');
     Route::get('/mainRound','Api\RoundController@index');
-    Route::post('/submitResult','Api\RoundController@sb');
+    Route::post('/submitResult','Api\RoundController@betSubmit');
     Route::get('/lastRoundResult', 'Api\RoundController@llr');
     Route::get('/leagues', 'Api\RoundController@leagues');
-    Route::get('/leaderBoard', 'Api\RoundController@leaderBoard');
+    Route::get('/leaderBoard', 'Api\LeaderBoardController@leaderB');
     Route::get('/agents', 'Api\RoundController@agents');
     Route::post('/myleague', 'Api\MyLeagueController@index');
     Route::post('/updateProfile', 'Api\ProfileController@updateUser')->name('profileUpdate.api');
     Route::get('/agentDashBoard','Api\AdminDashboardController@index');
     Route::post('/userRecord','Api\CoinController@index');
     Route::post('/sendCoins','Api\CoinController@sendCoins');
+    Route::post('/winner','Api\LeaderBoardController@winner');
+    Route::post('/closedLeague', 'Api\LeaderBoardController@closedLeague');
+    Route::post('/activeLeague', 'Api\MyLeagueController@activeLeague');
     
     
 
