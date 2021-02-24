@@ -107,7 +107,7 @@ class LeaderBoardController extends Controller
      
    
         
-            $points = Point::orderBy('points', 'desc')->where( 'created_at', '>', Carbon::now()->subDays(30))->get();
+            $points = Point::orderBy('winning_coins', 'desc')->where( 'created_at', '>', Carbon::now()->subDays(30))->get();
             
           
             for ($i = 0; $i < count($points); $i++) {
