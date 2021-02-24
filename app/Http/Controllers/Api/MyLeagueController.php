@@ -80,25 +80,39 @@ class MyLeagueController extends Controller
         $round_id = $request->round_id;
         
         $round = Round::where('id', $round_id)->first();
+        // return $round;
 
         if ($round) {
             $games = $round->games;
             $user = Auth::user();
             $packages = $round->packages;
+            // return $user->rounds;
             if (count($user->rounds) > 0) {
                 $arr = [];
                 foreach ($user->rounds as $rads) {
                     array_push($arr, $rads->id);
                 }
+                // return $arr;
                 if (empty($arr)) {
                     $bid = false;
                 } else {
-                    $result = array_search("$round->id", $arr);
-                    if ($result >= 0 || $result != '') {
+                    if (in_array($round->id, $arr)) 
+                    { 
                         $bid = true;
-                    } else {
+                    } 
+                    else
+                    { 
                         $bid = false;
-                    }
+                    } 
+                    // $result = array_search("$round->id", $arr);
+                    // dd($result);
+                    // return $result;
+                    // if ($result >= 0 || $result != 'false' || $result != '') {
+                    // return 'Hi';
+                    //     $bid = true;
+                    // } else {
+                    //     $bid = false;
+                    // }
                 }
             } else {
                 $bid = false;
