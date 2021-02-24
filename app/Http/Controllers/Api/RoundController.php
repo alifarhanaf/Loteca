@@ -513,10 +513,10 @@ class RoundController extends Controller
         $i = 0;
         foreach($userAnswers as $UA){
          
-            $game = Game::where('id',$UA->game_id)->first();
-            $gameAnswer = $game->results->Answer;
+            $gm = Game::where('id',$UA->game_id)->first();
+            $gameAnswer0 = $gm->results->Answer;
             
-            if($gameAnswer == $UA->answer){
+            if($gameAnswer0 == $UA->answer){
                 
                 $i++;
             }
@@ -533,10 +533,5 @@ class RoundController extends Controller
        
 
 
-    }
-    public function arrayCheck(Request $request){
-        $selected_answers = trim($request->selected_answers, '[]');
-        $selected_answers = explode(",", $selected_answers);
-        return $selected_answers;
     }
 }
