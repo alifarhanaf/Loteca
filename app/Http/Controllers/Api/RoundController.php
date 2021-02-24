@@ -517,7 +517,7 @@ class RoundController extends Controller
             $gameAnswer = $game->results->Answer;
             // dd($gameAnswer);
             if($gameAnswer == $UA->answer){
-                return 'Hi' + $i;
+                return $i;
                 $i++;
             }
         }//EndForeach
