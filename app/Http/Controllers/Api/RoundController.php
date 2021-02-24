@@ -515,9 +515,9 @@ class RoundController extends Controller
          
             $game = Game::where('id',$UA->game_id)->first();
             $gameAnswer = $game->results->Answer;
-            dd($gameAnswer);
+            // dd($gameAnswer);
             if($gameAnswer == $UA->answer){
-                
+                return 'Hi';
                 $i++;
             }
         }//EndForeach
