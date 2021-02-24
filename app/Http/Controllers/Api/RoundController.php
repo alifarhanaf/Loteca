@@ -276,8 +276,8 @@ class RoundController extends Controller
 
     public function betSubmit(Request $request)
     {
-        $selected_answers = trim($request->seected_answers, '[]');
-        $selected_answers = explode(",", $selected_answers);
+        
+        $selected_answers = explode(",", $request->selected_answers);
         $game_ids = explode(",", $request->game_ids);
         $round_id = $request->round_id;
         $package_id = $request->package_id;
