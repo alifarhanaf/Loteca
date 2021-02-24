@@ -58,7 +58,7 @@ class ApiAuthController extends Controller
             $contact->save();
 
             $image =  New Image();
-            $image->url = 'https://i.pinimg.com/originals/51/f6/fb/51f6fb256629fc755b8870c801092942.png';
+            $image->url = 'https://i1.wp.com/www.sardiniauniqueproperties.com/wp-content/uploads/2015/10/square-profile-pic-2.jpg?resize=300%2C300';
             $image->user()->associate($user);
             $image->save();
         
