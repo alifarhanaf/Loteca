@@ -36,8 +36,8 @@ class DashboardController extends Controller
         return view ('roundGrid')->with($data);
     }
 
-    public function finalizeRound(){
-        $round_id = 1;
+    public function finalizeRound(Request $request){
+        $round_id = $request->round_id;
         $round = Round::find($round_id); 
         $round->status = 2;
         $round->save();

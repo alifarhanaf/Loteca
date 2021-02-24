@@ -17,7 +17,7 @@ Route::get('/create_round','Web\DashboardController@createRound')->name('create_
 Route::get('/round_grid','Web\DashboardController@roundGrid')->name('round_grid');
 Route::get('/create_game','Web\DashboardController@createGame')->name('create_game');
 Route::get('/game_grid','Web\DashboardController@gameGrid')->name('game_grid');
-Route::get('/finalizeRound','Web\DashboardController@finalizeRound');
+Route::post('/finalizeRound','Web\DashboardController@finalizeRound');
     
 
 
