@@ -517,8 +517,9 @@ class RoundController extends Controller
             $gameAnswer = $game->results->Answer;
             // dd($gameAnswer);
             if($gameAnswer == $UA->answer){
-                return $i;
+                
                 $i++;
+                return $i;
             }
         }//EndForeach
         $point = new Point();
