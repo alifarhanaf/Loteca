@@ -276,6 +276,7 @@ class RoundController extends Controller
 
     public function betSubmit(Request $request)
     {
+     
         $selected_answerz = trim($request->selected_answers, '[]');
         $selected_answers = explode(",", $selected_answerz);
         $game_idz = trim($request->game_ids, '[]');
@@ -519,6 +520,7 @@ class RoundController extends Controller
             if($gameAnswer0 == $UA->answer){
                 
                 $i++;
+                return $i;
             }
         }//EndForeach
         $point = new Point();
