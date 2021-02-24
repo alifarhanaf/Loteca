@@ -507,7 +507,7 @@ class RoundController extends Controller
         $userAnswers = DB::table('bid_results')
         ->where('user_id', $user_id)
         ->where('round_id', $round_id)->get();
-        // dd($userAnswers);
+        dd($userAnswers);
         $round = Round::where('id',$round_id)->first();
         $totalGames = count($round->games);
         $i = 0;
@@ -515,11 +515,10 @@ class RoundController extends Controller
          
             $game = Game::where('id',$UA->game_id)->first();
             $gameAnswer = $game->results->Answer;
-            // dd($gameAnswer);
+            
             if($gameAnswer == $UA->answer){
                 
                 $i++;
-                return $i;
             }
         }//EndForeach
         $point = new Point();
