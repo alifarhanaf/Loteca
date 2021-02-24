@@ -26,7 +26,7 @@ Route::post('/register','Auth\ApiAuthController@register')->name('register.api')
 Route::post('/logout', 'Auth\ApiAuthController@logout')->name('logout.api');
 
 Route::post('/finalizeRound','Web\DashboardController@finalizeRound');
-
+Route::post('/arrayCheck','Api\RoundController@arrayCheck');
 
 
 
