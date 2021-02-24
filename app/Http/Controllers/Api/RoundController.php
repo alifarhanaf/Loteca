@@ -29,7 +29,7 @@ class RoundController extends Controller
         $now->toDateString();
         //  return $now;
         $round = Round::where('starting_date', '<=', $now)
-            ->where('ending_date', '>=', $now)->where('tag', 'original')
+            ->where('ending_date', '>=', $now)->where('tag', 'original')->where('status',1)
             ->first();
 
         if ($round) {

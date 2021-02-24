@@ -78,10 +78,7 @@ class MyLeagueController extends Controller
     public function activeLeague(Request $request)
     {
         $round_id = $request->round_id;
-        // $round = Round::where('id',1)->first();
-        // $now = Carbon::now();
-        // $now->toDateString();
-        //  return $now;
+        
         $round = Round::where('id', $round_id)->first();
 
         if ($round) {
