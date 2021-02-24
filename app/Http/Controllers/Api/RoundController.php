@@ -278,7 +278,8 @@ class RoundController extends Controller
     {
         $selected_answerz = trim($request->selected_answers, '[]');
         $selected_answers = explode(",", $selected_answerz);
-        $game_ids = explode(",", $request->game_ids);
+        $game_idz = trim($request->game_ids, '[]');
+        $game_ids = explode(",", $game_idz);
         $round_id = $request->round_id;
         $package_id = $request->package_id;
 
@@ -511,7 +512,7 @@ class RoundController extends Controller
         $totalGames = count($round->games);
         $i = 0;
         foreach($userAnswers as $UA){
-            // dd('Hi');
+         
             $game = Game::where('id',$UA->game_id)->first();
             $gameAnswer = $game->results->Answer;
             if($gameAnswer == $UA->answer){
