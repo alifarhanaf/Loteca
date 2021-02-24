@@ -98,7 +98,7 @@ class RoundController extends Controller
 
     public function llr()
     {
-        $round = Round::where('status', 0)->orderBy('ending_date', 'DESC')->get();
+        $round = Round::where('status', 2)->orderBy('ending_date', 'DESC')->get();
         if (count($round) > 0) {
             $games = $round[0]->games;
             // return $games[0]->results;
