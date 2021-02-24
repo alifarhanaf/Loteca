@@ -33,7 +33,7 @@ class RoundController extends Controller
             ->first();
 
         if ($round) {
-            $games = $round->games->sortBy('id');
+            $games = $round->games;
             $user = Auth::user();
             $packages = $round->packages;
             if (count($user->rounds) > 0) {

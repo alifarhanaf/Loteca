@@ -8,7 +8,7 @@ class Round extends Model
 {
     public function games()
     {
-        return $this->belongsToMany('App\Models\Game');
+        return $this->belongsToMany('App\Models\Game')->orderBy('id');
     }
     
     public function packages()
