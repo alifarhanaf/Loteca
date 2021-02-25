@@ -146,6 +146,7 @@ class DashboardController extends Controller
             
           
         }
+        return $arr;
        
         for ($i = 0; $i < count($packages); $i++) {
             $totalCoinsApplied = $packages[$i]->accumulative_price;
