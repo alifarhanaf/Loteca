@@ -66,7 +66,7 @@ class DashboardController extends Controller
             $gm = Game::where('id',$UA->game_id)->first();
             $gameAnswer0 = $gm->results->Answer;
             // return $gameAnswer0 . $UA->answer;
-            if(strtoupper($gameAnswer0) === strtoupper($UA->answer)){
+            if(strtoupper($gameAnswer0) == strtoupper($UA->answer)){
                 
                 $i++;
             }
