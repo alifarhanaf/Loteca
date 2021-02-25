@@ -2,11 +2,14 @@
 
 namespace App\Http\Controllers\Web;
 
+use App\User;
 use App\Models\Game;
 use App\Models\Point;
 use App\Models\Round;
 use App\Models\Winner;
+use App\Models\RoundUser;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 
 class DashboardController extends Controller
@@ -41,12 +44,73 @@ class DashboardController extends Controller
         $round = Round::find($round_id); 
         $round->status = 2;
         $round->save();
-
         $round = Round::where('id',$round_id)->first();
+        $totalGames = count($round->games);
         $packages = $round->packages;
+        $roundUsers = RoundUser::where('round_id',$round_id)->get();
+        $roundUsersIds = [];
+        foreach($roundUsers as $ru){
+            array_push($roundUsersIds,$ru->user_id);
+
+        }
+        $roundUsersC = User::findMany($roundUsersIds);
+        foreach($roundUsersC as $ruc ){
+
+        $userAnswers = DB::table('bid_results')
+        ->where('user_id', $ruc->id)
+        ->where('round_id', $round_id)->get();
+        $i = 0;
+        foreach($userAnswers as $UA){
+         
+            $gm = Game::where('id',$UA->game_id)->first();
+            $gameAnswer0 = $gm->results->Answer;
+            if($gameAnswer0 === $UA->answer){
+                
+                $i++;
+            }
+        }//EndForeach
+
+        $point = new Point();
+        $point->round_id = $round_id;
+        $point->user_id = $ruc->id;
+        $point->package_id = $userAnswers[0]->package_id;
+        $point->points = $i;
+        $point->total_points = $totalGames;
+        $point->save();
+
+        
+        }
+        // $userAnswers = DB::table('bid_results')
+        // ->where('user_id', $user_id)
+        // ->where('round_id', $round_id)->get();
+        // dd($userAnswers);
+        // $round = Round::where('id',$round_id)->first();
+        // $totalGames = count($round->games);
+        // $i = 0;
+        // foreach($userAnswers as $UA){
+         
+        //     $gm = Game::where('id',$UA->game_id)->first();
+        //     $gameAnswer0 = $gm->results->Answer;
+        //     dd($gameAnswer0 . $UA->answer);
+        //     if($gameAnswer0 === $UA->answer){
+                
+        //         $i++;
+        //         dd($i);
+        //     }
+        // }//EndForeach
+        // $point = new Point();
+        // $point->round_id = $round_id;
+        // $point->user_id = $user_id;
+        // $point->package_id = $package_id;
+        // $point->points = $i;
+        // $point->total_points = $totalGames;
+        // $point->save();
+
+
+        // $round = Round::where('id',$round_id)->first();
+        
         
         $arr = [];
-        // dd(count($packages));
         for ($i = 0; $i < count($packages); $i++) {
             $multipleWinners = [];
             $multipleWinners2 = [];
@@ -81,7 +145,7 @@ class DashboardController extends Controller
             
           
         }
-        // return $arr[2];
+       
         for ($i = 0; $i < count($packages); $i++) {
             $totalCoinsApplied = $packages[$i]->accumulative_price;
             $winnersTotal = count($arr[$i]);
@@ -101,30 +165,14 @@ class DashboardController extends Controller
             
 
         }
+
         
-        return $arr;
-        if (!array_key_exists("0",$arr)){
-            $arr[0] = null;
-        }
-        if (!array_key_exists("1",$arr)){
-            $arr[1] = null;
-        }
-        if (!array_key_exists("2",$arr)){
-            $arr[2] = null;
-        }
-        // $firstWinners =count($arr[0]);
-        // return $arr;
-        $data = array(
-                "status" => 200,
-                "response" => "true",
-                "message" => "Result Received",
-                "First Package Winners" => $arr[0],
-                "Second Package Winners" => $arr[1],
-                "Third Package Winners" => $arr[2],
-    
-    
-            );
-            return $data;
+       
+        
+
+        return true;
+       
+        
 
     }
 }

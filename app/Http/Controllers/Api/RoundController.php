@@ -338,7 +338,7 @@ class RoundController extends Controller
 
                             ]);
                         } //End For Loop
-                        $points = $this->answerCheck($round_id,$package_id);
+                        // $points = $this->answerCheck($round_id,$package_id);
 
                         $userAnswers = DB::table('bid_results')
                             ->where('user_id', $user->id)
@@ -408,7 +408,7 @@ class RoundController extends Controller
 
                         ]);
                     }
-                    $points = $this->answerCheck($round_id,$package_id);
+                    // $points = $this->answerCheck($round_id,$package_id);
 
                     $userAnswers = DB::table('bid_results')
                         ->where('user_id', $user->id)
@@ -471,7 +471,7 @@ class RoundController extends Controller
 
                 ]);
             }
-            $points = $this->answerCheck($round_id,$package_id);
+            // $points = $this->answerCheck($round_id,$package_id);
             $userAnswers = DB::table('bid_results')
                 ->where('user_id', $user->id)
                 ->where('round_id', $round_id)->get();
