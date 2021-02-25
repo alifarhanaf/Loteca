@@ -27,11 +27,12 @@ class RoundController extends Controller
         // $round = Round::where('id',1)->first();
         $now = Carbon::now();
         $now->toDateString();
+
         //  return $now;
         $round = Round::where('starting_date', '<=', $now)
             ->where('ending_date', '>=', $now)->where('tag', 'original')->where('status',1)
             ->first();
-
+        // return $round;
         if ($round) {
             $games = $round->games;
             $user = Auth::user();
@@ -44,12 +45,21 @@ class RoundController extends Controller
                 if (empty($arr)) {
                     $bid = false;
                 } else {
-                    $result = array_search("$round->id", $arr);
-                    if ($result >= 0 || $result != '') {
+                    // $result = array_search("$round->id", $arr);
+                    // dd($result);
+                    // if ($result >= 0 || $result != '') {
+                    //     $bid = true;
+                    // } else {
+                    //     $bid = false;
+                    // }
+                    if (in_array($round->id, $arr)) 
+                    { 
                         $bid = true;
-                    } else {
+                    } 
+                    else
+                    { 
                         $bid = false;
-                    }
+                    } 
                 }
             } else {
                 $bid = false;
