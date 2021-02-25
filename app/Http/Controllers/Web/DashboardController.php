@@ -51,6 +51,7 @@ class DashboardController extends Controller
         $roundUsers = DB::table('round_user')->where('round_id',$round_id)->get();
         $roundUsersIds = [];
         $test = [];
+        $test1 = [];
         foreach($roundUsers as $ru){
             array_push($roundUsersIds,$ru->user_id);
 
@@ -70,10 +71,15 @@ class DashboardController extends Controller
             if(strtoupper($gameAnswer0) == strtoupper($UA->answer)){
                 
                 $i++;
-                array_push($test,'matched');
+                array_push($test,$gameAnswer0);
+                array_push($test,$UA->answer);
             }
         }//EndForeach
-        return $test;
+        $data = array(
+            "oAnswer" => $test,
+            "gAnswer" => $test1
+        );
+        return $data;
 
         $point = new Point();
         $point->round_id = $round_id;
