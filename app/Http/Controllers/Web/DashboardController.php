@@ -131,6 +131,9 @@ class DashboardController extends Controller
             $multipleWinners = [];
             $multipleWinners2 = [];
             $multipleWinners3 = [];
+            $multipleWinners4 = [];
+            $multipleWinners5 = [];
+            $multipleWinners6 = [];
             $points = Point::where('round_id',$round_id)->where('package_id',$packages[$i]->id)->orderBy('points', 'desc')->get();
            
             $totalGames = count($round->games);
@@ -148,6 +151,18 @@ class DashboardController extends Controller
 
                     array_push($multipleWinners3,$pt->user->id); 
                 }
+                if(empty($multipleWinners3) && $pt->points == ($totalGames-3)){
+
+                    array_push($multipleWinners4,$pt->user->id); 
+                }
+                if(empty($multipleWinners4) && $pt->points == ($totalGames-4)){
+
+                    array_push($multipleWinners5,$pt->user->id); 
+                }
+                if(empty($multipleWinners5) && $pt->points == ($totalGames-5)){
+
+                    array_push($multipleWinners6,$pt->user->id); 
+                }
             }
             if(!empty($multipleWinners)){
                 
@@ -156,6 +171,12 @@ class DashboardController extends Controller
                 $arr[$i] =  $multipleWinners2;
             }elseif(!empty($multipleWinners3)){
                 $arr[$i] =  $multipleWinners3;
+            }elseif(!empty($multipleWinners4)){
+                $arr[$i] =  $multipleWinners4;
+            }elseif(!empty($multipleWinners5)){
+                $arr[$i] =  $multipleWinners5;
+            }elseif(!empty($multipleWinners6)){
+                $arr[$i] =  $multipleWinners6;
             }
 
             
