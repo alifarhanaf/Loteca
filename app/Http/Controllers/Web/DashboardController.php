@@ -47,7 +47,8 @@ class DashboardController extends Controller
         $round = Round::where('id',$round_id)->first();
         $totalGames = count($round->games);
         $packages = $round->packages;
-        $roundUsers = RoundUser::where('round_id',$round_id)->get();
+        // $roundUsers = RoundUser::where('round_id',$round_id)->get();
+        $roundUsers = DB::table('round_user')->where('round_id',$round_id)->get();
         $roundUsersIds = [];
         foreach($roundUsers as $ru){
             array_push($roundUsersIds,$ru->user_id);
