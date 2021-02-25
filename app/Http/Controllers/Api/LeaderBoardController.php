@@ -128,12 +128,15 @@ class LeaderBoardController extends Controller
                     
               
             }
+            $multipleWinnersMonthly = array_unique($multipleWinnersMonthly);
+            $multipleWinners = array_unique($multipleWinners);
+
             $data = array(
                 "status" => 200,
                 "response" => "true",
                 "message" => "Result Received",
-                "leaderBoardMonthly" => array_unique($multipleWinnersMonthly),
-                "leaderBoardAllTime" => array_unique($multipleWinners),
+                "leaderBoardMonthly" => $multipleWinnersMonthly,
+                "leaderBoardAllTime" => $multipleWinners,
     
     
             );
