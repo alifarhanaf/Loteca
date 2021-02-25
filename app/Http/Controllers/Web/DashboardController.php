@@ -69,7 +69,7 @@ class DashboardController extends Controller
             $gameAnswer0 = $gm->results->Answer;
             // return $gameAnswer0 . $UA->answer;
             array_push($test,$gameAnswer0);
-                array_push($test,$UA->answer);
+                array_push($test1,$UA->answer);
             if(strtoupper($gameAnswer0) == strtoupper($UA->answer)){
                 
                 $i++;
