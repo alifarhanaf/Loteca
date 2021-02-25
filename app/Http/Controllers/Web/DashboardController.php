@@ -68,19 +68,23 @@ class DashboardController extends Controller
             $gm = Game::where('id',$UA->game_id)->first();
             $gameAnswer0 = $gm->results->Answer;
             // return $gameAnswer0 . $UA->answer;
-            array_push($test,$gameAnswer0);
-                array_push($test1,$UA->answer);
-            if(strtoupper($gameAnswer0) == strtoupper($UA->answer)){
+            // array_push($test,$gameAnswer0);
+            //     array_push($test1,$UA->answer);
+               $oAnswer =  str_replace(' ', '', $gameAnswer0);
+               $uAnswer = str_replace(' ', '', $UA->answer);
+               // array_push($test,$gameAnswer0);
+              //     array_push($test1,$UA->answer);
+            if(strtoupper($oAnswer) == strtoupper($uAnswer)){
                 
                 $i++;
                 
             }
         }//EndForeach
-        $data = array(
-            "oAnswer" => $test,
-            "gAnswer" => $test1
-        );
-        return $data;
+        // $data = array(
+        //     "oAnswer" => $test,
+        //     "gAnswer" => $test1
+        // );
+        // return $data;
 
         $point = new Point();
         $point->round_id = $round_id;
@@ -157,7 +161,7 @@ class DashboardController extends Controller
             
           
         }
-        return $arr;
+        // return $arr;
        
         for ($i = 0; $i < count($packages); $i++) {
             $totalCoinsApplied = $packages[$i]->accumulative_price;
