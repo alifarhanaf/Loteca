@@ -85,7 +85,7 @@ class LeaderBoardController extends Controller
      
    
         
-            $points = Point::orderBy('winning_coins', 'desc')->groupBy('user_id')->get();
+            $points = Point::orderBy('winning_coins', 'desc')->get();
             
           
             for ($i = 0; $i < count($points); $i++) {
