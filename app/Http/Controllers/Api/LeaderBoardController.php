@@ -85,7 +85,7 @@ class LeaderBoardController extends Controller
      
    
         
-            $points = Point::distinct()->orderBy('winning_coins', 'desc')->get();
+            $points = Point::orderBy('winning_coins', 'desc')->get();
             
           
             for ($i = 0; $i < count($points); $i++) {
@@ -132,8 +132,8 @@ class LeaderBoardController extends Controller
                 "status" => 200,
                 "response" => "true",
                 "message" => "Result Received",
-                "leaderBoardMonthly" => $multipleWinnersMonthly,
-                "leaderBoardAllTime" => $multipleWinners,
+                "leaderBoardMonthly" => array_unique($multipleWinnersMonthly),
+                "leaderBoardAllTime" => ($multipleWinners),
     
     
             );
