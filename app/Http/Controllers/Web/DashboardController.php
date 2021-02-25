@@ -65,7 +65,7 @@ class DashboardController extends Controller
          
             $gm = Game::where('id',$UA->game_id)->first();
             $gameAnswer0 = $gm->results->Answer;
-            return $gameAnswer0 . $UA->Answer;
+            // return $gameAnswer0 . $UA->answer;
             if($gameAnswer0 === $UA->answer){
                 
                 $i++;
@@ -147,7 +147,7 @@ class DashboardController extends Controller
             
           
         }
-        // return $arr;
+        return $arr[0];
        
         for ($i = 0; $i < count($packages); $i++) {
             $totalCoinsApplied = $packages[$i]->accumulative_price;
