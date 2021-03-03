@@ -3,7 +3,8 @@
 @include('includes.subheader')
 
 
-
+<form action="{{ route('submit.game') }}" method="POST">
+  @csrf
      
       <div class="az-content-header d-block d-md-flex mg-r-40 mg-l-40 mg-t-20 " style=" padding-left:25px;padding-bottom:10px;padding-top:10px; border:1px solid  #cdd4e0 ">
         <div class="row w-100">
@@ -11,7 +12,7 @@
           <h4 style="color: #1c273c; margin-bottom: 0px;">Enter New Game</h4>
             </div>
             <div class="col-md-2">
-                <button class="btn btn-outline-indigo btn-rounded btn-block">Publish</button>
+                <button type="submit" class="btn btn-outline-indigo btn-rounded btn-block">Publish</button>
             </div>
         </div>
 
@@ -26,14 +27,14 @@
               
                     <div class="az-form-group">
                       <label class="form-label">Game Name</label>
-                      <input type="text" class="form-control" placeholder="Enter Game Name" >
+                      <input name="name" type="text" class="form-control" placeholder="Enter Game Name" >
                     </div><!-- az-form-group -->
                     <div class="az-form-group mg-t-20">
                         <label class="form-label">Happening Date</label>
                         <div class="input-group">
                             <div class="input-group-prepend">
                             </div>
-                            <input  id="datepickerNoOfMonths1" type="text" class="form-control" placeholder="MM/DD/YYYY">
+                            <input name="happening_date"  id="datepickerNoOfMonths1" type="text" class="form-control" placeholder="MM/DD/YYYY">
                           </div>
                       </div><!-- az-form-group -->
 
@@ -45,7 +46,7 @@
                   <div class="col-md-6">
                     <div class="az-form-group">
                         <label class="form-label">First Team</label>
-                        <input type="text" class="form-control" placeholder="Enter First Team" >
+                        <input name="team_a" type="text" class="form-control" placeholder="Enter First Team" >
 
                        
                             
@@ -58,7 +59,7 @@
                   <div class="col-md-6">
                     <div class="az-form-group">
                         <label class="form-label">Second Team</label>
-                        <input type="text" class="form-control" placeholder="Enter Second Team" >
+                        <input name="team_b" type="text" class="form-control" placeholder="Enter Second Team" >
 
                         
                         
@@ -108,6 +109,7 @@
 
 
       </div><!-- az-content-body -->
+</form>
 
 
       @include('includes.subfooter')

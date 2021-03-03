@@ -8,6 +8,7 @@ use App\Models\Game;
 use App\Models\Point;
 use App\Models\Round;
 use App\Models\Package;
+use App\Models\RoundUser;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
@@ -146,22 +147,42 @@ class RoundController extends Controller
             return response()->json($data, 200);
         }
     }
-    public function leagues()
+    public function participatedleagues()
     {
-        $closedLeagues = Round::where('status', 2)->where('creator_id', Auth::user()->id)->orderBy('ending_date', 'DESC')->get();
-        $ActiveLeagues = Round::where('status', 1)->where('creator_id', Auth::user()->id)->orderBy('ending_date', 'DESC')->get();
-        $ParticipatedLeagues = Round::where('creator_id', Auth::user()->id)->orderBy('ending_date', 'DESC')->get();
+        $userLeagues = RoundUser::where('user_id',Auth::user()->id)->get();
+        $arr = [];
+        foreach($userLeagues as $uL){
+            array_push($arr, $uL->round_id);
+
+        }
+        if(count($arr)>0){
+            array_values(array_unique($arr));
+            $rounds = Round::where('status',2)->findMany($arr);
+            // $closedLeagues = Round::where('status', 2)->orderBy('ending_date', 'DESC')->get();
+
+       
         $data = array(
             "status" => 200,
             "response" => "true",
             "message" => "Result Received",
-            "activeLeagues" => $ActiveLeagues,
-            "closedLeagues" => $closedLeagues,
-            "participatedLeagues" => $ParticipatedLeagues,
+            "participatedLeagues" => $rounds,
         );
 
 
         return response()->json($data, 200);
+
+        }else{
+        
+            $data = array(
+                "status" => 404,
+                "response" => "false",
+                "message" => "No Result Found",
+            );
+    
+    
+            return response()->json($data, 200);
+        }
+        
     }
     public function leaderBoard()
     {

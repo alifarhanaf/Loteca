@@ -213,4 +213,16 @@ class DashboardController extends Controller
         
 
     }
+    public function submitGame(Request $request){
+        // return $request->all();
+        $game = New Game();
+        $game->name = $request->name;
+        $game->team_a = $request->team_a;
+        $game->team_b = $request->team_b;
+        $game->happening_date = $request->happening_date;
+        $game->save();
+
+
+
+    }
 }

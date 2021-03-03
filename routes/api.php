@@ -35,7 +35,7 @@ Route::middleware('auth:api')->group( function(){
     Route::get('/mainRound','Api\RoundController@index');
     Route::post('/submitResult','Api\RoundController@betSubmit');
     Route::get('/lastRoundResult', 'Api\RoundController@llr');
-    Route::get('/leagues', 'Api\RoundController@leagues');
+    Route::get('/participatedleagues', 'Api\RoundController@participatedleagues');
     Route::get('/leaderBoard', 'Api\LeaderBoardController@leaderB');
     Route::get('/agents', 'Api\RoundController@agents');
     Route::post('/myleague', 'Api\MyLeagueController@index');
