@@ -149,7 +149,7 @@ class RoundController extends Controller
     }
     public function participatedleagues()
     {
-        $userLeagues = RoundUser::where('user_id',Auth::user()->id)->get();
+        $userLeagues = DB::table('round_user')->where('user_id',Auth::user()->id)->get();
         $arr = [];
         foreach($userLeagues as $uL){
             array_push($arr, $uL->round_id);
