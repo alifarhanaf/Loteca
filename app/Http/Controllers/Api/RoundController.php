@@ -314,6 +314,7 @@ class RoundController extends Controller
         $game_ids = explode(",", $game_idz);
         $round_id = $request->round_id;
         $package_id = $request->package_id;
+        $pk = Package::where('id',$package_id);
 
        
         $user = Auth::user();
@@ -376,6 +377,7 @@ class RoundController extends Controller
                             'created_at' => $round->created_at,
                             'updated_at' => $round->updated_at,
                             'packages' => $packages,
+                            'selected_package' => $pk,
                             'games' => $games,
 
                         );
@@ -446,6 +448,7 @@ class RoundController extends Controller
                         'created_at' => $round->created_at,
                         'updated_at' => $round->updated_at,
                         'packages' => $packages,
+                        'selected_package' => $pk,
                         'games' => $games,
                     );
 
@@ -508,6 +511,7 @@ class RoundController extends Controller
                 'created_at' => $round->created_at,
                 'updated_at' => $round->updated_at,
                 'packages' => $packages,
+                'selected_package' => $pk,
                 'games' => $games,
             );
             $data = array(
