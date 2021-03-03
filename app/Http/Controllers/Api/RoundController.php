@@ -314,7 +314,7 @@ class RoundController extends Controller
         $game_ids = explode(",", $game_idz);
         $round_id = $request->round_id;
         $package_id = $request->package_id;
-        $pk = Package::where('id',$package_id);
+        $pk = Package::where('id',$package_id)->first();
 
        
         $user = Auth::user();
