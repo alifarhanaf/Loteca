@@ -23,6 +23,9 @@ class DashboardController extends Controller
     public function createGame(){
         return view ('createGame');
     }
+    public function saveGame(){
+        
+    }
     public function gameGrid(){
         $games = Game::all();
         $data = array(

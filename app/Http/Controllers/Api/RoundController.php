@@ -45,6 +45,7 @@ class RoundController extends Controller
                 }
                 if (empty($arr)) {
                     $bid = false;
+                    $selected_package = null;
                 } else {
                     // $result = array_search("$round->id", $arr);
                     // dd($result);
@@ -56,10 +57,20 @@ class RoundController extends Controller
                     if (in_array($round->id, $arr)) 
                     { 
                         $bid = true;
+                    $ressult = DB::table('bid_results')
+                    ->where('user_id', $user->id)
+                    ->where('round_id', $round->id)->first();
+                    $package_id = $ressult->package_id;
+                    $selected_package = Package::where('id',$package_id)->first();
+
+
+
+
                     } 
                     else
                     { 
                         $bid = false;
+                        $selected_package = null;
                     } 
                 }
             } else {
@@ -73,6 +84,7 @@ class RoundController extends Controller
                 'created_at' => $round->created_at,
                 'updated_at' => $round->updated_at,
                 'packages' => $packages,
+                'selected_package' => $selected_package,
                 'games' => $games,
 
             );
@@ -381,13 +393,14 @@ class RoundController extends Controller
                             'games' => $games,
 
                         );
+                        $user = User::find(Auth::user()->id);
 
                         $data = array(
                             "status" => 200,
                             "response" => "true",
                             "message" => "Record Inserted",
                             "bid" => true,
-                            "user" => Auth::user(),
+                            "user" => $user,
                             "round" => $roundComplete,
                             "userAnswers" => $userAnswers,
 
@@ -451,13 +464,13 @@ class RoundController extends Controller
                         'selected_package' => $pk,
                         'games' => $games,
                     );
-
+                    $user = User::find(Auth::user()->id);
                     $data = array(
                         "status" => 200,
                         "response" => "true",
                         "message" => "Record Inserted",
                         "bid" => true,
-                        "user" => Auth::user(),
+                        "user" => $user,
                         "round" => $roundComplete,
                         "userAnswers" => $userAnswers,
                     );
@@ -514,12 +527,13 @@ class RoundController extends Controller
                 'selected_package' => $pk,
                 'games' => $games,
             );
+            $user = User::find(Auth::user()->id);
             $data = array(
                 "status" => 200,
                 "response" => "true",
                 "message" => "Record Inserted",
                 "bid" => true,
-                "user" => Auth::user(),
+                "user" => $user,
                 "round" => $roundComplete,
                 "userAnswers" => $userAnswers,
             );
