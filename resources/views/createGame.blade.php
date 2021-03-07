@@ -160,9 +160,19 @@
  };
 
  </script>
+ 
 
 
       @include('includes.subfooter')
       @include('includes.footer')
      
-    
+      <script>
+        @if(Session::has('success'))
+       // console.log('Hi');
+       toastr.success("{{ Session::get('success') }}") ;
+      @endif
+      @if(Session::has('error'))
+       // console.log('Hi');
+       toastr.error("{{ Session::get('error') }}") ;
+      @endif
+      </script>

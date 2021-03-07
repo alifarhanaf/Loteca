@@ -67,10 +67,10 @@ class DashboardController extends Controller
         
         $round->games()->attach(request('checkbox'));
         DB::commit();
-        return redirect()->back()->with('message', 'success'); 
+        return redirect()->back()->with('success', 'Round Created Successfully'); 
         } catch (\Exception $ex) {
             DB::rollback();
-            return redirect()->back()->with('message',$ex->getMessage());
+            return redirect()->back()->with('error',$ex->getMessage());
         }
          
 
@@ -94,6 +94,7 @@ class DashboardController extends Controller
             return redirect()->back()->with('error',$ex->getMessage());
         }
     }
+    editRound
 
     public function createGame(){
         return view ('createGame');
@@ -103,8 +104,10 @@ class DashboardController extends Controller
         
         DB::beginTransaction();
         try {
-        $happening_date = str_replace("/","-",request('happening_date'));
-        $newDate = date("Y-m-d", strtotime($happening_date));
+        $date = DateTime::createFromFormat("m/d/Y" , request('happening_date'));
+        $newDate = $date->format('Y-m-d');
+        // $happening_date = str_replace("/","-",request('happening_date'));
+        // $newDate = date("Y-m-d", strtotime($happening_date));
         $game = new Game();
         $game->name = request('name');
         $game->happening_date = $newDate;
@@ -122,10 +125,10 @@ class DashboardController extends Controller
         $game->flag_b = $flagBurl;
         $game->save();
         DB::commit();
-        return redirect()->back()->with('message', 'success'); 
+        return redirect()->back()->with('success', 'Game Created Successfully'); 
         } catch (\Exception $ex) {
             DB::rollback();
-            return redirect()->back()->with('message',$ex->getMessage());
+            return redirect()->back()->with('error',$ex->getMessage());
         }
          
     }
@@ -142,6 +145,7 @@ class DashboardController extends Controller
     public function finalizeRound(Request $request,$id){
         DB::beginTransaction();
         try {
+            
            
         $round_id = $id;
         $round = Round::find($round_id); 
@@ -169,6 +173,7 @@ class DashboardController extends Controller
         foreach($userAnswers as $UA){
          
             $gm = Game::where('id',$UA->game_id)->first();
+            if($gm->results){
             $gameAnswer0 = $gm->results->Answer;
             // return $gameAnswer0 . $UA->answer;
             // array_push($test,$gameAnswer0);
@@ -182,6 +187,10 @@ class DashboardController extends Controller
                 $i++;
                 
             }
+        }else{
+            DB::rollback();
+            return redirect()->back()->with('error','You have Not Added Game Results Yet.     Kindly Add Answers First.');
+        }
         }
         //EndForeach
         // $data = array(
