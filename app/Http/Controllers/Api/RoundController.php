@@ -110,8 +110,6 @@ class RoundController extends Controller
                 "status" => 404,
                 "response" => "false",
                 "message" => "No Round is Live",
-
-
             );
             return response()->json($data, 404);
         }
@@ -319,11 +317,13 @@ class RoundController extends Controller
 
     public function betSubmit(Request $request)
     {
-     
+        DB::beginTransaction();
+        // try {
         $selected_answerz = trim($request->selected_answers, '[]');
         $selected_answers = explode(",", $selected_answerz);
         $game_idz = trim($request->game_ids, '[]');
         $game_ids = explode(",", $game_idz);
+        // dd($game_idz);
         $round_id = $request->round_id;
         $package_id = $request->package_id;
         $pk = Package::where('id',$package_id)->first();
@@ -339,6 +339,7 @@ class RoundController extends Controller
             } //EndForeach
             if (!empty($arr)) {
                 if (in_array("$round_id", $arr)) {
+                    DB::rollback();
                     $data = array(
                         "status" => 409,
                         "response" => "true",
@@ -407,15 +408,17 @@ class RoundController extends Controller
 
 
                         );
+                        DB::commit();
                         return response()->json($data, 201);
                     } else {
-
+                        DB::rollback();
                         $data = array(
                             "status" => 429,
                             "response" => "true",
                             "message" => "You Don't have enough Coins",
 
                         );
+                        
                         return response()->json($data, 429);
                     } //EndCoinsCheckCondition
                 } //EndRecordCheckCondition
@@ -474,13 +477,16 @@ class RoundController extends Controller
                         "round" => $roundComplete,
                         "userAnswers" => $userAnswers,
                     );
+                    DB::commit();
                     return response()->json($data, 201);
                 } else {
+                    DB::rollback();
                     $data = array(
                         "status" => 429,
                         "response" => "true",
                         "message" => "You Don't have enough Coins",
                     );
+                    
                     return response()->json($data, 429);
                 }
             }
@@ -537,15 +543,26 @@ class RoundController extends Controller
                 "round" => $roundComplete,
                 "userAnswers" => $userAnswers,
             );
+            DB::commit();
             return response()->json($data, 201);
         } else {
+            DB::rollback();
             $data = array(
                 "status" => 429,
                 "response" => "true",
                 "message" => "You Don't have enough Coins",
             );
+            
             return response()->json($data, 429);
         }
+
+
+        // DB::commit();
+        // return redirect()->back()->with('message', 'success'); 
+        // } catch (\Exception $ex) {
+        //     DB::rollback();
+        //     return redirect()->back()->with('message',$ex->getMessage());
+        // }
     }
     
 

@@ -18,6 +18,8 @@
 {{-- <script src="../lib/jqvmap/maps/jquery.vmap.usa.js"></script> --}}
 <script src="{{ asset('js/azia.js') }}"></script>
 {{-- <script src="../js/azia.js"></script> --}}
+<script src="{{ asset('js/toaster.min.js') }}"></script>
+
 <script src="{{ asset('lib/jquery-ui/ui/widgets/datepicker.js') }}"></script>
 {{-- <script src="../lib/jquery-ui/ui/widgets/datepicker.js"></script> --}}
 <script src="{{ asset('lib/amazeui-datetimepicker/js/amazeui.datetimepicker.min.js') }}"></script>

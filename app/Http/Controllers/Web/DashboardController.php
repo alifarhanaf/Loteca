@@ -3,10 +3,13 @@
 namespace App\Http\Controllers\Web;
 
 use App\User;
+use DateTime;
+use Carbon\Carbon;
 use App\Models\Game;
 use App\Models\Point;
 use App\Models\Round;
 use App\Models\Winner;
+use App\Models\Package;
 use App\Models\RoundUser;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -18,20 +21,58 @@ class DashboardController extends Controller
         return view ('home');
     }
     public function createRound(){
-        return view ('createRound');
-    }
-    public function createGame(){
-        return view ('createGame');
-    }
-    public function saveGame(){
-        
-    }
-    public function gameGrid(){
-        $games = Game::all();
+        //   Carbon::today()->toDateString();
+        $games = Game::where('happening_date', '>=', Carbon::today()->toDateString())->get();
+        // return $games;
         $data = array(
             "games"=> $games,
         );
-        return view ('gameGrid')->with($data);
+        return view ('createRound')->with($data);
+    }
+    
+    public function submitRound(Request $request){
+        DB::beginTransaction();
+        try {
+        
+       
+        $date0 = DateTime::createFromFormat("m/d/Y" , request('start_date'));
+        $starting_date = $date0->format('Y-m-d');
+        $date1 = DateTime::createFromFormat("m/d/Y" , request('end_date'));
+        $ending_date = $date1->format('Y-m-d');
+       
+       
+        $round = new Round();
+        $round->name = request('name');
+        $round->starting_date = $starting_date;
+        $round->ending_date = $ending_date;
+        $round->tag = 'original';
+        $round->status = 1;
+        $round->save();
+
+        $package = new Package();
+        $package->participation_fee =  request('first_package');
+        $package->accumulative_price = 0;
+        $package->round_id = $round->id;
+        $package->save();
+        $package = new Package();
+        $package->participation_fee =  request('second_package');
+        $package->accumulative_price = 0;
+        $package->round_id = $round->id;
+        $package->save();
+        $package = new Package();
+        $package->participation_fee =  request('third_package');
+        $package->accumulative_price = 0;
+        $package->round_id = $round->id;
+        $package->save();
+        
+        $round->games()->attach(request('checkbox'));
+        DB::commit();
+        return redirect()->back()->with('message', 'success'); 
+        } catch (\Exception $ex) {
+            DB::rollback();
+            return redirect()->back()->with('message',$ex->getMessage());
+        }
+         
 
     }
     public function roundGrid(){
@@ -41,9 +82,68 @@ class DashboardController extends Controller
         );
         return view ('roundGrid')->with($data);
     }
+    public function destroyRound($id){
+        DB::beginTransaction();
+        try {
+       
+        Round::destroy($id);
+        DB::commit();
+        return redirect()->back()->with('success','Round Deleted Successfully');
+        } catch (\Exception $ex) {
+            DB::rollback();
+            return redirect()->back()->with('error',$ex->getMessage());
+        }
+    }
 
-    public function finalizeRound(Request $request){
-        $round_id = $request->round_id;
+    public function createGame(){
+        return view ('createGame');
+    }
+
+    public function submitGame(Request $request){
+        
+        DB::beginTransaction();
+        try {
+        $happening_date = str_replace("/","-",request('happening_date'));
+        $newDate = date("Y-m-d", strtotime($happening_date));
+        $game = new Game();
+        $game->name = request('name');
+        $game->happening_date = $newDate;
+        $game->team_a = request('team_a');
+        $game->team_b = request('team_b');
+        $flagAName = time().'.'.$request->flag_a->extension();
+        $flagBName = time().'1.'.$request->flag_b->extension();  
+        $path = base_path() . '/public/storage/Flags/';
+        $pathsave =  '/storage/Flags/';
+        $request->flag_a->move($path, $flagAName);
+        $request->flag_b->move($path, $flagBName);
+        $flagAurl = $pathsave.$flagAName;
+        $flagBurl = $pathsave.$flagBName;
+        $game->flag_a = $flagAurl;
+        $game->flag_b = $flagBurl;
+        $game->save();
+        DB::commit();
+        return redirect()->back()->with('message', 'success'); 
+        } catch (\Exception $ex) {
+            DB::rollback();
+            return redirect()->back()->with('message',$ex->getMessage());
+        }
+         
+    }
+    public function gameGrid(){
+        $games = Game::all();
+        $data = array(
+            "games"=> $games,
+        );
+        return view ('gameGrid')->with($data);
+
+    }
+    
+
+    public function finalizeRound(Request $request,$id){
+        DB::beginTransaction();
+        try {
+           
+        $round_id = $id;
         $round = Round::find($round_id); 
         $round->status = 2;
         $round->save();
@@ -82,7 +182,8 @@ class DashboardController extends Controller
                 $i++;
                 
             }
-        }//EndForeach
+        }
+        //EndForeach
         // $data = array(
         //     "oAnswer" => $test,
         //     "gAnswer" => $test1
@@ -195,7 +296,6 @@ class DashboardController extends Controller
                  $points = Point::where('round_id',$round_id)->where('package_id',$packages[$i]->id)->where('user_id',$a)->first();
                  $points->winning_coins = $CoinPerHead;
                  $points->save();
-                // return $a;
                 $winner = new Winner();
                 $winner->round_id = $round_id;
                 $winner->user_id = $a;
@@ -211,21 +311,29 @@ class DashboardController extends Controller
        
         
 
-        return true;
+        // return true;
+        DB::commit();
+        return redirect()->back()->with('success', 'Round Successfully Finalized',); 
+        } catch (\Exception $ex) {
+            DB::rollback();
+            return redirect()->back()->with('error',$ex->getMessage());
+        }
        
         
 
     }
-    public function submitGame(Request $request){
-        // return $request->all();
-        $game = New Game();
-        $game->name = $request->name;
-        $game->team_a = $request->team_a;
-        $game->team_b = $request->team_b;
-        $game->happening_date = $request->happening_date;
-        $game->save();
+    // public function submitGame(Request $request){
+         // return $request->all();
+    //     $game = New Game();
+    //     $game->name = $request->name;
+    //     $game->team_a = $request->team_a;
+    //     $game->team_b = $request->team_b;
+    //     $game->happening_date = $request->happening_date;
+    //     $game->save();
+
+    
 
 
 
-    }
+    // }
 }

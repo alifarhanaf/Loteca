@@ -24,8 +24,8 @@
                 @foreach ($games as $game)
                 <tr>
                   <td>{{$game->name}}</td>
-                  <td>{{$game->team_a}}</td>
-                  <td>{{$game->team_b}}</td>
+                  <td><img src="{{ asset($game->flag_a)}}" alt="Girl in a jacket" width="25" height="25">  &nbsp    {{$game->team_a}}</td>
+                  <td><img src="{{ asset($game->flag_b)}}" alt="Girl in a jacket" width="25" height="25">  &nbsp    {{$game->team_b}}</td>
                   <td>
                       <span class="badge badge-pill badge-primary" style="width: 80px">
                       {{$game->happening_date}}

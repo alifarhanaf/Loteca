@@ -3,6 +3,8 @@
 @include('includes.subheader')
 
 
+<form action="{{ route('submit.round') }}" method="POST" >
+    @csrf
 
      
       <div class="az-content-header d-block d-md-flex mg-r-40 mg-l-40 mg-t-20 " style=" padding-left:25px;padding-bottom:10px;padding-top:10px; border:1px solid  #cdd4e0 ">
@@ -11,7 +13,7 @@
           <h4 style="color: #1c273c; margin-bottom: 0px;">Enter New Round</h4>
             </div>
             <div class="col-md-2">
-                <button class="btn btn-outline-indigo btn-rounded btn-block">Publish</button>
+                <button type="submit" class="btn btn-outline-indigo btn-rounded btn-block">Publish</button>
             </div>
         </div>
 
@@ -26,12 +28,13 @@
               
                     <div class="az-form-group">
                       <label class="form-label">Round Name</label>
-                      <input type="text" class="form-control" placeholder="Enter Round Name" >
+                      <input type="text" name="name" class="form-control" placeholder="Enter Round Name" >
                     </div><!-- az-form-group -->
-                    <div class="az-form-group mg-t-20">
+                    {{-- <div class="az-form-group mg-t-20">
                         <label class="form-label">Password</label>
                         <input type="text" class="form-control" placeholder="Enter your password" >
-                      </div><!-- az-form-group -->
+                      </div> --}}
+                      <!-- az-form-group -->
 
                       
                
@@ -47,7 +50,7 @@
                             <div class="input-group">
                               <div class="input-group-prepend">
                               </div>
-                              <input  id="datepickerNoOfMonths" type="text" class="form-control" placeholder="MM/DD/YYYY">
+                              <input name="start_date"  id="datepickerNoOfMonths" type="text" class="form-control" placeholder="MM/DD/YYYY">
                             </div>
                           
 
@@ -62,7 +65,7 @@
                         <div class="input-group">
                             <div class="input-group-prepend">
                             </div>
-                            <input  id="datepickerNoOfMonths1" type="text" class="form-control" placeholder="MM/DD/YYYY">
+                            <input name="end_date"  id="datepickerNoOfMonths1" type="text" class="form-control" placeholder="DD/MM/YYYY">
                           </div>
                         
                       </div><!-- az-form-group -->
@@ -77,139 +80,36 @@
                 <div class=" col-md-12 " style="padding-left:0px;padding-right:0px;">
                     
                     <div class="frb-group">
+                        @foreach ($games as $game)
                         <div class="frb frb-primary">
-                            <input type="checkbox" id="checkbox-0" name="checkbox" value="0">
-                            <label for="checkbox-0">
+                            <input type="checkbox" id="checkbox-{{$game->id}}" name="checkbox[]" value="{{$game->id}}">
+                            <label for="checkbox-{{$game->id}}">
                                 <div class="row">
                                     <div class="col-md-3">
                                         <span class="frb-title">Game Name</span>
                                         <br>
-                                        <span class="frb-description">First Game</span>
+                                        <span class="frb-description">{{$game->name}}</span>
                                     </div>
                                     <div class="col-md-5">
                                         <span class="frb-title">Teams</span>
                                         <br>
-                                        <span class="frb-description">Pakistan Vs India</span>
+                                        <span class="frb-description"><img src="{{ asset($game->flag_a)}}" alt="Team A" width="20" height="20"> &nbsp {{$game->team_a}} <b>VS</b> {{$game->team_b}} &nbsp <img src="{{ asset($game->flag_b)}}" alt="Team B" width="20" height="20"></span>
                                     </div>
                                     <div class="col-md-4">
                                         <span class="frb-title">Happening Date</span>
                                         <br>
-                                        <span class="frb-description">10th February 2021</span>
+                                        <span class="frb-description">{{ \Carbon\Carbon::parse($game->happening_date)->isoFormat('MMM Do YY')}}</span>
                                     </div>
                                 </div>
                                 
                             </label>
                         </div>
-                        <div class="frb frb-primary">
-                            <input type="checkbox" id="checkbox-1" name="checkbox" value="1">
-                            <label for="checkbox-1">
-                                <div class="row">
-                                    <div class="col-md-3">
-                                        <span class="frb-title">Game Name</span>
-                                        <br>
-                                        <span class="frb-description">First Game</span>
-                                    </div>
-                                    <div class="col-md-5">
-                                        <span class="frb-title">Teams</span>
-                                        <br>
-                                        <span class="frb-description">Pakistan Vs India</span>
-                                    </div>
-                                    <div class="col-md-4">
-                                        <span class="frb-title">Happening Date</span>
-                                        <br>
-                                        <span class="frb-description">10th February 2021</span>
-                                    </div>
-                                </div>
-                            </label>
-                        </div>
-                        <div class="frb frb-success">
-                            <input type="checkbox" id="checkbox-2" name="checkbox" value="2">
-                            <label for="checkbox-2">
-                                <div class="row">
-                                    <div class="col-md-3">
-                                        <span class="frb-title">Game Name</span>
-                                        <br>
-                                        <span class="frb-description">First Game</span>
-                                    </div>
-                                    <div class="col-md-5">
-                                        <span class="frb-title">Teams</span>
-                                        <br>
-                                        <span class="frb-description">Pakistan Vs India</span>
-                                    </div>
-                                    <div class="col-md-4">
-                                        <span class="frb-title">Happening Date</span>
-                                        <br>
-                                        <span class="frb-description">10th February 2021</span>
-                                    </div>
-                                </div>
-                            </label>
-                        </div>
-                        <div class="frb frb-info">
-                            <input type="checkbox" id="checkbox-3" name="checkbox" value="3">
-                            <label for="checkbox-3">
-                                <div class="row">
-                                    <div class="col-md-3">
-                                        <span class="frb-title">Game Name</span>
-                                        <br>
-                                        <span class="frb-description">First Game</span>
-                                    </div>
-                                    <div class="col-md-5">
-                                        <span class="frb-title">Teams</span>
-                                        <br>
-                                        <span class="frb-description">Pakistan Vs India</span>
-                                    </div>
-                                    <div class="col-md-4">
-                                        <span class="frb-title">Happening Date</span>
-                                        <br>
-                                        <span class="frb-description">10th February 2021</span>
-                                    </div>
-                                </div>
-                            </label>
-                        </div>
-                        <div class="frb frb-warning">
-                            <input type="checkbox" id="checkbox-4" name="checkbox" value="4">
-                            <label for="checkbox-4">
-                                <div class="row">
-                                    <div class="col-md-3">
-                                        <span class="frb-title">Game Name</span>
-                                        <br>
-                                        <span class="frb-description">First Game</span>
-                                    </div>
-                                    <div class="col-md-5">
-                                        <span class="frb-title">Teams</span>
-                                        <br>
-                                        <span class="frb-description">Pakistan Vs India</span>
-                                    </div>
-                                    <div class="col-md-4">
-                                        <span class="frb-title">Happening Date</span>
-                                        <br>
-                                        <span class="frb-description">10th February 2021</span>
-                                    </div>
-                                </div>
-                            </label>
-                        </div>
-                        <div class="frb frb-danger">
-                            <input type="checkbox" id="checkbox-5" name="checkbox" value="5">
-                            <label for="checkbox-5">
-                                <div class="row">
-                                    <div class="col-md-3">
-                                        <span class="frb-title">Game Name</span>
-                                        <br>
-                                        <span class="frb-description">First Game</span>
-                                    </div>
-                                    <div class="col-md-5">
-                                        <span class="frb-title">Teams</span>
-                                        <br>
-                                        <span class="frb-description">Pakistan Vs India</span>
-                                    </div>
-                                    <div class="col-md-4">
-                                        <span class="frb-title">Happening Date</span>
-                                        <br>
-                                        <span class="frb-description">10th February 2021</span>
-                                    </div>
-                                </div>
-                            </label>
-                        </div>
+                            
+                        @endforeach
+                        
+                       
+                        
+                       
                     </div>
                 </div>
 
@@ -249,12 +149,12 @@
                         <hr>
                         
                         <label class="form-label">Participation Fee</label>
-                        <input type="text" class="form-control" placeholder="Enter Participation Fee" >
+                        <input name="first_package" type="text" class="form-control" placeholder="Enter Participation Fee" >
                         
-                        <hr>
+                        {{-- <hr>
 
                         <label class="form-label">Accumulative Prize</label>
-                        <input type="text" class="form-control" placeholder="Enter Accumulative Prize" >
+                        <input type="text" class="form-control" placeholder="Enter Accumulative Prize" > --}}
   
   
   
@@ -267,12 +167,12 @@
                         <hr>
                         
                         <label class="form-label">Participation Fee</label>
-                        <input type="text" class="form-control" placeholder="Enter Participation Fee" >
+                        <input name="second_package" type="text" class="form-control" placeholder="Enter Participation Fee" >
                         
-                        <hr>
+                        {{-- <hr>
 
                         <label class="form-label">Accumulative Prize</label>
-                        <input type="text" class="form-control" placeholder="Enter Accumulative Prize" >
+                        <input type="text" class="form-control" placeholder="Enter Accumulative Prize" > --}}
   
   
   
@@ -285,12 +185,12 @@
                         <hr>
                         
                         <label class="form-label">Participation Fee</label>
-                        <input type="text" class="form-control" placeholder="Enter Participation Fee" >
+                        <input name="third_package" type="text" class="form-control" placeholder="Enter Participation Fee" >
                         
-                        <hr>
+                        {{-- <hr>
 
                         <label class="form-label">Accumulative Prize</label>
-                        <input type="text" class="form-control" placeholder="Enter Accumulative Prize" >
+                        <input type="text" class="form-control" placeholder="Enter Accumulative Prize" > --}}
   
   
   
@@ -305,7 +205,7 @@
 
 
       </div><!-- az-content-body -->
-
+    </form>
 
       @include('includes.subfooter')
       @include('includes.footer')

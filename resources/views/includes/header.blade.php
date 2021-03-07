@@ -30,5 +30,8 @@
     {{-- <link rel="stylesheet" href="../css/azia.css"> --}}
 
     <link href="{{ asset('css/chkbox.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/uploadBtn.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/toaster.min.css') }}" rel="stylesheet">
+    {{-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css"> --}}
 
   </head>
