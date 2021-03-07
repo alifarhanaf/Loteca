@@ -94,7 +94,7 @@ class DashboardController extends Controller
             return redirect()->back()->with('error',$ex->getMessage());
         }
     }
-    editRound
+   
 
     public function createGame(){
         return view ('createGame');
