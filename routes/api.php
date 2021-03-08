@@ -46,7 +46,7 @@ Route::middleware('auth:api')->group( function(){
     Route::post('/winner','Api\LeaderBoardController@winner');
     Route::post('/leagueDetails', 'Api\LeaderBoardController@closedLeague');
     Route::post('/activeLeague', 'Api\MyLeagueController@activeLeague');
-    Route::get('/mainRoundForAgent','Api\AgentController@index');
+    Route::post('/mainRoundForAgent','Api\AgentController@index');
     
     
 
