@@ -25,7 +25,7 @@ Route::post('/login', 'Auth\ApiAuthController@login')->name('login.api');
 Route::post('/register','Auth\ApiAuthController@register')->name('register.api');
 Route::post('/logout', 'Auth\ApiAuthController@logout')->name('logout.api');
 
-Route::post('/finalizeRound','Web\DashboardController@finalizeRound');
+// Route::post('/finalizeRound','Web\DashboardController@finalizeRound');
 Route::post('/arrayCheck','Api\RoundController@arrayCheck');
 
 
@@ -46,6 +46,7 @@ Route::middleware('auth:api')->group( function(){
     Route::post('/winner','Api\LeaderBoardController@winner');
     Route::post('/leagueDetails', 'Api\LeaderBoardController@closedLeague');
     Route::post('/activeLeague', 'Api\MyLeagueController@activeLeague');
+    Route::get('/mainRoundForAgent','Api\AgentController@index');
     
     
 
