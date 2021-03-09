@@ -106,4 +106,79 @@ class AgentController extends Controller
             return response()->json($data, 404);
         }
     }
+
+    public function ValidateUser(Request $request){
+        $user =  User::where('email',$request->email)->first();
+        if ($user ){
+            $now = Carbon::now();
+            $now->toDateString();
+            $round = Round::where('starting_date', '<=', $now)
+            ->where('ending_date', '>=', $now)->where('tag', 'original')->where('status',1)
+            ->first();
+        // return $round;
+        if ($round) {
+
+            if (count($user->rounds) > 0) {
+                $arr = [];
+                foreach ($user->rounds as $rads) {
+                    array_push($arr, $rads->id);
+                }
+                
+                if (in_array($round->id, $arr)){ 
+                    $data = array(
+                        "status" => 209,
+                        "response" => "false",
+                        "message" => "User Already Made a Bet On This Round",
+                        );
+                        return response()->json($data,200);
+                }else{ 
+                        $user->contacts;
+                        $user->images;
+                        $data = array(
+                            "status"=>200,
+                            "response"=>"true",
+                            "message" => "Success",
+                            "user" => $user,
+                        );
+                        return response()->json($data,200);
+                    
+                } 
+                
+            }else{
+                $user->contacts;
+                $user->images;
+                $data = array(
+                    "status"=>200,
+                    "response"=>"true",
+                    "message" => "Success",
+                    "user" => $user,
+                );
+                return response()->json($data,200);
+            }
+
+
+
+            
+
+        }else {
+            $data = array(
+                "status" => 404,
+                "response" => "false",
+                "message" => "No Round is Live",
+            );
+            return response()->json($data, 404);
+        }
+            
+
+        }else{
+            $data = array(
+            "status" => 404,
+            "response" => "false",
+            "message" => "User Not Found",
+            );
+            return response()->json($data,200);
+        }
+        
+        
+    }
 }
