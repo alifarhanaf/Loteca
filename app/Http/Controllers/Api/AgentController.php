@@ -130,7 +130,7 @@ class AgentController extends Controller
                         "response" => "false",
                         "message" => "User Already Made a Bet On This Round",
                         );
-                        return response()->json($data,200);
+                        return response()->json($data,209);
                 }else{ 
                         $user->contacts;
                         $user->images;
@@ -176,7 +176,7 @@ class AgentController extends Controller
             "response" => "false",
             "message" => "User Not Found",
             );
-            return response()->json($data,200);
+            return response()->json($data,404);
         }
         
         
