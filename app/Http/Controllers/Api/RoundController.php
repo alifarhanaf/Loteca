@@ -46,6 +46,7 @@ class RoundController extends Controller
                 if (empty($arr)) {
                     $bid = false;
                     $selected_package = null;
+                    $bet_date = null;
                 } else {
                     // $result = array_search("$round->id", $arr);
                     // dd($result);
@@ -60,6 +61,7 @@ class RoundController extends Controller
                     $ressult = DB::table('bid_results')
                     ->where('user_id', $user->id)
                     ->where('round_id', $round->id)->first();
+                    $bet_date = $ressult->created_at;
                     $package_id = $ressult->package_id;
                     $selected_package = Package::where('id',$package_id)->first();
 
@@ -71,11 +73,13 @@ class RoundController extends Controller
                     { 
                         $bid = false;
                         $selected_package = null;
+                        $bet_date = null;
                     } 
                 }
             } else {
                 $bid = false;
                 $selected_package = null;
+                $bet_date = null;
             }
             $roundComplete = array(
                 'id' => $round->id,
@@ -101,6 +105,7 @@ class RoundController extends Controller
                 "response" => "true",
                 "message" => "Success",
                 "bid" => $bid,
+                "bet_date" => $bet_date,
                 "user" => $user,
                 "round" => $roundComplete,
                 "userAnswers" => $userAnswers,
