@@ -223,7 +223,7 @@ class AgentController extends Controller
                                 'game_id' => $game_ids[$i],
                                 'answer' => $selected_answers[$i],
                                 'package_id' => $package_id,
-                                'created_at' => Carbon::now(),
+                                'created_at' => DB::raw('now()'),
 
                             ]);
                         } //End For Loop
