@@ -16,6 +16,7 @@ class AgentController extends Controller
 {
     public function index(Request $request)
     {
+        return $request->all();
         // $round = Round::where('id',1)->first();
         $now = Carbon::now();
         $now->toDateString();
