@@ -61,6 +61,7 @@ class AgentController extends Controller
                 }
             } else {
                 $bid = false;
+                $selected_package = null;
             }
             $roundComplete = array(
                 'id' => $round->id,
