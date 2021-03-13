@@ -276,6 +276,7 @@ class AgentController extends Controller
                             ->where('user_id', $user->id)
                             ->where('round_id', $round_id)->get();
                         $round = Round::where('id', $round_id)->first();
+                        $bet_date = $userAnswers[0]->created_at;
                         $games = $round->games;
                         $packages = $round->packages;
                         foreach($games as $game){
@@ -324,6 +325,7 @@ class AgentController extends Controller
                             "response" => "true",
                             "message" => "Record Inserted",
                             "bid" => true,
+                            "bet_date" => $bet_date,
                             "user" => $user,
                             "agent" => $agent,
                             "round" => $roundComplete,
@@ -378,6 +380,7 @@ class AgentController extends Controller
                         ->where('user_id', $user->id)
                         ->where('round_id', $round_id)->get();
                     $round = Round::where('id', $round_id)->first();
+                    $bet_date = $userAnswers[0]->created_at;
                     $games = $round->games;
                     $packages = $round->packages;
                     foreach($games as $game){
@@ -424,6 +427,7 @@ class AgentController extends Controller
                         "response" => "true",
                         "message" => "Record Inserted",
                         "bid" => true,
+                        "bet_date" => $bet_date,
                         "user" => $user,
                         "agent" => $agent,
                         "round" => $roundComplete,
@@ -472,6 +476,7 @@ class AgentController extends Controller
                 ->where('user_id', $user->id)
                 ->where('round_id', $round_id)->get();
             $round = Round::where('id', $round_id)->first();
+            $bet_date = $userAnswers[0]->created_at;
             $games = $round->games;
             $packages = $round->packages;
             foreach($games as $game){
@@ -518,6 +523,7 @@ class AgentController extends Controller
                 "response" => "true",
                 "message" => "Record Inserted",
                 "bid" => true,
+                "bet_date" => $bet_date,
                 "user" => $user,
                 "agent" => $agent,
                 "round" => $roundComplete,
