@@ -15,6 +15,12 @@ class FeedBackController extends Controller
         $feedback->type = $request->type;
         $feedback->user_id = Auth::user()->id;
         $feedback->save();
+        $data = array(
+            "status" => 200,
+            "response" => "true",
+            "message" => "FeedBack Posted",
+        );
+        return response()->json($data, 200);
 
     }
 }
