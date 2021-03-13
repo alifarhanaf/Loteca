@@ -82,12 +82,12 @@ class RoundController extends Controller
                         $game['widegtSwitch2']= false ;
                     }else if(strtoupper($gtb) == strtoupper($gto)){
                         $game['widegtSwitch0']= false ;
-                        $game['widegtSwitch1']= true ;
-                        $game['widegtSwitch2']= false ;
-                    }else if(strtoupper($gtd) == strtoupper($gto)){
-                        $game['widegtSwitch0']= false ;
                         $game['widegtSwitch1']= false ;
                         $game['widegtSwitch2']= true ;
+                    }else if(strtoupper($gtd) == strtoupper($gto)){
+                        $game['widegtSwitch0']= false ;
+                        $game['widegtSwitch1']= true ;
+                        $game['widegtSwitch2']= false ;
                     }
                     
                         // return $game;
@@ -442,12 +442,12 @@ class RoundController extends Controller
                             $game['widegtSwitch2']= false ;
                         }else if(strtoupper($gtb) == strtoupper($gto)){
                             $game['widegtSwitch0']= false ;
-                            $game['widegtSwitch1']= true ;
-                            $game['widegtSwitch2']= false ;
-                        }else if(strtoupper($gtd) == strtoupper($gto)){
-                            $game['widegtSwitch0']= false ;
                             $game['widegtSwitch1']= false ;
                             $game['widegtSwitch2']= true ;
+                        }else if(strtoupper($gtd) == strtoupper($gto)){
+                            $game['widegtSwitch0']= false ;
+                            $game['widegtSwitch1']= true ;
+                            $game['widegtSwitch2']= false ;
                         }
                     }
 
@@ -544,12 +544,12 @@ class RoundController extends Controller
                         $game['widegtSwitch2']= false ;
                     }else if(strtoupper($gtb) == strtoupper($gto)){
                         $game['widegtSwitch0']= false ;
-                        $game['widegtSwitch1']= true ;
-                        $game['widegtSwitch2']= false ;
-                    }else if(strtoupper($gtd) == strtoupper($gto)){
-                        $game['widegtSwitch0']= false ;
                         $game['widegtSwitch1']= false ;
                         $game['widegtSwitch2']= true ;
+                    }else if(strtoupper($gtd) == strtoupper($gto)){
+                        $game['widegtSwitch0']= false ;
+                        $game['widegtSwitch1']= true ;
+                        $game['widegtSwitch2']= false ;
                     }
                 }
 
@@ -638,12 +638,12 @@ class RoundController extends Controller
                 $game['widegtSwitch2']= false ;
             }else if(strtoupper($gtb) == strtoupper($gto)){
                 $game['widegtSwitch0']= false ;
-                $game['widegtSwitch1']= true ;
-                $game['widegtSwitch2']= false ;
-            }else if(strtoupper($gtd) == strtoupper($gto)){
-                $game['widegtSwitch0']= false ;
                 $game['widegtSwitch1']= false ;
                 $game['widegtSwitch2']= true ;
+            }else if(strtoupper($gtd) == strtoupper($gto)){
+                $game['widegtSwitch0']= false ;
+                $game['widegtSwitch1']= true ;
+                $game['widegtSwitch2']= false ;
             }
         }
 
