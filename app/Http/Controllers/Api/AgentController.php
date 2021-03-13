@@ -91,6 +91,7 @@ class AgentController extends Controller
                 "response" => "true",
                 "message" => "Success",
                 "bid" => $bid,
+                "bet_date" => $bet_date,
                 "user" => $user,
                 "agent" => $agent,
                 "round" => $roundComplete,
