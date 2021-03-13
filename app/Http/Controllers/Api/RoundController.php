@@ -421,7 +421,7 @@ class RoundController extends Controller
                             ->where('user_id', $user->id)
                             ->where('round_id', $round_id)->get();
                         $round = Round::where('id', $round_id)->first();
-                        $bet_date = $userAnswers->created_at;
+                        $bet_date = $userAnswers[0]->created_at;
                         $games = $round->games;
                         $packages = $round->packages;
                         foreach($games as $game){
@@ -523,7 +523,7 @@ class RoundController extends Controller
                         ->where('user_id', $user->id)
                         ->where('round_id', $round_id)->get();
                     $round = Round::where('id', $round_id)->first();
-                    $bet_date = $userAnswers->created_at;
+                    $bet_date = $userAnswers[0]->created_at;
                     $games = $round->games;
                     $packages = $round->packages;
                     foreach($games as $game){
@@ -617,7 +617,7 @@ class RoundController extends Controller
                 ->where('user_id', $user->id)
                 ->where('round_id', $round_id)->get();
             $round = Round::where('id', $round_id)->first();
-            $bet_date = $userAnswers->created_at;
+            $bet_date = $userAnswers[0]->created_at;
             $games = $round->games;
             $packages = $round->packages;
             foreach($games as $game){
