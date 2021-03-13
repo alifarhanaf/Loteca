@@ -49,6 +49,7 @@ Route::middleware('auth:api')->group( function(){
     Route::post('/mainRoundForAgent','Api\AgentController@index');
     Route::post('/ValidateUser','Api\AgentController@ValidateUser');
     Route::post('/submitResultByAgent','Api\AgentController@betSubmit');
+    Route::post('/feedback','Api\FeedBackController@index');
 
 
 });
