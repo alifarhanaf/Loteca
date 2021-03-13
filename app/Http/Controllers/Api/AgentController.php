@@ -53,9 +53,12 @@ class AgentController extends Controller
                         $ressult = DB::table('bid_results')
                             ->where('user_id', $user->id)
                             ->where('round_id', $round->id)->first();
+                           
                             $bet_date = $ressult->created_at;
                         $package_id = $ressult->package_id;
                         $selected_package = Package::where('id', $package_id)->first();
+                       
+                        
                     } else {
                         $bid = false;
                         $selected_package = null;
