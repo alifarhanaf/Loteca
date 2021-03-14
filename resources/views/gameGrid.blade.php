@@ -13,7 +13,7 @@
             <table id="example2" class="table">
               <thead>
                 <tr>
-                  <th class="wd-20p">Name</th>
+                  <th class="wd-20p">Championship</th>
                   <th class="wd-25p">First Team</th>
                   <th class="wd-20p">Second Team</th>
                   <th class="wd-15p">Happening Date</th>
