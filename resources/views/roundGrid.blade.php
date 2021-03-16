@@ -47,9 +47,8 @@
                       <button  type="submit" class="grid-btn"><i class="typcn typcn-tick"></i></button>
                   </form>
                       &nbsp
-                      <form 
-                      {{-- action="{{ route ('brand.edit',$brand->id) }}"  --}}
-                       >
+                      <form action="{{ route ('roundDetail',$round->id) }}" >
+                      
                           {{ csrf_field() }}
                           
                   <button type="submit" class="grid-btn"><i class="typcn typcn-eye"></i></button>

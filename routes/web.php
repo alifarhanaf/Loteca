@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
+Route::get('/round_detail/{id}','Web\RoundController@roundPage')->name('roundDetail');
 Route::get('/dashboard','Web\DashboardController@index')->name('dashboard');
 Route::get('/create_round','Web\DashboardController@createRound')->name('create_round');
 Route::get('/round_grid','Web\DashboardController@roundGrid')->name('round_grid');
