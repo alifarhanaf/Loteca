@@ -145,6 +145,10 @@ class DashboardController extends Controller
     
 
     public function finalizeRound(Request $request,$id){
+        $winner = Winner::where('round_id',$id)->first();
+        if($winner){
+            return redirect()->back()->with('error','Already Finalized This Round.');
+        }
         DB::beginTransaction();
         try {
             
