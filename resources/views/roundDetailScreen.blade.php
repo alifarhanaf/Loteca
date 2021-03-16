@@ -10,7 +10,7 @@
 <div class="az-form-group">
     <div class="row">
         <div class="col-md-1">
-            <img class="rounded-circle" style="height: 70px; width:70px;" alt="100x100" src="{{ asset('/storage/Flags/round.png')}}"
+            <img class="rounded-circle" style="height: 70px; width:70px;" alt="100x100" src="{{ asset('/public/storage/Flags/round.png')}}"
           data-holder-rendered="true">
         </div>
         <div class="col-md-3" style="margin-top:10px;">
@@ -41,7 +41,7 @@
         <div class="our-team-main">
         
         <div class="">
-        <img style="margin-bottom: 10px" src="{{ asset('/storage/Flags/money.png')}}" class="img-fluid" />
+        <img style="margin-bottom: 10px" src="{{ asset('/public/storage/Flags/money.png')}}" class="img-fluid" />
         <p>{{$pkgs->participation_fee}} Coins</p>
         <h6>First Package</h6>
         
@@ -75,7 +75,7 @@
         <div class="our-team-main">
         
         <div class="team-front">
-        <img src="{{ asset('/storage/Flags/league.png')}}" class="img-fluid" />
+        <img src="{{ asset('/public/storage/Flags/league.png')}}" class="img-fluid" />
         <h5 style="margin-bottom: 0px">{{$gms->name}}</h5>
         <p>{{$gms->team_a}} Vs {{$gms->team_b}}</p>
         </div>
