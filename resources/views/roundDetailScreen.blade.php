@@ -91,7 +91,7 @@
             margin-left: auto;
             margin-right: auto;
             width: 50%;" />
-             <p style="text-align:center" ><b>{{$gms->team_a}}</b>  </p>
+             <p style="text-align:center" ><b>{{ \Illuminate\Support\Str::limit($gms->team_a, 10, $end='...') }} </b>  </p>
                 </div>
                 <div class="col-md-2">
                     <p class="mg-t-15" >VS  </p>
@@ -101,7 +101,7 @@
             margin-left: auto;
             margin-right: auto;
             width: 50%;" />
-                    <p style="text-align:center" ><b>{{$gms->team_b}}</b>  </p>
+                    <p style="text-align:center" ><b>{{ \Illuminate\Support\Str::limit($gms->team_b, 10, $end='...') }}</b>  </p>
             
                 </div>
     
