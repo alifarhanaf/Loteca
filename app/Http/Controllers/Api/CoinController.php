@@ -58,8 +58,9 @@ class CoinController extends Controller
                 "response" => "true",
                 "message" => "Coins Sent Successfully" ,
                 "agent" => $agent,
-                "user" => $user,
+                "user" => $updatedUser,
                 "coins_transferred" => $request->coins,
+                "transfer_date" => $ct->created_at,
                 );
                 return response()->json($data,200);
 
