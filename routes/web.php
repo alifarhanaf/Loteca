@@ -24,6 +24,8 @@ Route::post('/finalize_round/{id}','Web\DashboardController@finalizeRound')->nam
 Route::delete('/delete_round/{id}','Web\DashboardController@destroyRound')->name('delete.round');
 Route::get('/round_edit/{id}', 'Web\DashboardController@editRound')->name('edit.round');
 Route::post('/submit_round_edit/{id}', 'Web\DashboardController@editRoundSubmit')->name('edit.round.submit');
+Route::get('/game_answers','Web\DashboardController@gameAnswerGrid')->name('game_answer_grid');
+Route::post('/submit_answers/{id}','Web\DashboardController@submitAnswer')->name('submit_game_answer');
 Route::get('/', function () {
     return view('welcome');
 });

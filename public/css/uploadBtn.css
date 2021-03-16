@@ -59,6 +59,18 @@
         justify-content: center;
         flex-shrink: 0;
 }
+.grid-btn-big{
+  width: 100px;
+  height: 30px;
+  background: #98AFC7;
+  border: #98AFC7;
+  border-radius: 5px;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
   
   
     

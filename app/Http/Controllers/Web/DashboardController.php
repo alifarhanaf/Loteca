@@ -8,6 +8,7 @@ use Carbon\Carbon;
 use App\Models\Game;
 use App\Models\Point;
 use App\Models\Round;
+use App\Models\Result;
 use App\Models\Winner;
 use App\Models\Package;
 use App\Models\RoundUser;
@@ -351,4 +352,35 @@ class DashboardController extends Controller
 
 
     // }
+    public function gameAnswerGrid(){
+        $results = Result::all();
+        $ids = [];
+        foreach($results as $rs){
+            array_push($ids,$rs->game_id);
+
+        }
+        $games = Game::whereNotIn('id', $ids)->get();
+       
+        $data = array(
+            "games"=> $games,
+        );
+        return view ('gameAnswers')->with($data);
+    }
+    public function submitAnswer(Request $request, $id){
+        DB::beginTransaction();
+        try {
+        $result = New Result();
+        $result->Answer = $request->name;
+        $result->game_id = $id;
+        $result->save();
+        // return $request->all();
+        DB::commit();
+        return redirect()->back()->with('success', 'Answer Successfully Submitted',); 
+        } catch (\Exception $ex) {
+            DB::rollback();
+            return redirect()->back()->with('error',$ex->getMessage());
+        }
+
+
+    }
 }
