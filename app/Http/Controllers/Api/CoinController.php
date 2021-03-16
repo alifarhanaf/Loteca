@@ -50,11 +50,16 @@ class CoinController extends Controller
             $ct->receiver_id = $receiver->id;
             $ct->sent_coins = $request->coins;
             $ct->save();
+            $agent = Auth::user();
+            $updatedUser = User::where('email',$request->email)->first();
 
             $data = array(
                 "status" => 200,
                 "response" => "true",
                 "message" => "Coins Sent Successfully" ,
+                "agent" => $agent,
+                "user" => $user,
+                "coins_transferred" => $request->coins,
                 );
                 return response()->json($data,200);
 

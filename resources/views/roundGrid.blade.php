@@ -52,7 +52,7 @@
                        >
                           {{ csrf_field() }}
                           
-                  <button type="submit" class="grid-btn"><i class="typcn typcn-edit"></i></button>
+                  <button type="submit" class="grid-btn"><i class="typcn typcn-eye"></i></button>
                       </form>
                   &nbsp
                   <form 

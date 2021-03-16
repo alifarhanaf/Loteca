@@ -48,7 +48,6 @@ class DashboardController extends Controller
         $round->tag = 'original';
         $round->status = 1;
         $round->save();
-
         $package = new Package();
         $package->participation_fee =  request('first_package');
         $package->accumulative_price = 0;
@@ -133,7 +132,10 @@ class DashboardController extends Controller
          
     }
     public function gameGrid(){
-        $games = Game::all();
+        $games = Game::OrderBy('created_at', 'desc')->get();
+        // return $games;
+        // $sorted = $games->orderBy('created_at', 'desc');
+        // $games = Game::sortBy('created_at', 'ASC')->get();
         $data = array(
             "games"=> $games,
         );

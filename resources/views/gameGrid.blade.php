@@ -31,7 +31,12 @@
                       {{$game->happening_date}}
                       </span>
                     </td>
-                  <td>{{$game->created_at}}</td>
+                  <td>
+                    {{-- {{  --}}
+                  {{ \Carbon\Carbon::parse($game->created_at)->diffForHumans() }} 
+                  
+                {{-- }} --}}
+              </td>
                 </tr>
                 @endforeach
                 {{-- <tr>
