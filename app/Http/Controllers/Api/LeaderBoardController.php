@@ -96,7 +96,7 @@ class LeaderBoardController extends Controller
                     $count  = $count + $a->points;
                 }
                 $points[$i]->user['image'] = $points[$i]->user->images[0]->url;
-                $points[$i]->user['winning_coins'] = $count;
+                $points[$i]->user['Winning Coins'] = $count;
                 if(!in_array($points[$i]->user, $multipleWinners, true)){
                     array_push($multipleWinners,$points[$i]->user);
                 }
@@ -120,7 +120,7 @@ class LeaderBoardController extends Controller
                     $count  = $count + $a->points;
                 }
                 $points[$i]->user['image'] = $points[$i]->user->images[0]->url;
-                $points[$i]->user['winning_coins'] = $count;
+                $points[$i]->user['Winning Coins'] = $count;
                 if(!in_array($points[$i]->user, $multipleWinnersMonthly, true)){
                     array_push($multipleWinnersMonthly,$points[$i]->user);
                 }
@@ -131,7 +131,7 @@ class LeaderBoardController extends Controller
             $multipleWinnersMonthly = array_values(array_unique($multipleWinnersMonthly));
             $multipleWinners = array_values(array_unique($multipleWinners));
             
-            $array = collect($multipleWinners)->sortBy('winning_coins')->reverse()->toArray();
+            $array = collect($multipleWinners)->sortBy('Winning Coins')->reverse()->toArray();
 
             $data = array(
                 "status" => 200,
