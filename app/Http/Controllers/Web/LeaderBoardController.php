@@ -50,6 +50,7 @@ class LeaderBoardController extends Controller
                 foreach($aa as $a){
                     $count  = $count + $a->points;
                 }
+                $points[$i]->user->contacts;
                 $points[$i]->user['image'] = $points[$i]->user->images[0]->url;
                 $points[$i]->user['winning_coins'] = $count*10;
                 if(!in_array($points[$i]->user, $multipleWinnersMonthly, true)){
@@ -74,6 +75,7 @@ class LeaderBoardController extends Controller
     
     
             );
+            // return $data;
             return view ('leaderBoard')->with($data);
     
             // return response()->json($data, 200);

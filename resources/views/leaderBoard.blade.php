@@ -1,4 +1,5 @@
 @include('includes.header')
+<link href="{{ asset('css/leaderB.css') }}" rel="stylesheet">
 @include('includes.sidebar')
 @include('includes.subheader')
 
@@ -11,55 +12,70 @@
     {{-- {!! dd($leaderBoardMonthly[0]) !!} --}}
           <p class="mg-b-20">Responsive is an extension for DataTables that resolves that problem by optimising the table's layout for different screen sizes through the dynamic insertion and removal of columns from the table.</p>
 
-          <div>
-            <table id="example2" class="table">
-              <thead>
-                <tr>
-                  <th class="wd-30p">Name</th>
-                  <th class="wd-50p">Email</th>
-                  <th class="wd-20p">Points</th>
-                  {{-- <th class="wd-15p">Happening Date</th>
-                  <th class="wd-20p">Created At</th> --}}
-                </tr>
-              </thead>
-              <tbody>
+          {{-- //Start --}}
+          <div class="content">
+            <div class="container">
+              
                
-                @foreach ($leaderBoardMonthly as $game)
-                {{-- {!! dd($game['name']) !!} --}}
-                <tr>
-                  <td>{{$game['name']}}</td>
-                  <td>
-                     {{$game['email']}}
-                     {{-- <img src="{{ asset($game->email)}}" alt="Girl in a jacket" width="25" height="25">  &nbsp    {{$game->team_a}} --}}
-                  </td>
-                  <td>
-                     {{$game['winning_coins']}}
-                     {{-- <img src="{{ asset($game->winning_coins)}}" alt="Girl in a jacket" width="25" height="25">  &nbsp    {{$game->team_b}} --}}
-                  </td>
-                  {{-- <td>
-                      <span class="badge badge-pill badge-primary" style="width: 80px">
-                      {{$game->happening_date}}
-                      </span>
-                    </td>
-                  <td> --}}
-                    {{-- {{ 
-                  
-                  
-                }} --}}
-              </td>
-                </tr>
-                @endforeach
+                <div class="row">
+                   @foreach ($leaderBoardMonthly as $item)
+                       
+                   
+                    <div class="col-md-4">
+                        <div class="text-center card-box">
+                            <div class="member-card pt-2 pb-2">
+                                <div class="thumb-lg member-thumb mx-auto"><img src={{$item['images']['0']['url']}} class="rounded-circle img-thumbnail" alt="profile-image"></div>
+                                <div class="">
+                                    <h4>{{$item['name']}}</h4>
+                                    <p class="text-muted">End User <span>| </span><span><a href="#" class="text-pink">Loteca 2.0</a></span></p>
+                                </div>
+                                {{-- <p>Helo</p> --}}
+                                
+                                {{-- <button type="button" class="btn btn-primary mt-3 btn-rounded waves-effect w-md waves-light">Message Now</button> --}}
+                                <div class="mt-3">
+                                    <div class="row ">
+                                       <div class="child">
+                                          <div style=" background: #fdfdfd">
+                                          <p style="margin-bottom:0.2rem;margin-top:0.2rem">
+                                             <b>Points:</b>  {{$item['winning_coins']}}
+                                           </p>
+                                          </div>
+                                          <div class="mt-2" style="padding-right:20px;padding-left:20px;background: #fdfdfd">
+                                        <p style="margin-bottom:0.2rem" class="mt-2">
+                                          <b>Email:</b>  {{$item['contacts']['0']['email']}}
+                                        </p>
+                                        <p>
+                                          <b>Phone:</b> {{$item['contacts']['0']['phone']}}
+                                        </p>
+                                          </div>
+                                       </div>
+                                       
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- end col -->
+                    @endforeach
+                    
+
+
+                </div>
+                <!-- end row -->
                 
-              </tbody>
-            </table>
-          </div>
+               
+              
+            </div>
+            <!-- container -->
+        </div>
+          
 
 
 
 
 
 
-
+      {{-- End --}}
     </div><!-- az-content-body -->
 
 
