@@ -26,8 +26,8 @@
           
               
                     <div class="az-form-group">
-                      <label class="form-label">Game Name</label>
-                      <input name="name" type="text" class="form-control" placeholder="Enter Game Name" >
+                      <label class="form-label">Championship</label>
+                      <input name="name" type="text" class="form-control" placeholder="Enter Championship Name" >
                     </div><!-- az-form-group -->
                     <div class="az-form-group mg-t-20">
                         <label class="form-label">Happening Date</label>
