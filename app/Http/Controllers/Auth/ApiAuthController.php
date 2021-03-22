@@ -43,7 +43,7 @@ class ApiAuthController extends Controller
         $user->name = request('name');
         $user->email = request('email');
         $user->password = request('password');
-        $user->coins = '300';
+        $user->coins = '0';
         $user->remember_token = request('remember_token');
         $user->roles = request('role');
         $user->save();
