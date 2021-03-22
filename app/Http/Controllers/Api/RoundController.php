@@ -369,7 +369,9 @@ class RoundController extends Controller
         $round_id = $request->round_id;
         $package_id = $request->package_id;
         $pk = Package::where('id',$package_id)->first();
-
+        $ck = Package::find($pk->id);
+        $ck->accumulative_price = $pk->accumulative_price + $pk->participation_fee;
+        $ck->save();
        
         $user = Auth::user();
 

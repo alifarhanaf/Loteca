@@ -222,6 +222,9 @@ class AgentController extends Controller
         $package_id = $request->package_id;
         $user_id = $request->user_id;
         $pk = Package::where('id', $package_id)->first();
+        $ck = Package::find($pk->id);
+        $ck->accumulative_price = $pk->accumulative_price + $pk->participation_fee;
+        $ck->save();
 
 
         $user = User::find($user_id);
