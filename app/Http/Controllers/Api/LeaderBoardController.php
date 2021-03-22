@@ -130,13 +130,15 @@ class LeaderBoardController extends Controller
             }
             $multipleWinnersMonthly = array_values(array_unique($multipleWinnersMonthly));
             $multipleWinners = array_values(array_unique($multipleWinners));
+            
+            $array = collect($multipleWinners)->sortBy('points')->reverse()->toArray();
 
             $data = array(
                 "status" => 200,
                 "response" => "true",
                 "message" => "Result Received",
                 "leaderBoardMonthly" => $multipleWinnersMonthly,
-                "leaderBoardAllTime" => $multipleWinners,
+                "leaderBoardAllTime" => $array,
     
     
             );
