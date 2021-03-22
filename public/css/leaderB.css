@@ -38,8 +38,8 @@
     background-color: #fff;
     border: 1px solid #dee2e6;
     border-radius: .25rem;
-    max-width: 100%;
-    height: auto;
+    width: 88px;
+    height: 88px;
 }
 .text-pink {
     color: #ff679b!important;
