@@ -138,7 +138,7 @@ class LeaderBoardController extends Controller
                 "response" => "true",
                 "message" => "Result Received",
                 "leaderBoardMonthly" => $multipleWinnersMonthly,
-                "leaderBoardAllTime" => $array,
+                "leaderBoardAllTime" => $multipleWinners,
     
     
             );
