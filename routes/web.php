@@ -26,6 +26,7 @@ Route::get('/round_edit/{id}', 'Web\DashboardController@editRound')->name('edit.
 Route::post('/submit_round_edit/{id}', 'Web\DashboardController@editRoundSubmit')->name('edit.round.submit');
 Route::get('/game_answers','Web\DashboardController@gameAnswerGrid')->name('game_answer_grid');
 Route::post('/submit_answers/{id}','Web\DashboardController@submitAnswer')->name('submit_game_answer');
+Route::get('/leaderBoard','Web\LeaderBoardController@leaderB')->name('leaderB');
 Route::get('/', function () {
     return view('welcome');
 });
