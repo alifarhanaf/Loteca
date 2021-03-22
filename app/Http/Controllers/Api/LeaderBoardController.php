@@ -93,7 +93,7 @@ class LeaderBoardController extends Controller
                 $aa = Point::where('user_id',$points[$i]->user->id)->get();
                 $count = 0;
                 foreach($aa as $a){
-                    $count  = $count + $a->winning_coins;
+                    $count  = $count + $a->points;
                 }
                 $points[$i]->user['image'] = $points[$i]->user->images[0]->url;
                 $points[$i]->user['Winning Coins'] = $count;
@@ -117,7 +117,7 @@ class LeaderBoardController extends Controller
                 $aa = Point::where('user_id',$points[$i]->user->id)->where( 'created_at', '>', Carbon::now()->subDays(30))->get();
                 $count = 0;
                 foreach($aa as $a){
-                    $count  = $count + $a->winning_coins;
+                    $count  = $count + $a->points;
                 }
                 $points[$i]->user['image'] = $points[$i]->user->images[0]->url;
                 $points[$i]->user['Winning Coins'] = $count;
