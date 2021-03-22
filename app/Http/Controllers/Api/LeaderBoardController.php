@@ -132,13 +132,14 @@ class LeaderBoardController extends Controller
             $multipleWinners = array_values(array_unique($multipleWinners));
             
             $array = collect($multipleWinners)->sortBy('Winning Coins')->reverse()->toArray();
+            $arraySorted = array_values($array);
 
             $data = array(
                 "status" => 200,
                 "response" => "true",
                 "message" => "Result Received",
                 "leaderBoardMonthly" => $multipleWinnersMonthly,
-                "leaderBoardAllTime" => $array,
+                "leaderBoardAllTime" => $arraySorted,
     
     
             );
