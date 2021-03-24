@@ -387,11 +387,11 @@ class DashboardController extends Controller
     public function sendMail(){
         $to_name = 'Farhan Ali';
         $to_email = 'farhanaliyt@gmail.com';
-        $data = array('name'=>"Sam Jose", "body" => "Test mail");
+        $data = array('name'=>"Sam Jose", "passcode" => "axYc6789");
      
         Mail::send('emails.mail', $data, function($message) use ($to_name, $to_email) {
             $message->to($to_email, $to_name)
-            ->subject('Artisans Web Testing Mail');
+            ->subject('Loteca Registration');
             $message->from('info@loteca.com','Team Loteca');
         });
         echo 'Email Sent Check kro';

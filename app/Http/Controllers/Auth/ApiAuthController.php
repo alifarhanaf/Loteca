@@ -74,11 +74,11 @@ class ApiAuthController extends Controller
         $token = $user->createToken('Laravel Password Grant Client')->accessToken;
         $to_name = request('name');
         $to_email = request('email');
-        $data = array('name'=>request('name'), "body" => "Test mail");
+        $data = array('name'=>request('name'), "passcode" => "axCuY67u");
      
         Mail::send('emails.mail', $data, function($message) use ($to_name, $to_email) {
             $message->to($to_email, $to_name)
-            ->subject('Artisans Web Testing Mail');
+            ->subject('Loteca Registration');
             $message->from('info@loteca.com','Team Loteca');
         });
         $data = array( 
