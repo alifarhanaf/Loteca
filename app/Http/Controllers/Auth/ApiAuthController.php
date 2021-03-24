@@ -3,11 +3,13 @@
 namespace App\Http\Controllers\Auth;
 
 use App\User;
+use Carbon\Carbon;
 use App\Models\Image;
 use App\Models\Contact;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Validator;
@@ -40,6 +42,7 @@ class ApiAuthController extends Controller
         }
         $request['password']=Hash::make($request['password']);
         $request['remember_token'] = Str::random(10);
+        $code = Str::random(10);
         $user = new User();
         $user->name = request('name');
         $user->email = request('email');
@@ -47,6 +50,7 @@ class ApiAuthController extends Controller
         $user->coins = '0';
         $user->remember_token = request('remember_token');
         $user->roles = request('role');
+        $user->auth_code = $code;
         $user->save();
         // dd($request->role);
        
@@ -74,7 +78,7 @@ class ApiAuthController extends Controller
         $token = $user->createToken('Laravel Password Grant Client')->accessToken;
         $to_name = request('name');
         $to_email = request('email');
-        $data = array('name'=>request('name'), "passcode" => "axCuY67u");
+        $data = array('name'=>request('name'), "passcode" => $code);
      
         Mail::send('emails.mail', $data, function($message) use ($to_name, $to_email) {
             $message->to($to_email, $to_name)
@@ -159,6 +163,53 @@ class ApiAuthController extends Controller
         $token->revoke();
         $response = ['message' => 'You have been successfully logged out!'];
         return response($response, 200);
+    }
+    public function resendCode(){
+        $user =  Auth::user();
+        $code = Str::random(10);
+        $usr = User::find($user->id);
+        $usr->auth_code = $code;
+        $usr->save();
+        $to_name = $user->name;
+        $to_email = $user->email;
+        $data = array('name'=>$user->name, "passcode" => $code);
+     
+        Mail::send('emails.mail', $data, function($message) use ($to_name, $to_email) {
+            $message->to($to_email, $to_name)
+            ->subject('Loteca Registration');
+            $message->from('info@loteca.com','Team Loteca');
+        });
+        $data = array( 
+            "status"=>200,
+            "response"=>"true",
+            "message" => "Code Sent Successfully",
+         );
+         return response()->json($data,200);
+
+
+        
+    }
+    public function confirmEmail(Request $request){
+        $user =  Auth::user();
+        if($user->email == $request->email){
+            $usr = User::find($user->id);
+            $usr->email_verified_at = Carbon::now()->toDateTimeString();
+            $usr->save();
+            $data = array( 
+                "status"=>200,
+                "response"=>"true",
+                "message" => "User Authenticated Successfully",
+             );
+             return response()->json($data,200);
+        }else{
+            $data = array( 
+                "status"=>209,
+                "response"=>"false",
+                "message" => "Incorrect Details",
+             );
+             return response()->json($data,209);
+        }
+
     }
     // public function updateUser(){
 

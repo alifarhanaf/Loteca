@@ -50,6 +50,9 @@ Route::middleware('auth:api')->group( function(){
     Route::post('/ValidateUser','Api\AgentController@ValidateUser');
     Route::post('/submitResultByAgent','Api\AgentController@betSubmit');
     Route::post('/feedback','Api\FeedBackController@index');
+    Route::post('/resendCode','Auth\ApiAuthController@resendCode');
+    Route::get('/resendCode','Auth\ApiAuthController@resendCode');
+    Route::post('/confirmEmail','Auth\ApiAuthController@confirmEmail');
 
 
 });
