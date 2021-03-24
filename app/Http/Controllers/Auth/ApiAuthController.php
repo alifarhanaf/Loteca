@@ -191,7 +191,7 @@ class ApiAuthController extends Controller
     }
     public function confirmEmail(Request $request){
         $user =  Auth::user();
-        if($user->email == $request->email){
+        if($user->auth_code == $request->code){
             $usr = User::find($user->id);
             $usr->email_verified_at = Carbon::now()->toDateTimeString();
             $usr->save();
