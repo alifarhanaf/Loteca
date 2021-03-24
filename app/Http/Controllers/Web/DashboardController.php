@@ -15,6 +15,7 @@ use App\Models\RoundUser;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Mail;
 
 class DashboardController extends Controller
 {
@@ -382,5 +383,17 @@ class DashboardController extends Controller
         }
 
 
+    }
+    public function sendMail(){
+        $to_name = 'Farhan Ali';
+        $to_email = 'farhanaliyt@gmail.com';
+        $data = array('name'=>"Sam Jose", "body" => "Test mail");
+     
+        Mail::send('emails.mail', $data, function($message) use ($to_name, $to_email) {
+            $message->to($to_email, $to_name)
+            ->subject('Artisans Web Testing Mail');
+            $message->from('info@loteca.com','Team Loteca');
+        });
+        echo 'Email Sent Check kro';
     }
 }
