@@ -211,6 +211,29 @@ class ApiAuthController extends Controller
         }
 
     }
+    public function changePasswordCode(Request $request){
+        $code = Str::random(10);
+        
+        $to_name = "User";
+        $to_email = $request->email;
+        $data = array('name'=>"User", "passcode" => $code);
+     
+        Mail::send('emails.passwordReset', $data, function($message) use ($to_name, $to_email) {
+            $message->to($to_email, $to_name)
+            ->subject('Loteca Password Reset Request');
+            $message->from('info@loteca.com','Team Loteca');
+        });
+        $data = array( 
+            "status"=>200,
+            "response"=>"true",
+            "message" => "Code Sent Successfully",
+            "code" => $code,
+         );
+         return response()->json($data,200);
+
+
+        
+    }
     // public function updateUser(){
 
     //     $user = Auth::user();

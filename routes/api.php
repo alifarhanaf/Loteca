@@ -24,6 +24,7 @@ use App\Http\Resources\Round as SingleRoundResource;
 Route::post('/login', 'Auth\ApiAuthController@login')->name('login.api');
 Route::post('/register','Auth\ApiAuthController@register')->name('register.api');
 Route::post('/logout', 'Auth\ApiAuthController@logout')->name('logout.api');
+Route::post('/resetPasswordCode','Auth\ApiAuthController@changePasswordCode');
 
 // Route::post('/finalizeRound','Web\DashboardController@finalizeRound');
 Route::post('/arrayCheck','Api\RoundController@arrayCheck');
@@ -50,10 +51,10 @@ Route::middleware('auth:api')->group( function(){
     Route::post('/ValidateUser','Api\AgentController@ValidateUser');
     Route::post('/submitResultByAgent','Api\AgentController@betSubmit');
     Route::post('/feedback','Api\FeedBackController@index');
-    Route::post('/resendCode','Auth\ApiAuthController@resendCode');
+    // Route::post('/resendCode','Auth\ApiAuthController@resendCode');
     Route::get('/resendCode','Auth\ApiAuthController@resendCode');
     Route::post('/confirmEmail','Auth\ApiAuthController@confirmEmail');
-
+    
 
 });
 
