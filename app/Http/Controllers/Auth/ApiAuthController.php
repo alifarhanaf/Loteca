@@ -234,6 +234,18 @@ class ApiAuthController extends Controller
 
         
     }
+    public function updatePassword(Request $request){
+        $request['password']=Hash::make($request['password']);
+        $user = User::where('email',$request->email)->first();
+        $user->password = $request->password;
+        $user->save();
+        $data = array( 
+            "status"=>200,
+            "response"=>"true",
+            "message" => "Password Updated Successfully",
+         );
+         return response()->json($data,200);
+    }
     // public function updateUser(){
 
     //     $user = Auth::user();
