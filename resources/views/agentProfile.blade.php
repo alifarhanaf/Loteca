@@ -66,6 +66,7 @@
               </button>
             </div>
             <form method="POST" action="{{ route('update.comission',$agent->id) }}">
+                @csrf
             <div class="modal-body">
                 <input class="form-control" name="percent" placeholder="Input box" type="text">
              
