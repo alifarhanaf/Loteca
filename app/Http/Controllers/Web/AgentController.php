@@ -31,7 +31,6 @@ class AgentController extends Controller
         
         $data = array(
             "agent" => $agent,
-            "rounds" => $agent->rounds,
         );
 
         return view('agentProfile')->with($data);
