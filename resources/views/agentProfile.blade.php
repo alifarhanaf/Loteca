@@ -48,43 +48,36 @@
                                     <div class="col-sm-6">
                                         <div class="row" style="padding-left: 15px;">
                                             <p class="m-b-10 f-w-600">Comission Percentage</p>
-                                            <button data-toggle="modal" data-target="#open-modal" 
+                                            <button data-toggle="modal" data-target="#modaldemo2" 
                                             style="background: transparent;border: none;margin-top: 2px;
                                             padding-top: 0px;align-self: flex-start;margin-left: 5px;">
                                             <i class="typcn typcn-pencil" style="color: black;"></i>
                                             </button>
-                                            <div id="open-modal" class="modal-window">
-                                                <div>
-                                                  <a href="#" title="Close" class="modal-close">Close</a>
-                                                  <h1>Voilà!</h1>
-                                                  <div>A CSS-only modal based on the :target pseudo-class. Hope you find it helpful.</div>
-                                                  <div><small>Check out</small></div>
-                                                  <a href="https://aminoeditor.com" target="_blank">👉 Amino: Live CSS Editor for Chrome</div>
-                                                  </div>
+                                            
 
                                              <!-- SMALL MODAL -->
-    {{-- <div id="modaldemo2" class="modal">
+    <div id="modaldemo2" class="modal">
         <div class="modal-dialog modal-sm" role="document">
           <div class="modal-content">
             <div class="modal-header">
-              <h6 class="modal-title">Notice</h6>
+              <h6 class="modal-title">Comission Percentage</h6>
               <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
               </button>
             </div>
+            <form method="POST" action="{{ route('update.comission',$agent->id) }}">
             <div class="modal-body">
-              <p>It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. </p>
+                <input class="form-control" name="percent" placeholder="Input box" type="text">
+             
             </div>
             <div class="modal-footer justify-content-center">
-              <button type="button" class="btn btn-indigo">Save changes</button>
+              <button type="submit" class="btn btn-indigo">Save changes</button>
               <button type="button" class="btn btn-outline-light" data-dismiss="modal">Close</button>
             </div>
+            </form>
           </div>
-        </div>
-        
-        
-      </div> --}}
-      <!-- modal -->
+        </div><!-- modal-dialog -->
+      </div><!-- modal -->
   
                                         </div>
 

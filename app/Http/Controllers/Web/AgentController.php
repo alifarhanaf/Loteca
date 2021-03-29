@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Web;
 
 use App\User;
 use Carbon\Carbon;
+use App\Models\Comission;
 use App\Models\CoinTransfer;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -138,5 +139,14 @@ class AgentController extends Controller
         );
 
         return view('agentProfile')->with($data);
+    }
+    public function updateComission(Request $request,$id){
+        $user = User::find($id);
+        $cid = $user->comissions->id;
+        $comission = Comission::find($cid);
+        $comission->comission_percentage = $request->percent;
+        $comission->save();
+        return redirect()->back()->with('success','Comission Updated Successfully');
+
     }
 }
