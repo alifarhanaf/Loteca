@@ -106,8 +106,8 @@
           {{ request()->is('user_grid') ? 'show' : ''}}
           ">
             <a href="" class="nav-link with-sub"><i class="typcn typcn-chart-bar-outline"></i>Users</a>
-            <ul class="nav-sub {{ request()->is('user_grid') ? 'active' : ''}}">
-              <li class="nav-sub-item"><a href="{{ route('user_grid') }}" class="nav-sub-link">All Users</a></li>
+            <ul class="nav-sub ">
+              <li class="nav-sub-item {{ request()->is('user_grid') ? 'active' : ''}}"><a href="{{ route('user_grid') }}" class="nav-sub-link">All Users</a></li>
               {{-- <li class="nav-sub-item"><a href="chart-flot.html" class="nav-sub-link">Flot Charts</a></li>
               <li class="nav-sub-item"><a href="chart-chartjs.html" class="nav-sub-link">ChartJS</a></li>
               <li class="nav-sub-item"><a href="chart-sparkline.html" class="nav-sub-link">Sparkline</a></li>
