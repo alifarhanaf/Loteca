@@ -72,8 +72,8 @@
              
             </div>
             <div class="modal-footer justify-content-center">
-              <button type="submit" class="btn btn-indigo">Save changes</button>
-              <button type="button" class="btn btn-outline-light" data-dismiss="modal">Close</button>
+              <button type="submit" class="btn btn-outline-light">Save changes</button>
+              {{-- <button type="button" class="btn btn-outline-light" data-dismiss="modal">Close</button> --}}
             </div>
             </form>
           </div>
@@ -85,7 +85,7 @@
 
 
 
-                                        <h6 class="text-muted f-w-400">17</h6>
+                                        <h6 class="text-muted f-w-400">{{$comission}}</h6>
                                     </div>
                                     <div class="col-sm-6">
 
