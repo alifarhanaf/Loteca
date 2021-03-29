@@ -65,7 +65,7 @@ img {
     </div>
     @foreach ($feedbacks as $feedback)
     <div class="row" style="width: 100%;margin-left:0px;margin-right:0px">
-        <div class=" card ">
+        <div class=" card " style="width: 100%">
         <div class="card-body ">
          
                     <h5 class="card-title "><b>
