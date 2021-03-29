@@ -86,14 +86,13 @@
                                     </td>
                                   <td>
                                     <div class="row d-flex justify-content-end" style="margin-right: 8%">
-                                        <form 
-                                    action="{{ route('close.round',1) }}" 
-                                    method="POST" >
-                                        {{ csrf_field() }}
-                                       
-                                        <button  type="submit" class="grid-btn" style="width:100px;" ><i class="typcn typcn-eye"></i></button>
-                                    </form>
-                                    </div>
+                                        <form action="{{ route ('roundDetail',$round->id) }}" >
+                      
+                                            {{ csrf_field() }}
+                                            
+                                    <button type="submit" class="grid-btn" style="width:100px;"><i class="typcn typcn-eye"></i></button>
+                                        </form>
+                                    </div> 
                               </td>
                                 </tr>
                                 @endforeach
