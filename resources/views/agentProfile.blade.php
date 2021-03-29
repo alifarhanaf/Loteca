@@ -48,14 +48,22 @@
                                     <div class="col-sm-6">
                                         <div class="row" style="padding-left: 15px;">
                                             <p class="m-b-10 f-w-600">Comission Percentage</p>
-                                            <button data-toggle="modal" data-target="#modaldemo2" 
+                                            <button data-toggle="modal" data-target="#open-modal" 
                                             style="background: transparent;border: none;margin-top: 2px;
                                             padding-top: 0px;align-self: flex-start;margin-left: 5px;">
                                             <i class="typcn typcn-pencil" style="color: black;"></i>
                                             </button>
+                                            <div id="open-modal" class="modal-window">
+                                                <div>
+                                                  <a href="#" title="Close" class="modal-close">Close</a>
+                                                  <h1>Voilà!</h1>
+                                                  <div>A CSS-only modal based on the :target pseudo-class. Hope you find it helpful.</div>
+                                                  <div><small>Check out</small></div>
+                                                  <a href="https://aminoeditor.com" target="_blank">👉 Amino: Live CSS Editor for Chrome</div>
+                                                  </div>
 
                                              <!-- SMALL MODAL -->
-    <div id="modaldemo2" class="modal">
+    {{-- <div id="modaldemo2" class="modal">
         <div class="modal-dialog modal-sm" role="document">
           <div class="modal-content">
             <div class="modal-header">
@@ -72,8 +80,11 @@
               <button type="button" class="btn btn-outline-light" data-dismiss="modal">Close</button>
             </div>
           </div>
-        </div><!-- modal-dialog -->
-      </div><!-- modal -->
+        </div>
+        
+        
+      </div> --}}
+      <!-- modal -->
   
                                         </div>
 
