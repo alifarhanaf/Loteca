@@ -50,6 +50,7 @@
                         <input name="percent" type="text" class="form-control" placeholder="Enter Comission Percentage" >
                       </div><!-- az-form-group -->
                       <input type="hidden" name="admin" value="1">
+                      <input type="hidden" name="role" value="3">
 
                       
                
