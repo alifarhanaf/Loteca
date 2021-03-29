@@ -64,7 +64,7 @@ class ApiAuthController extends Controller
 
             $comission = New Comission();
             $comission->comission_percentage = $request->percent;
-            $comission->user()->associate($user);
+            $comission->user_id = $user->id;
             $comission->save();
         
         
