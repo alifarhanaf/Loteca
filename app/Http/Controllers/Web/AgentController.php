@@ -134,6 +134,7 @@ class AgentController extends Controller
             "weekly_data" => $weekly_data,
             "monthly_data" => $monthly_data,
             "all_time_data" => $all_time_data,
+            "comission" => $com_percentage,
         );
 
         return view('agentProfile')->with($data);
