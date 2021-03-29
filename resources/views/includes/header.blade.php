@@ -34,7 +34,7 @@
     <link href="{{ asset('css/toaster.min.css') }}" rel="stylesheet">
     <link href="{{ asset('css/roundDetail.css') }}" rel="stylesheet">
     <link href="{{ asset('css/userProfile.css') }}" rel="stylesheet">
-
+    <link href="{{ asset('css/modalPercentage.css') }}" rel="stylesheet">
     {{-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css"> --}}
 
   </head>
