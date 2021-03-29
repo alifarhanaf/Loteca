@@ -53,19 +53,27 @@
                     
                 </div>
                 {{-- Start Here --}}
-                <div class="az-content-body mg-t-20" style="padding: 0 40px 40px !important ; ">
+                <div class="az-content-body mg-t-20" style="padding: 0 15px 15px !important ; ">
                 <div class="row">
                     <div class="col-md-3 card user-card-full">
-                        <p>Hello</p>
+                        <h6 style="padding: 15px; text-align: center; padding-bottom: 0px;">Total Coins</h6>
+                        <hr style="margin-top: 0px;padding-top: 0px;">
+                        <p style="text-align: center;"><b>500</b></p>
                     </div>
                     <div class="col-md-3 card user-card-full">
-                        <p>Hello</p>
+                        <h6 style="padding: 15px; text-align: center; padding-bottom: 0px;">Total Coins</h6>
+                        <hr style="margin-top: 0px;padding-top: 0px;">
+                        <p style="text-align: center;"><b>500</b></p>
                     </div>
                     <div class="col-md-3 card user-card-full">
-                        <p>Hello</p>
+                        <h6 style="padding: 15px; text-align: center; padding-bottom: 0px;">Total Coins</h6>
+                        <hr style="margin-top: 0px;padding-top: 0px;">
+                        <p style="text-align: center;"><b>500</b></p>
                     </div>
                     <div class="col-md-3 card user-card-full">
-                        <p>Hello</p>
+                        <h6 style="padding: 15px; text-align: center; padding-bottom: 0px;">Total Coins</h6>
+                        <hr style="margin-top: 0px;padding-top: 0px;">
+                        <p style="text-align: center;"><b>500</b></p>
                     </div>
 
                 </div>
