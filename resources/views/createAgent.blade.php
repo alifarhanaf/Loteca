@@ -29,7 +29,7 @@
                       <label class="form-label">Name</label>
                       <input name="name" type="text" class="form-control" placeholder="Enter Name" >
                     </div><!-- az-form-group -->
-                    <div class="az-form-group">
+                    <div class="az-form-group mg-t-20">
                         <label class="form-label">Email</label>
                         <input name="email" type="text" class="form-control" placeholder="Enter Email" >
                       </div><!-- az-form-group -->
@@ -37,15 +37,15 @@
                         <label class="form-label">Password</label>
                       <input name="password" type="password" class="form-control" placeholder="Enter Password" >
                       </div><!-- az-form-group -->
-                      <div class="az-form-group">
+                      <div class="az-form-group mg-t-20">
                         <label class="form-label">Phone</label>
                         <input name="phone" type="text" class="form-control" placeholder="Enter Phone" >
                       </div><!-- az-form-group -->
-                      <div class="az-form-group">
+                      <div class="az-form-group mg-t-20">
                         <label class="form-label">WhatsApp Phone</label>
                         <input name="whatsapp_phone" type="text" class="form-control" placeholder="Enter Whatsapp Phone" >
                       </div><!-- az-form-group -->
-                      <div class="az-form-group">
+                      <div class="az-form-group mg-t-20">
                         <label class="form-label">Comission Percentage</label>
                         <input name="percent" type="text" class="form-control" placeholder="Enter Comission Percentage" >
                       </div><!-- az-form-group -->
