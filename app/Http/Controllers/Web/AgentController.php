@@ -146,7 +146,7 @@ class AgentController extends Controller
         $comission = Comission::find($cid);
         $comission->comission_percentage = $request->percent;
         $comission->save();
-        return redirect()->back()->with('success','Comission Updated Successfully');
+        return redirect()->route('agent_grid')->with('success','Comission Updated Successfully');
 
     }
 }
