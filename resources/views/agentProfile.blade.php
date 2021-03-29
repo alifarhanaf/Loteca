@@ -56,25 +56,50 @@
                 <div class="az-content-body mg-t-20" style="padding: 0 15px 15px !important ; ">
                 <div class="row">
                     <div class="col-md-3 card user-card-full">
-                        <h6 style="padding: 15px; text-align: center; padding-bottom: 0px;">Total Coins</h6>
+                        <h6 style="padding: 15px; text-align: center; padding-bottom: 0px;">Today Sale</h6>
                         <hr style="margin-top: 0px;padding-top: 0px;">
-                        <p style="text-align: center;"><b>500</b></p>
+                        <p style="text-align: center;"><b>{{$daily_data->sales}}</b></p>
                     </div>
                     <div class="col-md-3 card user-card-full">
-                        <h6 style="padding: 15px; text-align: center; padding-bottom: 0px;">Total Coins</h6>
+                        <h6 style="padding: 15px; text-align: center; padding-bottom: 0px;">Weekly Sale</h6>
                         <hr style="margin-top: 0px;padding-top: 0px;">
-                        <p style="text-align: center;"><b>500</b></p>
+                        <p style="text-align: center;"><b>{{$weekly_data->sales}}</b></p>
                     </div>
                     <div class="col-md-3 card user-card-full">
-                        <h6 style="padding: 15px; text-align: center; padding-bottom: 0px;">Total Coins</h6>
+                        <h6 style="padding: 15px; text-align: center; padding-bottom: 0px;">Monthly Sale</h6>
                         <hr style="margin-top: 0px;padding-top: 0px;">
-                        <p style="text-align: center;"><b>500</b></p>
+                        <p style="text-align: center;"><b>{{$monthly_data->sales}}</b></p>
                     </div>
                     <div class="col-md-3 card user-card-full">
-                        <h6 style="padding: 15px; text-align: center; padding-bottom: 0px;">Total Coins</h6>
+                        <h6 style="padding: 15px; text-align: center; padding-bottom: 0px;">All Time Sale </h6>
                         <hr style="margin-top: 0px;padding-top: 0px;">
-                        <p style="text-align: center;"><b>500</b></p>
+                        <p style="text-align: center;"><b>{{$all_time_data->sales}}</b></p>
                     </div>
+                    
+
+                </div>
+                <div class="row">
+                    <div class="col-md-3 card user-card-full">
+                        <h6 style="padding: 15px; text-align: center; padding-bottom: 0px;">Today Comission</h6>
+                        <hr style="margin-top: 0px;padding-top: 0px;">
+                        <p style="text-align: center;"><b>{{$daily_data->comission}}</b></p>
+                    </div>
+                    <div class="col-md-3 card user-card-full">
+                        <h6 style="padding: 15px; text-align: center; padding-bottom: 0px;">Weekly Comission</h6>
+                        <hr style="margin-top: 0px;padding-top: 0px;">
+                        <p style="text-align: center;"><b>{{$weekly_data->comission}}</b></p>
+                    </div>
+                    <div class="col-md-3 card user-card-full">
+                        <h6 style="padding: 15px; text-align: center; padding-bottom: 0px;">Monthly Comission</h6>
+                        <hr style="margin-top: 0px;padding-top: 0px;">
+                        <p style="text-align: center;"><b>{{$monthly_data->comission}}</b></p>
+                    </div>
+                    <div class="col-md-3 card user-card-full">
+                        <h6 style="padding: 15px; text-align: center; padding-bottom: 0px;">All Time Comission</h6>
+                        <hr style="margin-top: 0px;padding-top: 0px;">
+                        <p style="text-align: center;"><b>{{$all_time_data->comission}}</b></p>
+                    </div>
+                    
 
                 </div>
                 </div>
