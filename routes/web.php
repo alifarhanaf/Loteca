@@ -36,6 +36,8 @@ Route::get('/sendMail','Web\DashboardController@sendMail');
 Route::get('/create_game','Web\DashboardController@createGame')->name('create_game');
 Route::get('/user_grid','Web\UserController@userGrid')->name('user_grid');
 Route::post('/user_profile/{id}','Web\UserController@userProfile')->name('user.profile');
+Route::post('/agent_profile/{id}','Web\AgentController@agentProfile')->name('agent.profile');
+Route::get('/agent_grid','Web\AgentController@agentGrid')->name('agent_grid');
 });
 
 Route::get('/', function () {

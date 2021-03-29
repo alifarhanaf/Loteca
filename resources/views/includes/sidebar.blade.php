@@ -114,11 +114,14 @@
               <li class="nav-sub-item"><a href="chart-peity.html" class="nav-sub-link">Peity</a></li> --}}
             </ul>
           </li><!-- nav-item -->
-          <li class="nav-item">
+          <li class="nav-item 
+          {{ request()->is('agent_grid') ? 'active' : ''}} 
+          {{ request()->is('agent_grid') ? 'show' : ''}}
+          ">
             <a href="" class="nav-link with-sub"><i class="typcn typcn-map"></i>Agents</a>
             <ul class="nav-sub">
-              <li class="nav-sub-item"><a href="map-google.html" class="nav-sub-link">New Agent</a></li>
-              <li class="nav-sub-item"><a href="map-leaflet.html" class="nav-sub-link">All Agents</a></li>
+              <li class="nav-sub-item "><a href="map-google.html" class="nav-sub-link">New Agent</a></li>
+              <li class="nav-sub-item  {{ request()->is('agent_grid') ? 'active' : ''}}  "><a href="{{ route('agent_grid') }}" class="nav-sub-link">All Agents</a></li>
               <li class="nav-sub-item"><a href="map-vector.html" class="nav-sub-link">Agent Comission</a></li>
             </ul>
           </li><!-- nav-item -->
