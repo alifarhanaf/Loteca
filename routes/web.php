@@ -14,8 +14,7 @@ use Illuminate\Support\Facades\Route;
 */
 Route::get('/login','Web\AuthController@index')->name('login');
 Route::post('/processing','Auth\ApiAuthController@login')->name('submit.login');
-Route::get('/register_form','Auth\ApiAuthController@registerForm')->name('form.register');
-Route::post('/register_process','Auth\ApiAuthController@register')->name('submit.register');
+
 
 Route::middleware('admin:web')->group( function(){
 Route::get('/dashboard','Web\DashboardController@index')->name('dashboard');
@@ -41,6 +40,8 @@ Route::post('/user_profile/{id}','Web\UserController@userProfile')->name('user.p
 Route::post('/agent_profile/{id}','Web\AgentController@agentProfile')->name('agent.profile');
 Route::get('/agent_grid','Web\AgentController@agentGrid')->name('agent_grid');
 Route::post('/update_comission/{id}','Web\AgentController@updateComission')->name('update.comission');
+Route::get('/register_form','Auth\ApiAuthController@registerForm')->name('form.register');
+Route::post('/register_process','Auth\ApiAuthController@register')->name('submit.register');
 });
 
 Route::get('/', function () {
