@@ -18,26 +18,26 @@
                         </div>
                         <div class="col-sm-8">
                             <div class="card-block">
-                                <h6 class="m-b-20 p-b-5 b-b-default f-w-600">Information</h6>
+                                <h6 class="m-b-20 p-b-5 b-b-default f-w-600">Basic Information</h6>
                                 <div class="row">
+                                    <div class="col-sm-6">
+                                        <p class="m-b-10 f-w-600">Coins</p>
+                                        <h6 class="text-muted f-w-400">{{$user->coins}}</h6>
+                                    </div>
                                     <div class="col-sm-6">
                                         <p class="m-b-10 f-w-600">Email</p>
                                         <h6 class="text-muted f-w-400">{{$user->email}}</h6>
                                     </div>
+                                </div>
+                                <h6 class="m-b-20 m-t-40 p-b-5 b-b-default f-w-600">Contact Information</h6>
+                                <div class="row">
                                     <div class="col-sm-6">
                                         <p class="m-b-10 f-w-600">Phone</p>
                                         <h6 class="text-muted f-w-400">{{$user->contacts[0]->phone}}</h6>
                                     </div>
-                                </div>
-                                <h6 class="m-b-20 m-t-40 p-b-5 b-b-default f-w-600">Projects</h6>
-                                <div class="row">
                                     <div class="col-sm-6">
-                                        <p class="m-b-10 f-w-600">Recent</p>
-                                        <h6 class="text-muted f-w-400">Sam Disuja</h6>
-                                    </div>
-                                    <div class="col-sm-6">
-                                        <p class="m-b-10 f-w-600">Most Viewed</p>
-                                        <h6 class="text-muted f-w-400">Dinoter husainm</h6>
+                                        <p class="m-b-10 f-w-600">WhatsApp</p>
+                                        <h6 class="text-muted f-w-400">{{$user->contacts[0]->whatsapp}}</h6>
                                     </div>
                                     
                                 </div>
@@ -72,14 +72,16 @@
                                 </tr>
                               </thead>
                               <tbody>
-                               
+                               @foreach ($rounds as $round)
+                                   
+                              
                                 <tr>
                                   <td><img src="https://img.icons8.com/bubbles/100/000000/user.png" alt="Girl in a jacket" width="25" height="25"></td>
-                                  <td>0000000</td>
-                                  <td>00000000</td>
+                                  <td>{{$round->name}}</td>
+                                  <td>{{$round->starting_date}}</td>
                                   <td>
                                       
-                                     00000000000
+                                    {{$round->ending_date}}
                                       
                                     </td>
                                   <td>
@@ -94,6 +96,7 @@
                                     </div>
                               </td>
                                 </tr>
+                                @endforeach
                                
                                 
                               </tbody>
