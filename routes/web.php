@@ -35,6 +35,7 @@ Route::get('/leaderBoard','Web\LeaderBoardController@leaderB')->name('leaderB');
 Route::get('/sendMail','Web\DashboardController@sendMail');
 Route::get('/create_game','Web\DashboardController@createGame')->name('create_game');
 Route::get('/user_grid','Web\UserController@userGrid')->name('user_grid');
+Route::get('/user_profile','Web\UserController@userProfile')->name('user.profile');
 });
 
 Route::get('/', function () {

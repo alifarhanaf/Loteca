@@ -17,7 +17,8 @@
                   <th class="wd-25p">Name</th>
                   <th class="wd-20p">Email</th>
                   <th class="wd-15p">Cell#</th>
-                  <th class="wd-20p">Coins</th>
+                  <th class="wd-8p">Coins</th>
+                  <th class="wd-12p">Actions</th>
                 </tr>
               </thead>
               <tbody>
@@ -32,10 +33,21 @@
                       
                     </td>
                   <td>
-                    {{-- {{  --}}
+                   
                   {{$user->coins}} 
                   
-                {{-- }} --}}
+               
+              </td>
+              <td>
+                <div class="row d-flex justify-content-end" style="margin-right: 8%">
+                    <form 
+                action="{{ route('user.profile',$user->id) }}" 
+                method="POST" >
+                    {{ csrf_field() }}
+                   
+                    <button  type="submit" class="grid-btn" style="width:100px;" ><i class="typcn typcn-eye"></i></button>
+                </form>
+                </div>
               </td>
                 </tr>
                 @endforeach

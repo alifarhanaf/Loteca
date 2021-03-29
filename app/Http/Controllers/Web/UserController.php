@@ -24,4 +24,16 @@ class UserController extends Controller
         return view('userGrid')->with($data);
         
     }
+    public function userProfile($id){
+        $user = User::where('id',$id)->first();
+        $user->contacts;
+        $user->images;
+        
+        $data = array(
+            "user" => $user,
+            "rounds" => $user->rounds,
+        );
+
+        return view('userProfile')->with($data);
+    }
 }
