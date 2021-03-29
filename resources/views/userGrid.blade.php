@@ -13,12 +13,12 @@
             <table id="example2" class="table">
               <thead>
                 <tr>
-                  <th class="wd-20p">Image</th>
+                  <th class="wd-15p">Image</th>
                   <th class="wd-25p">Name</th>
                   <th class="wd-20p">Email</th>
                   <th class="wd-15p">Cell#</th>
-                  <th class="wd-8p">Coins</th>
-                  <th class="wd-12p">Actions</th>
+                  <th class="wd-12p">Coins</th>
+                  <th class="wd-13p">Actions</th>
                 </tr>
               </thead>
               <tbody>
