@@ -42,6 +42,7 @@ Route::get('/agent_grid','Web\AgentController@agentGrid')->name('agent_grid');
 Route::post('/update_comission/{id}','Web\AgentController@updateComission')->name('update.comission');
 Route::get('/register_form','Auth\ApiAuthController@registerForm')->name('form.register');
 Route::post('/register_process','Auth\ApiAuthController@register')->name('submit.register');
+Route::get('/feedback','Web\FeedbackController@index')->name('feedback');
 });
 
 Route::get('/', function () {
