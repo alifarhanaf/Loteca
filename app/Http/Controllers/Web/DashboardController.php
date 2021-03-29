@@ -78,9 +78,18 @@ class DashboardController extends Controller
     }
     public function roundGrid(){
         $rounds = Round::all();
+        foreach($rounds as $round){
+            $winner = Winner::where('round_id',$round->id)->first();
+        if($winner){
+            $round['finalize'] = 1;
+        }else{
+            $round['finalize'] = 0;
+        }
+        }
         $data = array(
             "rounds"=> $rounds,
         );
+        
         return view ('roundGrid')->with($data);
     }
     public function destroyRound($id){
@@ -142,6 +151,14 @@ class DashboardController extends Controller
             "games"=> $games,
         );
         return view ('gameGrid')->with($data);
+
+    }
+    public function closeRound($id){
+        $round_id = $id;
+        $round = Round::find($round_id); 
+        $round->status = 2;
+        $round->save();
+        return redirect()->back()->with('success','Round Closed Successfully');
 
     }
     

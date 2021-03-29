@@ -12,6 +12,8 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Validator;
 
 
@@ -116,6 +118,35 @@ class ApiAuthController extends Controller
              );
              return response()->json($data,422);
         }
+        if($request->has('admin')){
+            $user = User::where('email', $request->email)->first();
+        if ($user ) {
+            if($user->roles == 3){
+                if (Hash::check($request->password, $user->password)) {
+                    // Session::put('user', $user);
+                    // session(['user' => $user]);
+                    $request->session()->put('user', $user);
+                    
+                    return Redirect::to('dashboard')->with('success','Successfully Logged In');
+                    
+                    
+                } else {
+                    return redirect()->back()->with('error','Password Mismatch');
+                    
+                }
+
+            }else{
+                return redirect()->back()->with('error','You are not Authorized');
+            }
+            
+        } else {
+            return redirect()->back()->with('error','User does not exist');
+            
+        }
+
+
+        }else{
+            
         $user = User::where('email', $request->email)->first();
         if ($user) {
             if (Hash::check($request->password, $user->password)) {
@@ -126,6 +157,7 @@ class ApiAuthController extends Controller
                     $role = 'Agent';
                 }else if($user->roles == 3){
                     $role = 'Manager';
+                    // return Redirect::to('dashboard');
                 }
                 $user->contacts;
                 $user->images;
@@ -157,6 +189,10 @@ class ApiAuthController extends Controller
              );
              return response()->json($data,404);
         }
+
+        }
+
+
     }
     public function logout (Request $request) {
         $token = $request->user()->token();

@@ -16,9 +16,9 @@
               <thead>
                 <tr>
                   <th class="wd-20p">Name</th>
-                  <th class="wd-25p">Starting Date</th>
+                  <th class="wd-20p">Starting Date</th>
                   <th class="wd-20p">Ending Date</th>
-                  <th class="wd-15p">Status</th>
+                  <th class="wd-20p">Status</th>
                   <th class="wd-20p" >Actions</th>
                 </tr>
               </thead>
@@ -32,6 +32,9 @@
                     <span class="{{$round->status == 1 ? 'badge badge-pill badge-primary': 'badge badge-pill badge-warning'}}" style="width: 50px;">
                         {{$round->status == 1 ? 'Live':'Closed'}}
                     </span>
+                    <span class="{{$round->finalize == 0 ? 'badge badge-pill badge-warning':''}}" style="width: 80px;">
+                      {{$round->finalize == 0 ? 'Not Finalized':''}}
+                  </span>
                     
                   </td>
                   <td>
@@ -40,6 +43,14 @@
                     </span> --}}
                     <div class="row d-flex justify-content-end" style="margin-right: 8%">
                       <form 
+                  action="{{ route('close.round',$round->id) }}" 
+                  method="POST" >
+                      {{ csrf_field() }}
+                     
+                      <button  type="submit" class="grid-btn"><i class="typcn typcn-lock-closed"></i></button>
+                  </form>
+                  &nbsp
+                  <form 
                   action="{{ route('finalize.round',$round->id) }}" 
                   method="POST" >
                       {{ csrf_field() }}

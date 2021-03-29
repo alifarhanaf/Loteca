@@ -14,12 +14,12 @@
       <div class="az-sidebar-body">
         <ul class="nav">
           <li class="nav-label">Main Menu</li>
-          <li class="nav-item ">
+          <li class="nav-item  {{ request()->is('dashboard') ? 'active' : ''}} {{ request()->is('dashboard') ? 'show' : ''}} ">
             <a href="index.html" class="nav-link with-sub"><i class="typcn typcn-clipboard"></i>Dashboard</a>
             <ul class="nav-sub">
-              <li class="nav-sub-item"><a href="dashboard-one.html" class="nav-sub-link">Web Analytics</a></li>
-              <li class="nav-sub-item active"><a href="dashboard-two.html" class="nav-sub-link">Sales Monitoring</a></li>
-              <li class="nav-sub-item"><a href="dashboard-three.html" class="nav-sub-link">Ad Campaign</a></li>
+              <li class="nav-sub-item  {{ request()->is('dashboard') ? 'active' : ''}} "><a href="{{ route('dashboard') }}" class="nav-sub-link">Index</a></li>
+              {{-- <li class="nav-sub-item active"><a href="dashboard-two.html" class="nav-sub-link">Sales Monitoring</a></li>
+              <li class="nav-sub-item"><a href="dashboard-three.html" class="nav-sub-link">Ad Campaign</a></li> --}}
               {{-- <li class="nav-sub-item"><a href="dashboard-four.html" class="nav-sub-link">Event Management</a></li>
               <li class="nav-sub-item"><a href="dashboard-five.html" class="nav-sub-link">Helpdesk Management</a></li>
               <li class="nav-sub-item"><a href="dashboard-six.html" class="nav-sub-link">Finance Monitoring</a></li>
@@ -29,14 +29,22 @@
               <li class="nav-sub-item"><a href="dashboard-ten.html" class="nav-sub-link">Product Management</a></li> --}}
             </ul>
           </li><!-- nav-item -->
-          <li class="nav-item active show">
+          <li class="nav-item 
+          {{ request()->is('round_grid') ? 'active' : ''}}
+          {{ request()->is('round_grid') ? 'show' : ''}}
+          {{ request()->is('create_round') ? 'active' : ''}}
+          {{ request()->is('create_round') ? 'show' : ''}}
+          
+
+          
+          ">
             <a href="" class="nav-link with-sub"><i class="typcn typcn-anchor"></i>Round</a>
             <ul class="nav-sub">
-              <li class="nav-sub-item">
-                <a href="app-mail.html" class="nav-sub-link">New Round</a>
+              <li class="nav-sub-item {{ request()->is('create_round') ? 'active' : ''}}">
+                <a href="{{ route('create_round') }}" class="nav-sub-link">New Round</a>
               </li>
-              <li class="nav-sub-item">
-                <a href="app-chat.html" class="nav-sub-link">All Rounds</a>
+              <li class="nav-sub-item {{ request()->is('round_grid') ? 'active' : ''}}">
+                <a href="{{ route('round_grid') }}" class="nav-sub-link">All Rounds</a>
               </li>
               {{-- <li class="nav-sub-item">
                 <a href="app-calendar.html" class="nav-sub-link">Calendar</a>
@@ -51,11 +59,16 @@
               <li class="nav-sub-item"><a href="page-404.html" class="nav-sub-link">Page 404</a></li> --}}
             </ul>
           </li><!-- nav-item -->
-          <li class="nav-item">
+          <li class="nav-item
+          {{ request()->is('game_grid') ? 'active' : ''}}
+          {{ request()->is('game_grid') ? 'show' : ''}}
+          {{ request()->is('create_game') ? 'active' : ''}}
+          {{ request()->is('create_game') ? 'show' : ''}}
+          ">
             <a href="" class="nav-link with-sub"><i class="typcn typcn-book"></i>Games</a>
             <ul class="nav-sub">
-              <li class="nav-sub-item"><a href="elem-accordion.html" class="nav-sub-link">New Game</a></li>
-              <li class="nav-sub-item"><a href="elem-alerts.html" class="nav-sub-link">All Games</a></li>
+              <li class="nav-sub-item {{ request()->is('create_game') ? 'active' : ''}}"><a href="{{ route('create_game') }}" class="nav-sub-link">New Game</a></li>
+              <li class="nav-sub-item  {{ request()->is('game_grid') ? 'active' : ''}}"><a href="{{ route('game_grid') }}" class="nav-sub-link">All Games</a></li>
               {{-- <li class="nav-sub-item"><a href="elem-avatar.html" class="nav-sub-link">Avatar</a></li>
               <li class="nav-sub-item"><a href="elem-badge.html" class="nav-sub-link">Badge</a></li>
               <li class="nav-sub-item"><a href="elem-breadcrumbs.html" class="nav-sub-link">Breadcrumbs</a></li>
@@ -78,10 +91,10 @@
               <li class="nav-sub-item"><a href="elem-tooltip.html" class="nav-sub-link">Tooltip</a></li> --}}
             </ul>
           </li><!-- nav-item -->
-          <li class="nav-item">
+          <li class="nav-item {{ request()->is('game_answers') ? 'active' : ''}} {{ request()->is('game_answers') ? 'show' : ''}}">
             <a href="" class="nav-link with-sub"><i class="typcn typcn-edit"></i>Results</a>
             <ul class="nav-sub">
-              <li class="nav-sub-item"><a href="form-elements.html" class="nav-sub-link">Add Results</a></li>
+              <li class="nav-sub-item  {{ request()->is('game_answers') ? 'active' : ''}}"><a href="{{ route('game_answer_grid') }}" class="nav-sub-link">Add Results</a></li>
               {{-- <li class="nav-sub-item"><a href="form-layouts.html" class="nav-sub-link">Form Layouts</a></li>
               <li class="nav-sub-item"><a href="form-validation.html" class="nav-sub-link">Form Validation</a></li>
               <li class="nav-sub-item"><a href="form-wizards.html" class="nav-sub-link">Form Wizards</a></li>
