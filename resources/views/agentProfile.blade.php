@@ -11,9 +11,11 @@
                     <div class="row m-l-0 m-r-0">
                         <div class="col-sm-4 bg-c-lite-green user-profile">
                             <div class="card-block text-center text-white">
-                                <div class="m-b-25"> <img src="{{$agent->images[0]->url}}" class="img-radius" alt="User-Profile-Image"> </div>
-                                <h6 class="f-w-600">{{$agent->name}}</h6>
-                                <p>Coins Agent</p> <i class=" mdi mdi-square-edit-outline feather icon-edit m-t-10 f-16"></i>
+                                <div class="m-b-25"> <img src="{{ $agent->images[0]->url }}" class="img-radius"
+                                        alt="User-Profile-Image"> </div>
+                                <h6 class="f-w-600">{{ $agent->name }}</h6>
+                                <p>Coins Agent</p> <i
+                                    class=" mdi mdi-square-edit-outline feather icon-edit m-t-10 f-16"></i>
                             </div>
                         </div>
                         <div class="col-sm-8">
@@ -22,98 +24,137 @@
                                 <div class="row">
                                     <div class="col-sm-6">
                                         <p class="m-b-10 f-w-600">Coins</p>
-                                        <h6 class="text-muted f-w-400">{{$agent->coins}}</h6>
+                                        <h6 class="text-muted f-w-400">{{ $agent->coins }}</h6>
                                     </div>
                                     <div class="col-sm-6">
                                         <p class="m-b-10 f-w-600">Email</p>
-                                        <h6 class="text-muted f-w-400">{{$agent->email}}</h6>
+                                        <h6 class="text-muted f-w-400">{{ $agent->email }}</h6>
                                     </div>
                                 </div>
                                 <h6 class="m-b-20 m-t-40 p-b-5 b-b-default f-w-600">Contact Information</h6>
                                 <div class="row">
                                     <div class="col-sm-6">
                                         <p class="m-b-10 f-w-600">Phone</p>
-                                        <h6 class="text-muted f-w-400">{{$agent->contacts[0]->phone}}</h6>
+                                        <h6 class="text-muted f-w-400">{{ $agent->contacts[0]->phone }}</h6>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <p class="m-b-10 f-w-600">WhatsApp</p>
+                                        <h6 class="text-muted f-w-400">{{ $agent->contacts[0]->whatsapp }}</h6>
+                                    </div>
+
+                                </div>
+                                <h6 class="m-b-20 m-t-40 p-b-5 b-b-default f-w-600">Comission Information</h6>
+                                <div class="row">
+                                    <div class="col-sm-6">
+                                        <div class="row" style="padding-left: 15px;">
+                                            <p class="m-b-10 f-w-600">Comission Percentage</p>
+                                            <button data-target="#open-modal" type="button"
+                                            style="background: transparent;border: none;margin-top: 2px;
+                                            padding-top: 0px;align-self: flex-start;margin-left: 5px;">
+                                            <i class="typcn typcn-pencil" style="color: black;"></i>
+                                            </button>
+
+                                            <div id="open-modal" class="modal-window">
+                                                <div>
+                                                  <a href="#" title="Close" class="modal-close">Close</a>
+                                                  <h1>Voilà!</h1>
+                                                  <div>A CSS-only modal based on the :target pseudo-class. Hope you find it helpful.</div>
+                                                  <div><small>Check out</small></div>
+                                                  <a href="https://aminoeditor.com" target="_blank">👉 Amino: Live CSS Editor for Chrome</div>
+                                                  </div>
+                                        </div>
+
+
+
+
+                                        <h6 class="text-muted f-w-400">17</h6>
+                                    </div>
+                                    <div class="col-sm-6">
+
+                                    </div>
+
+                                </div>
+                                {{-- <div class="row">
+                                    <div class="col-sm-6">
+                                        <p class="m-b-10 f-w-600">Comission Percentage</p>
+                                        <h6 class="text-muted f-w-400">{{$comission}} %</h6>
                                     </div>
                                     <div class="col-sm-6">
                                         <p class="m-b-10 f-w-600">WhatsApp</p>
                                         <h6 class="text-muted f-w-400">{{$agent->contacts[0]->whatsapp}}</h6>
                                     </div>
                                     
-                                </div>
-                                <h6 class="m-b-20 m-t-40 p-b-5 b-b-default f-w-600">Comission Information</h6>
-                                <div class="row">
-                                    <div class="col-sm-6">
-                                        <p class="m-b-10 f-w-600">Comission Percentage</p>
-                                        <h6 class="text-muted f-w-400">{{$comission}}</h6>
-                                    </div>
-                                    <div class="col-sm-6">
-                                        {{-- <p class="m-b-10 f-w-600">WhatsApp</p>
-                                        <h6 class="text-muted f-w-400">{{$agent->contacts[0]->whatsapp}}</h6> --}}
-                                    </div>
-                                    
-                                </div>
+                                </div> --}}
                                 <ul class="social-link list-unstyled m-t-40 m-b-10">
-                                    <li><a href="#!" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="facebook" data-abc="true"><i class="mdi mdi-facebook feather icon-facebook facebook" aria-hidden="true"></i></a></li>
-                                    <li><a href="#!" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="twitter" data-abc="true"><i class="mdi mdi-twitter feather icon-twitter twitter" aria-hidden="true"></i></a></li>
-                                    <li><a href="#!" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="instagram" data-abc="true"><i class="mdi mdi-instagram feather icon-instagram instagram" aria-hidden="true"></i></a></li>
+                                    <li><a href="#!" data-toggle="tooltip" data-placement="bottom" title=""
+                                            data-original-title="facebook" data-abc="true"><i
+                                                class="mdi mdi-facebook feather icon-facebook facebook"
+                                                aria-hidden="true"></i></a></li>
+                                    <li><a href="#!" data-toggle="tooltip" data-placement="bottom" title=""
+                                            data-original-title="twitter" data-abc="true"><i
+                                                class="mdi mdi-twitter feather icon-twitter twitter"
+                                                aria-hidden="true"></i></a></li>
+                                    <li><a href="#!" data-toggle="tooltip" data-placement="bottom" title=""
+                                            data-original-title="instagram" data-abc="true"><i
+                                                class="mdi mdi-instagram feather icon-instagram instagram"
+                                                aria-hidden="true"></i></a></li>
                                 </ul>
                             </div>
                         </div>
                     </div>
-                    
-                    
+
+
                 </div>
                 {{-- Start Here --}}
                 <div class="az-content-body mg-t-20" style="padding: 0 15px 15px !important ; ">
-                <div class="row">
-                    <div class="col-md-3 card user-card-full">
-                        <h6 style="padding: 15px; text-align: center; padding-bottom: 0px;">Today Sale</h6>
-                        <hr style="margin-top: 0px;padding-top: 0px;">
-                        <p style="text-align: center;"><b>{{$daily_data['sales']}}</b></p>
-                    </div>
-                    <div class="col-md-3 card user-card-full">
-                        <h6 style="padding: 15px; text-align: center; padding-bottom: 0px;">Weekly Sale</h6>
-                        <hr style="margin-top: 0px;padding-top: 0px;">
-                        <p style="text-align: center;"><b>{{$weekly_data['sales']}}</b></p>
-                    </div>
-                    <div class="col-md-3 card user-card-full">
-                        <h6 style="padding: 15px; text-align: center; padding-bottom: 0px;">Monthly Sale</h6>
-                        <hr style="margin-top: 0px;padding-top: 0px;">
-                        <p style="text-align: center;"><b>{{$monthly_data['sales']}}</b></p>
-                    </div>
-                    <div class="col-md-3 card user-card-full">
-                        <h6 style="padding: 15px; text-align: center; padding-bottom: 0px;">All Time Sale </h6>
-                        <hr style="margin-top: 0px;padding-top: 0px;">
-                        <p style="text-align: center;"><b>{{$all_time_data['sales']}}</b></p>
-                    </div>
-                    
+                    <div class="row">
+                        <div class="col-md-3 card user-card-full">
+                            <h6 style="padding: 15px; text-align: center; padding-bottom: 0px;">Today Sale</h6>
+                            <hr style="margin-top: 0px;padding-top: 0px;">
+                            <p style="text-align: center;"><b>{{ $daily_data['sales'] }}</b></p>
+                        </div>
+                        <div class="col-md-3 card user-card-full">
+                            <h6 style="padding: 15px; text-align: center; padding-bottom: 0px;">Weekly Sale</h6>
+                            <hr style="margin-top: 0px;padding-top: 0px;">
+                            <p style="text-align: center;"><b>{{ $weekly_data['sales'] }}</b></p>
+                        </div>
+                        <div class="col-md-3 card user-card-full">
+                            <h6 style="padding: 15px; text-align: center; padding-bottom: 0px;">Monthly Sale</h6>
+                            <hr style="margin-top: 0px;padding-top: 0px;">
+                            <p style="text-align: center;"><b>{{ $monthly_data['sales'] }}</b></p>
+                        </div>
+                        <div class="col-md-3 card user-card-full">
+                            <h6 style="padding: 15px; text-align: center; padding-bottom: 0px;">All Time Sale </h6>
+                            <hr style="margin-top: 0px;padding-top: 0px;">
+                            <p style="text-align: center;"><b>{{ $all_time_data['sales'] }}</b></p>
+                        </div>
 
-                </div>
-                <div class="row">
-                    <div class="col-md-3 card user-card-full">
-                        <h6 style="padding: 15px; text-align: center; padding-bottom: 0px;">Today Comission</h6>
-                        <hr style="margin-top: 0px;padding-top: 0px;">
-                        <p style="text-align: center;"><b>{{$daily_data['comission']}}</b></p>
-                    </div>
-                    <div class="col-md-3 card user-card-full">
-                        <h6 style="padding: 15px; text-align: center; padding-bottom: 0px;">Weekly Comission</h6>
-                        <hr style="margin-top: 0px;padding-top: 0px;">
-                        <p style="text-align: center;"><b>{{$weekly_data['comission']}}</b></p>
-                    </div>
-                    <div class="col-md-3 card user-card-full">
-                        <h6 style="padding: 15px; text-align: center; padding-bottom: 0px;">Monthly Comission</h6>
-                        <hr style="margin-top: 0px;padding-top: 0px;">
-                        <p style="text-align: center;"><b>{{$monthly_data['comission']}}</b></p>
-                    </div>
-                    <div class="col-md-3 card user-card-full">
-                        <h6 style="padding: 15px; text-align: center; padding-bottom: 0px;">All Time Comission</h6>
-                        <hr style="margin-top: 0px;padding-top: 0px;">
-                        <p style="text-align: center;"><b>{{$all_time_data['comission']}}</b></p>
-                    </div>
-                    
 
-                </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-3 card user-card-full">
+                            <h6 style="padding: 15px; text-align: center; padding-bottom: 0px;">Today Comission</h6>
+                            <hr style="margin-top: 0px;padding-top: 0px;">
+                            <p style="text-align: center;"><b>{{ $daily_data['comission'] }}</b></p>
+                        </div>
+                        <div class="col-md-3 card user-card-full">
+                            <h6 style="padding: 15px; text-align: center; padding-bottom: 0px;">Weekly Comission</h6>
+                            <hr style="margin-top: 0px;padding-top: 0px;">
+                            <p style="text-align: center;"><b>{{ $weekly_data['comission'] }}</b></p>
+                        </div>
+                        <div class="col-md-3 card user-card-full">
+                            <h6 style="padding: 15px; text-align: center; padding-bottom: 0px;">Monthly Comission</h6>
+                            <hr style="margin-top: 0px;padding-top: 0px;">
+                            <p style="text-align: center;"><b>{{ $monthly_data['comission'] }}</b></p>
+                        </div>
+                        <div class="col-md-3 card user-card-full">
+                            <h6 style="padding: 15px; text-align: center; padding-bottom: 0px;">All Time Comission</h6>
+                            <hr style="margin-top: 0px;padding-top: 0px;">
+                            <p style="text-align: center;"><b>{{ $all_time_data['comission'] }}</b></p>
+                        </div>
+
+
+                    </div>
                 </div>
                 {{-- <div class="card user-card-full">
                 <div class="az-content-body mg-t-20" style="padding: 0 40px 40px !important ; ">
