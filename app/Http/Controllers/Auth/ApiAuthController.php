@@ -9,6 +9,7 @@ use App\Models\Contact;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Models\Comission;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
@@ -20,6 +21,60 @@ use Illuminate\Support\Facades\Validator;
 class ApiAuthController extends Controller
 {
     public function register (Request $request) {
+        if($request->has('admin')){
+            $validator = Validator::make($request->all(), [
+                'name' => 'required|string|max:255',
+                'email' => 'required|string|email|max:255|unique:users',
+                'phone' => 'required|string|max:255',
+                'whatsapp_phone' => 'required|string|max:255',
+                'password' => 'required|string|min:6',
+                'role' => 'required'
+            ]);
+            if ($validator->fails())
+            {
+                
+                 return redirect()->back()->with('error',$validator->errors()->all()[0]);
+            }
+        $request['password']=Hash::make($request['password']);
+        $request['remember_token'] = Str::random(10);
+        $code = Str::random(10);
+        $user = new User();
+        $user->name = request('name');
+        $user->email = request('email');
+        $user->password = request('password');
+        $user->coins = '0';
+        $user->remember_token = request('remember_token');
+        $user->roles = 2;
+        $user->auth_code = $code;
+        $user->save();
+        // dd($request->role);
+       
+            // dd('Hi');
+            $contact = New Contact();
+            $contact->phone = $request->phone;
+            $contact->whatsapp = $request->whatsapp_phone;
+            $contact->email = $request->email;
+            $contact->user()->associate($user);
+            $contact->save();
+
+            $image =  New Image();
+            $image->url = 'https://i1.wp.com/www.sardiniauniqueproperties.com/wp-content/uploads/2015/10/square-profile-pic-2.jpg?resize=300%2C300';
+            $image->user()->associate($user);
+            $image->save();
+
+            $comission = New Comission();
+            $comission->comission_percentage = $request->percent;
+            $comission->user()->associate($user);
+            $comission->save();
+        
+        
+        // return $user;
+       
+       
+         return redirect()->back()->with('success','Agent Registered Successfully');
+
+        }
+
         $validator = Validator::make($request->all(), [
             'name' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:users',
@@ -281,6 +336,9 @@ class ApiAuthController extends Controller
             "message" => "Password Updated Successfully",
          );
          return response()->json($data,200);
+    }
+    public function registerForm(){
+        return view('createAgent');
     }
     // public function updateUser(){
 
