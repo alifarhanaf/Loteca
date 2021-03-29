@@ -81,7 +81,7 @@ img {
                     </b></h5>
               
                     <h6 class="card-subtitle mb-2 text-muted">
-                        <p class="card-text text-muted small "> <img src="https://img.icons8.com/color/26/000000/christmas-star.png" class="mr-1 " width="19" height="19" id="star"> <span class="vl mr-2 ml-0"></span> <i class="fa fa-users text-muted "></i> Public <span class="vl ml-1 mr-2 "></span> <span></span>Sent by <span class="font-weight-bold"> {{$feedback['user_name']}}</span>{{\Carbon\Carbon::parse($feedback->created_at)->diffForHumans()}}  </p>
+                        <p class="card-text text-muted small "> <img src="https://img.icons8.com/color/26/000000/christmas-star.png" class="mr-1 " width="19" height="19" id="star"> <span class="vl mr-2 ml-0"></span> <i class="fa fa-users text-muted "></i> Public <span class="vl ml-1 mr-2 "></span> <span></span>Sent by <span class="font-weight-bold"> {{$feedback['user_name']}}</span> &nbsp {{\Carbon\Carbon::parse($feedback->created_at)->diffForHumans()}}  </p>
                     </h6>
                
         </div>
