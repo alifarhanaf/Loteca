@@ -48,7 +48,10 @@
                                         <p class="m-b-10 f-w-600">{{$agent->name}}</p>
                                         <h6 class="text-muted f-w-400">{{$agent->contacts[0]->phone}}</h6>
                                         @else
-                                        <p>Assign New User</p>
+                                        <div class="">
+                                            <label class="form-label">Name</label>
+                                            <input name="name" type="text" class="form-control" placeholder="Enter Name" >
+                                          </div><!-- az-form-group -->
                                         @endif
                                     </div>
                                     {{-- <div class="col-sm-6">
