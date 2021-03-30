@@ -265,7 +265,7 @@ class RoundController extends Controller
 
     public function agents()
     {
-        $users = User::where('roles', 2)->get();
+        $users = User::where('roles', 2)->orWhere('roles', 3)->get();
         for ($i = 0; $i < count($users); $i++) {
 
             if (count($users[$i]->images) > 0) {

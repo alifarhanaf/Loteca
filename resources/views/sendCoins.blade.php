@@ -12,7 +12,7 @@
           <h4 style="color: #1c273c; margin-bottom: 0px;">Enter New Agent</h4>
             </div>
             <div class="col-md-2">
-                <button type="submit" class="btn btn-outline-indigo btn-rounded btn-block">Publish</button>
+                <button type="submit" class="btn btn-outline-indigo btn-rounded btn-block">Send</button>
             </div>
         </div>
 
