@@ -59,8 +59,10 @@ img {
 <div class=" mg-t-20" style="padding: 0 40px 40px !important ; ">
     <div class=" card ">
         <div class="card-body ">
-    <div class="az-content-label mg-b-5">FeedBack DataTable</div>
-          <p class="mg-b-20">Responsive is an extension for DataTables that resolves that problem by optimising the table's layout for different screen sizes through the dynamic insertion and removal of columns from the table.</p>
+    <div class="az-content-label mg-b-5">Bug Reports</div>
+          <p class="mg-b-20">
+            Bug Reports are related to the functionality of Loteca. Figure out based on User's Bug Reports if a feature is designed a particular way or if it is actually broken. 
+              </p>
         </div>
     </div>
     @foreach ($bugs as $bug)

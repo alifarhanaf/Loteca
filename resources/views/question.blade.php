@@ -59,8 +59,9 @@ img {
 <div class=" mg-t-20" style="padding: 0 40px 40px !important ; ">
     <div class=" card ">
         <div class="card-body ">
-    <div class="az-content-label mg-b-5">FeedBack DataTable</div>
-          <p class="mg-b-20">Responsive is an extension for DataTables that resolves that problem by optimising the table's layout for different screen sizes through the dynamic insertion and removal of columns from the table.</p>
+    <div class="az-content-label mg-b-5">Questions and Queries</div>
+          <p class="mg-b-20">
+            Deliver More Value for Users. An User's question helps you know what users want, what difficulties they are facing and how you can best deliver it to them. It'll be both reputition and economical effective.</p>
         </div>
     </div>
     @foreach ($questions as $qstn)
