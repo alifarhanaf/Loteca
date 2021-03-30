@@ -52,6 +52,6 @@ class UserController extends Controller
             'agent_id' => $agent->id,
 
         ]);
-        return redirect()->route('user.profile',$id)->with('success','Agent Assigned Successfully');
+        return redirect()->route('user_grid')->with('success','Agent Assigned Successfully');
     }
 }
