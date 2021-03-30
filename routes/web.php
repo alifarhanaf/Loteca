@@ -46,6 +46,7 @@ Route::get('/comments','Web\FeedbackController@comment')->name('comments');
 Route::get('/bugs','Web\FeedbackController@bug')->name('bugs');
 Route::get('/questions','Web\FeedbackController@question')->name('questions');
 Route::get('/send_coins','Web\DashboardController@coins')->name('coin.screen');
+Route::post('/transfer_coins','Web\DashboardController@transferCoins')->name('coin.transfer');
 });
 
 Route::get('/', function () {

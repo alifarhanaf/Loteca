@@ -530,4 +530,12 @@ class DashboardController extends Controller
 
         
     }
+    public function coins(){
+        return view('sendCoins');
+
+    }
+    public function transferCoins(Request $request){
+        return $request;
+
+    }
 }
