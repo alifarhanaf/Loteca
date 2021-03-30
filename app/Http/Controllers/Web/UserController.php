@@ -52,7 +52,7 @@ class UserController extends Controller
             'agent_id' => $agent->id,
 
         ]);
-        dd('true');
-        // return redirect()->back()->with('success','Agent Assigned Successfully');
+        // dd('true');
+        return redirect()->route('user_grid')->with('success','Agent Assigned Successfully');
     }
 }
