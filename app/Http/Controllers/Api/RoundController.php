@@ -276,7 +276,7 @@ class RoundController extends Controller
         ->where('user_id', Auth::user()->id)->first();
         $users[0] = $admin ;
         if($usrs){
-            $agent = User::where('id',$usrs->id)->first();
+            $agent = User::where('id',$usrs->agent_id)->first();
             $users[1] = $agent;
 
         }
