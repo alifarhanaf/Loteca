@@ -280,7 +280,7 @@ class RoundController extends Controller
             $users[1] = $agent;
 
         }
-        $users = collect($users)->reverse()->toArray();
+        // $users = collect($users)->reverse()->toArray();
         dd($users);
 
         
