@@ -274,15 +274,15 @@ class RoundController extends Controller
         $admin = User::where('roles', 3)->first();
         $usrs = DB::table('agent_users')
         ->where('user_id', Auth::user()->id)->first();
-        $users[0] = $admin ;
+        $userz[0] = $admin ;
         if($usrs){
             $agent = User::where('id',$usrs->agent_id)->first();
-            $users[1] = $agent;
+            $userz[1] = $agent;
 
         }
-        $users = array_values($users);
+        $users = array_values($userz);
         // $users = collect($users)->reverse()->toArray();
-        dd($users);
+        // dd($users);
 
         
 
