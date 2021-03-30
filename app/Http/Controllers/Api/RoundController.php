@@ -281,6 +281,7 @@ class RoundController extends Controller
 
         }
         $users = collect($users)->reverse()->toArray();
+        dd($users);
 
         
 
