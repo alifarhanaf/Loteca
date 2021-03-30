@@ -535,7 +535,48 @@ class DashboardController extends Controller
 
     }
     public function transferCoins(Request $request){
-        return $request;
+        // return $request;
+        $user =  User::where('roles','3')->first();
+        $check = User::where('email',$request->email)->first();
+        if($check){
+
+        
+        // return $user->coins;
+        if($user->coins >= $request->coins){
+            $cc = $user->coins - $request->coins;
+            $sender = User::find($user->id);
+            $sender->coins = $cc ;
+            $sender->save();
+            $receiver = User::where('email',$request->email)->first();
+            $receiver->coins = $receiver->coins + $request->coins;
+            $receiver->save();
+            $ct = new CoinTransfer(); 
+            $ct->sender_id = $sender->id;
+            $ct->receiver_id = $receiver->id;
+            $ct->sent_coins = $request->coins;
+            $ct->save();
+            return redirect()->back()->with('success','Coins Transferred Successfully');
+            // $agent = Auth::user();
+            // $updatedUser = User::where('email',$request->email)->first();
+
+            // $data = array(
+            //     "status" => 200,
+            //     "response" => "true",
+            //     "message" => "Coins Sent Successfully" ,
+            //     "agent" => $agent,
+            //     "user" => $updatedUser,
+            //     "coins_transferred" => $request->coins,
+            //     "transfer_date" => $ct->created_at,
+            //     );
+            //     return response()->json($data,200);
+
+        }else{
+            return redirect()->back()->with('error','You Dont have Enough Coins');
+
+        }
+    }else{
+        return redirect()->back()->with('error','User Does Not Exist');
+    }
 
     }
 }
