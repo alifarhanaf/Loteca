@@ -52,6 +52,7 @@ class UserController extends Controller
             'agent_id' => $agent->id,
 
         ]);
+        dd('true');
         // return redirect()->back()->with('success','Agent Assigned Successfully');
     }
 }
