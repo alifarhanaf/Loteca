@@ -268,11 +268,13 @@ class RoundController extends Controller
     {   
         $a = 2;
         $b = 3;
-        $users = User::where(function ($query) use ($a, $b) {
-        $query->where('roles', '=', $a)
-              ->orWhere('roles', '=', $b);
-    })->get();
-        // $users = User::where('roles', 2)->get();
+    //     $users = User::where(function ($query) use ($a, $b) {
+    //     $query->where('roles', '=', $a)
+    //           ->orWhere('roles', '=', $b);
+    // })->get();
+        $agents = User::where('roles', 2)->get();
+        $admins = User::where('roles', 3)->get();
+        $users = $agents->merge($admins);
         for ($i = 0; $i < count($users); $i++) {
 
             if (count($users[$i]->images) > 0) {
