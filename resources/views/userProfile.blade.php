@@ -49,8 +49,9 @@
                                         <h6 class="text-muted f-w-400">{{$agent->contacts[0]->phone}}</h6>
                                         @else
                                         <form method="POST" action="assign.agent">
+                                            @csrf
                                         <div class="">
-                                            <label class="form-label">Name</label>
+                                            
                                             <input style="border: none;
                                             text-decoration: underline;
                                             padding-left: 0px;" name="email" type="text" class="form-control" placeholder="Enter Agent Email To Assign" >
