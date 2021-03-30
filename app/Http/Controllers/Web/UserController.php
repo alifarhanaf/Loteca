@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Web;
 
 use App\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 
 class UserController extends Controller
@@ -28,9 +29,17 @@ class UserController extends Controller
         $user = User::where('id',$id)->first();
         $user->contacts;
         $user->images;
+        $usrs = DB::table('agent_users')
+        ->where('user_id', $id)->first();
+        if($usrs){
+            $agent = User::where('id',$usrs->agent_id)->first();
+        }else{
+            $agent = null;
+        }
         
         $data = array(
             "user" => $user,
+            "agent" => $agent,
             "rounds" => $user->rounds,
         );
 
