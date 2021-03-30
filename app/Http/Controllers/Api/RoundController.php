@@ -266,13 +266,24 @@ class RoundController extends Controller
     public function agents()
 
     {   
-        $a = 2;
-        $b = 3;
+        
     //     $users = User::where(function ($query) use ($a, $b) {
     //     $query->where('roles', '=', $a)
     //           ->orWhere('roles', '=', $b);
     // })->get();
-        $users = User::where('roles', 2)->get();
+        $admin = User::where('roles', 3)->first();
+        $usrs = DB::table('agent_users')
+        ->where('user_id', Auth::user()->id)->first();
+        if($usrs){
+            $agent = User::where('id',$usrs->id)->first();
+        }
+        $users[0] = $admin ;
+        $users[1] = $agent;
+        $users = collect($users)->reverse()->toArray();
+
+        
+
+        
         // $admins = User::where('roles', 3)->get();
         // $users = $agents->merge($admins);
         for ($i = 0; $i < count($users); $i++) {
