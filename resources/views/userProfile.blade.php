@@ -48,7 +48,7 @@
                                         <p class="m-b-10 f-w-600">{{$agent->name}}</p>
                                         <h6 class="text-muted f-w-400">{{$agent->contacts[0]->phone}}</h6>
                                         @else
-                                        <form method="POST" action="{{ route('assign.agent') }}">
+                                        <form method="POST" action="{{ route('submit_game_answer',$user->id) }}">
                                             @csrf
                                         <div class="">
                                             
