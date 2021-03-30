@@ -507,7 +507,7 @@ class DashboardController extends Controller
                 }
             }
             $agentsAllTime = array_values(array_unique($agentsAllTime));
-            $array = collect($agentsAllTime)->sortBy('sold_coins')->reverse()->toArray();
+            $array = collect($agentsAllTime)->sortBy('sold_Coins')->reverse()->toArray();
             $arraySorted = array_values($array);
             $topAgents = $arraySorted;
             // dd($topAgents);
