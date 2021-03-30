@@ -45,4 +45,13 @@ class UserController extends Controller
 
         return view('userProfile')->with($data);
     }
+    public function assignAgent(Request $request, $id){
+        $agent = User::where('email',$request->email)->first();
+        DB::table('agent_users')->insert([
+            'user_id' => $id,
+            'agent_id' => $agent->id,
+
+        ]);
+        return redirect()->route('user.profile')->with('success','Agent Assigned Successfully');
+    }
 }

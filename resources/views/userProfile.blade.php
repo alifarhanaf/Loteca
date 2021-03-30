@@ -48,10 +48,15 @@
                                         <p class="m-b-10 f-w-600">{{$agent->name}}</p>
                                         <h6 class="text-muted f-w-400">{{$agent->contacts[0]->phone}}</h6>
                                         @else
+                                        <form method="POST" action="assign.agent">
                                         <div class="">
                                             <label class="form-label">Name</label>
-                                            <input name="name" type="text" class="form-control" placeholder="Enter Name" >
+                                            <input style="border: none;
+                                            text-decoration: underline;
+                                            padding-left: 0px;" name="email" type="text" class="form-control" placeholder="Enter Agent Email To Assign" >
+                                            <button  type="submit" class="grid-btn" style="width:100px;" ><i class="typcn typcn-eye"></i></button>
                                           </div><!-- az-form-group -->
+                                        </form>
                                         @endif
                                     </div>
                                     {{-- <div class="col-sm-6">
