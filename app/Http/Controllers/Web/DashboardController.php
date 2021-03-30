@@ -485,7 +485,7 @@ class DashboardController extends Controller
             $agentsAllTime = [];
             $soldCoins = CoinTransfer::get();
             // dd(count($soldCoins));
-            for ($i = 0; $i < count($soldCoins)-1; $i++) {
+            for ($i = 0; $i < count($soldCoins); $i++) {
                 // dd($soldCoins);
                 $user = User::find($soldCoins[$i]->sender_id);
                 
@@ -510,7 +510,7 @@ class DashboardController extends Controller
             $array = collect($agentsAllTime)->sortBy('sold_coins')->reverse()->toArray();
             $arraySorted = array_values($array);
             $topAgents = $arraySorted;
-            dd($topAgents);
+            // dd($topAgents);
 
 
 
