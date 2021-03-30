@@ -17,7 +17,7 @@ Route::post('/processing','Auth\ApiAuthController@login')->name('submit.login');
 
 
 Route::middleware('admin:web')->group( function(){
-Route::get('/dashboard','Web\DashboardController@index')->name('dashboard');
+Route::get('/dashboard','Web\DashboardController@dashboard')->name('dashboard');
 Route::get('/round_detail/{id}','Web\RoundController@roundPage')->name('roundDetail');
 Route::get('/create_round','Web\DashboardController@createRound')->name('create_round');
 Route::get('/round_grid','Web\DashboardController@roundGrid')->name('round_grid');

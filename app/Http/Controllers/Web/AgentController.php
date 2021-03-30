@@ -113,20 +113,7 @@ class AgentController extends Controller
             
         );
         
-        // $data = array(
-        // "status"=>200,
-        // "response"=>"true",
-        // "message" => "Success",
-        // "data" => array(
-        //     "daily_data" => $daily_data,
-        //     "weekly_data" => $weekly_data,
-        //     "monthly_data" => $monthly_data,
-        //     "all_time_data" => $all_time_data,
-        //     "user" => $user,
-
-        // )
-        // );
-        // return response()->json($data,200);
+       
         }
         
         $data = array(

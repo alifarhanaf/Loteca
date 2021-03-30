@@ -12,6 +12,7 @@ use App\Models\Result;
 use App\Models\Winner;
 use App\Models\Package;
 use App\Models\RoundUser;
+use App\Models\CoinTransfer;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
@@ -412,5 +413,121 @@ class DashboardController extends Controller
             $message->from('info@loteca.com','Team Loteca');
         });
         echo 'Email Sent Check kro';
+    }
+    public function dashboard(){
+        $history1 = CoinTransfer::where( 'created_at', '>', Carbon::today())->get();
+        $total_sales1 = 0; 
+        foreach($history1 as $h1){
+            $total_sales1 = $total_sales1 + $h1->sent_coins;
+        }
+        $history2 = CoinTransfer::where( 'created_at', '>', Carbon::now()->subDays(7))->get();
+        $total_sales2 = 0; 
+        foreach($history2 as $h2){
+            $total_sales2 = $total_sales2 + $h2->sent_coins;
+        }
+        $history3 = CoinTransfer::where( 'created_at', '>', Carbon::now()->subDays(30))->get();
+        $total_sales3 = 0; 
+        foreach($history3 as $h3){
+            $total_sales3 = $total_sales3 + $h3->sent_coins;
+        }
+        $history4 = CoinTransfer::get();
+        $total_sales4 = 0;
+        foreach($history4 as $h4){
+            $total_sales4 = $total_sales4 + $h4->sent_coins;
+        }
+        $sales_data = array (
+            "daily_sales" => $total_sales1,
+            "weekly_sales" => $total_sales2,
+            "monthly_sales" => $total_sales3,
+            "all_sales" => $total_sales4,
+        );
+        $users = User::where('roles','1')->get();
+        $totalUsers = count($users);
+        $agents = User::where('roles','2')->get();
+        $totalAgents = count($agents);
+
+        $now = Carbon::now();
+        $now->toDateString();
+        //  return $now;
+        $round = Round::where('starting_date', '<=', $now)
+            ->where('ending_date', '>=', $now)->where('tag', 'original')->where('status',1)
+            ->first();
+            if($round){
+            $roundName = $round->name;
+            $totalGames = count($round->games);
+            }else{
+                $roundName = 'No Live Round';
+                $totalGames = 'N/A';
+            }
+            $multipleWinnersMonthly = [];
+            $points = Point::orderBy('points', 'desc')->where( 'created_at', '>', Carbon::now()->subDays(30))->get();
+            for ($i = 0; $i < count($points); $i++) {
+           
+                $aa = Point::where('user_id',$points[$i]->user->id)->where( 'created_at', '>', Carbon::now()->subDays(30))->get();
+                $count = 0;
+                foreach($aa as $a){
+                    $count  = $count + $a->points;
+                }
+                $points[$i]->user['image'] = $points[$i]->user->images[0]->url;
+                $points[$i]->user['Winning Coins'] = $count*10;
+                if(!in_array($points[$i]->user, $multipleWinnersMonthly, true)){
+                    array_push($multipleWinnersMonthly,$points[$i]->user);
+                }
+            }
+            $multipleWinnersMonthly = array_values(array_unique($multipleWinnersMonthly));
+            $brray = collect($multipleWinnersMonthly)->sortBy('Winning Coins')->reverse()->toArray();
+            $brraySorted = array_values($brray);
+            $monthlyLeaderBoard = $brraySorted;
+            $admin = User::where('roles','3')->first();
+            $totalCoins = $admin->coins;
+            //Best Agents
+
+            $agentsAllTime = [];
+            $soldCoins = CoinTransfer::get();
+            // dd(count($soldCoins));
+            for ($i = 0; $i < count($soldCoins)-1; $i++) {
+                // dd($soldCoins);
+                $user = User::find($soldCoins[$i]->sender_id);
+                
+                // $soldCoins['user'] = $user;
+                $aa = CoinTransfer::where('sender_id',$user->id)->get();
+                $count = 0;
+                foreach($aa as $a){
+                    $count  = $count + $a->sent_coins;
+                }
+                // return $soldCoins;
+                $user['image'] = $user->images[0]->url;
+                $user['sold_Coins'] = $count;
+                $soldCoins[$i]['user'] =  $user;
+
+                // $soldCoins[$i]['user'][0]['image'] = $user->images[0]->url;
+                // $soldCoins[$i]['user']['sold_Coins'] = $count;
+                if(!in_array($soldCoins[$i]['user'], $agentsAllTime, true)){
+                    array_push($agentsAllTime,$soldCoins[$i]['user']);
+                }
+            }
+            $agentsAllTime = array_values(array_unique($agentsAllTime));
+            $array = collect($agentsAllTime)->sortBy('sold_coins')->reverse()->toArray();
+            $arraySorted = array_values($array);
+            $topAgents = $arraySorted;
+            // dd($topAgents);
+
+
+
+            $data =  array(
+                "sales" => $sales_data,
+                "totalAgents" => $totalAgents,
+                "totalUsers" => $totalUsers,
+                "totalGames" => $totalGames,
+                "totalCoins" => $totalCoins,
+                "roundName" => $roundName,
+                "monthlyLeaderBoard" => $monthlyLeaderBoard,
+                "topAgents" => $topAgents,
+            );
+            return view('home')->with($data);
+        
+
+
+        
     }
 }
