@@ -45,8 +45,8 @@
                                 <div class="row">
                                     <div class="col-sm-6">
                                         @if($agent != null)
-                                        <p class="m-b-10 f-w-600">Phone</p>
-                                        <h6 class="text-muted f-w-400">{{$user->contacts[0]->phone}}</h6>
+                                        <p class="m-b-10 f-w-600">{{$agent->name}}</p>
+                                        <h6 class="text-muted f-w-400">{{$agent->contacts[0]->phone}}</h6>
                                         @else
                                         <p>Assign New User</p>
                                         @endif
