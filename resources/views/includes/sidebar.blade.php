@@ -117,20 +117,29 @@
           <li class="nav-item 
           {{ request()->is('agent_grid') ? 'active' : ''}} 
           {{ request()->is('agent_grid') ? 'show' : ''}}
+          {{ request()->is('register_form') ? 'active' : ''}}
+          {{ request()->is('register_form') ? 'show' : ''}}
           ">
             <a href="" class="nav-link with-sub"><i class="typcn typcn-map"></i>Agents</a>
             <ul class="nav-sub">
-              <li class="nav-sub-item "><a href="map-google.html" class="nav-sub-link">New Agent</a></li>
+              <li class="nav-sub-item {{ request()->is('register_form') ? 'active' : ''}}  "><a href="{{ route('form.register') }}" class="nav-sub-link">New Agent</a></li>
               <li class="nav-sub-item  {{ request()->is('agent_grid') ? 'active' : ''}}  "><a href="{{ route('agent_grid') }}" class="nav-sub-link">All Agents</a></li>
               <li class="nav-sub-item"><a href="map-vector.html" class="nav-sub-link">Agent Comission</a></li>
             </ul>
           </li><!-- nav-item -->
-          <li class="nav-item">
+          <li class="nav-item 
+          {{ request()->is('comments') ? 'active' : ''}}
+          {{ request()->is('comments') ? 'show' : ''}}
+          {{ request()->is('bugs') ? 'active' : ''}}
+          {{ request()->is('bugs') ? 'show' : ''}}
+          {{ request()->is('questions') ? 'active' : ''}}
+          {{ request()->is('questions') ? 'show' : ''}}
+          ">
             <a href="" class="nav-link with-sub"><i class="typcn typcn-tabs-outline"></i>Feed Back</a>
             <ul class="nav-sub">
-              <li class="nav-sub-item"><a href="table-basic.html" class="nav-sub-link">Suggestions</a></li>
-              <li class="nav-sub-item"><a href="table-data.html" class="nav-sub-link">Bug Reports</a></li>
-              <li class="nav-sub-item"><a href="table-data.html" class="nav-sub-link">Questions</a></li>
+              <li class="nav-sub-item {{ request()->is('comments') ? 'active' : ''}} "><a href="{{ route('comments') }}" class="nav-sub-link">Suggestions</a></li>
+              <li class="nav-sub-item {{ request()->is('bugs') ? 'active' : ''}}"><a href="{{ route('bugs') }}" class="nav-sub-link">Bug Reports</a></li>
+              <li class="nav-sub-item  {{ request()->is('questions') ? 'active' : ''}}"><a href="{{ route('questions') }}" class="nav-sub-link">Questions</a></li>
             </ul>
           </li><!-- nav-item -->
           <li class="nav-item">

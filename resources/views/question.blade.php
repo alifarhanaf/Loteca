@@ -63,30 +63,23 @@ img {
           <p class="mg-b-20">Responsive is an extension for DataTables that resolves that problem by optimising the table's layout for different screen sizes through the dynamic insertion and removal of columns from the table.</p>
         </div>
     </div>
-    @foreach ($feedbacks as $feedback)
+    @foreach ($questions as $qstn)
     <div class="row" style="width: 100%;margin-left:0px;margin-right:0px">
         <div class=" card " style="width: 100%">
         <div class="card-body ">
          
                     <h5 class="card-title "><b>
-                        @if ($feedback->type == 0)
-                        Comments
-                        @elseif($feedback->type == 1)
-                        Bug
-                        @elseif($feedback->type == 2)
-                        Question
-                            
-                        @endif
+                        User's Question
                         
                     </b></h5>
               
                     <h6 class="card-subtitle mb-2 text-muted">
-                        <p class="card-text text-muted small "> <img src="https://img.icons8.com/color/26/000000/christmas-star.png" class="mr-1 " width="19" height="19" id="star"> <span class="vl mr-2 ml-0"></span> <i class="fa fa-users text-muted "></i> Public <span class="vl ml-1 mr-2 "></span> <span></span>Sent by <span class="font-weight-bold"> {{$feedback['user_name']}}</span> &nbsp {{\Carbon\Carbon::parse($feedback->created_at)->diffForHumans()}}  </p>
+                        <p class="card-text text-muted small "> <img src="https://img.icons8.com/color/26/000000/christmas-star.png" class="mr-1 " width="19" height="19" id="star"> <span class="vl mr-2 ml-0"></span> <i class="fa fa-users text-muted "></i> Public <span class="vl ml-1 mr-2 "></span> <span></span>Sent by <span class="font-weight-bold"> {{$qstn['user_name']}}</span> &nbsp {{\Carbon\Carbon::parse($qstn->created_at)->diffForHumans()}}  </p>
                     </h6>
                
         </div>
         <div class="card-footer bg-white px-0 ">
-            <p style="padding-left:20px;padding-right:20px">{{$feedback->content}}</p>
+            <p style="padding-left:20px;padding-right:20px">{{$qstn->content}}</p>
             
         </div>
     </div>
