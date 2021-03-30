@@ -124,7 +124,7 @@
             <ul class="nav-sub">
               <li class="nav-sub-item {{ request()->is('register_form') ? 'active' : ''}}  "><a href="{{ route('form.register') }}" class="nav-sub-link">New Agent</a></li>
               <li class="nav-sub-item  {{ request()->is('agent_grid') ? 'active' : ''}}  "><a href="{{ route('agent_grid') }}" class="nav-sub-link">All Agents</a></li>
-              <li class="nav-sub-item"><a href="map-vector.html" class="nav-sub-link">Agent Comission</a></li>
+              {{-- <li class="nav-sub-item"><a href="map-vector.html" class="nav-sub-link">Agent Comission</a></li> --}}
             </ul>
           </li><!-- nav-item -->
           <li class="nav-item 
