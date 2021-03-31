@@ -57,7 +57,12 @@ class RoundController extends Controller
                     // }
                     if (in_array($round->id, $arr)) 
                     { 
+                        // Remove Start
                         $bid = false;
+                        $selected_package = null;
+                        $bet_date = null;
+                        // Remove End
+
                     //     $bid = true;
                     // $ressult = DB::table('bid_results')
                     // ->where('user_id', $user->id)
@@ -65,7 +70,13 @@ class RoundController extends Controller
                     // $bet_date = $ressult->created_at;
                     // $package_id = $ressult->package_id;
                     // $selected_package = Package::where('id',$package_id)->first();
-                    // foreach($games as $game){
+                    foreach($games as $game){
+                        // Remove Start
+
+                        $game['widegtSwitch0']= null ;
+                        $game['widegtSwitch1']= null ;
+                        $game['widegtSwitch2']= null ;
+                        // Remove End
                       
                     //     $ressult1 = DB::table('bid_results')
                     // ->where('user_id', $user->id)
@@ -93,7 +104,7 @@ class RoundController extends Controller
                     
                         
 
-                    // }
+                    }
                    
 
 
