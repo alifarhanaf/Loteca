@@ -49,45 +49,48 @@ class AgentController extends Controller
                     //     $bid = false;
                     // }
                     if (in_array($round->id, $arr)) {
-                        $bid = true;
-                        $ressult = DB::table('bid_results')
-                            ->where('user_id', $user->id)
-                            ->where('round_id', $round->id)->first();
-                           
-                            $bet_date = $ressult->created_at;
-                        $package_id = $ressult->package_id;
-                        $selected_package = Package::where('id', $package_id)->first();
-                        foreach($games as $game){
-                            // return $round->id;
-                            $ressult1 = DB::table('bid_results')
-                        ->where('user_id', $user->id)
-                        ->where('round_id', $round->id)
-                        ->where('game_id', $game->id)
-                        ->get();
-                        // return $ressult1;
-                        $gta =  str_replace(' ', '', $game->team_a);
-                        $gtb = str_replace(' ', '', $game->team_b);
-                        $gtd = 'Draw';
-                        $gto = str_replace(' ', '', $ressult1[0]->answer);
-                        if(strtoupper($gta) == strtoupper($gto)){
-                            $game['widegtSwitch0']= true ;
-                            $game['widegtSwitch1']= false ;
-                            $game['widegtSwitch2']= false ;
-                        }else if(strtoupper($gtb) == strtoupper($gto)){
-                            $game['widegtSwitch0']= false ;
-                            $game['widegtSwitch1']= false ;
-                            $game['widegtSwitch2']= true ;
-                        }else if(strtoupper($gtd) == strtoupper($gto)){
-                            $game['widegtSwitch0']= false ;
-                            $game['widegtSwitch1']= true ;
-                            $game['widegtSwitch2']= false ;
-                        }
+                        $bid = false;
+                        $selected_package = null;
+                        $bet_date = null;
                         
-                            // return $game;
-                            
-                        // return $ressult;
-                            //  $game['id'] = 1;
-                            //  return $game;
+                        // $bid = true;
+
+                        // $ressult = DB::table('bid_results')
+                        //     ->where('user_id', $user->id)
+                        //     ->where('round_id', $round->id)->first();
+                           
+                        //     $bet_date = $ressult->created_at;
+                        // $package_id = $ressult->package_id;
+                        // $selected_package = Package::where('id', $package_id)->first();
+                        foreach($games as $game){
+                            $game['widegtSwitch0']= null ;
+                            $game['widegtSwitch1']= null ;
+                            $game['widegtSwitch2']= null ;
+                           
+                        //     $ressult1 = DB::table('bid_results')
+                        // ->where('user_id', $user->id)
+                        // ->where('round_id', $round->id)
+                        // ->where('game_id', $game->id)
+                        // ->get();
+                        
+                        // $gta =  str_replace(' ', '', $game->team_a);
+                        // $gtb = str_replace(' ', '', $game->team_b);
+                        // $gtd = 'Draw';
+                        // $gto = str_replace(' ', '', $ressult1[0]->answer);
+                        // if(strtoupper($gta) == strtoupper($gto)){
+                        //     $game['widegtSwitch0']= true ;
+                        //     $game['widegtSwitch1']= false ;
+                        //     $game['widegtSwitch2']= false ;
+                        // }else if(strtoupper($gtb) == strtoupper($gto)){
+                        //     $game['widegtSwitch0']= false ;
+                        //     $game['widegtSwitch1']= false ;
+                        //     $game['widegtSwitch2']= true ;
+                        // }else if(strtoupper($gtd) == strtoupper($gto)){
+                        //     $game['widegtSwitch0']= false ;
+                        //     $game['widegtSwitch1']= true ;
+                        //     $game['widegtSwitch2']= false ;
+                        // }
+                        
     
                         }
                        
@@ -237,17 +240,17 @@ class AgentController extends Controller
                 array_push($arr, $rads->id);
             } //EndForeach
             if (!empty($arr)) {
-                if (in_array("$round_id", $arr)) {
-                    DB::rollback();
-                    $data = array(
-                        "status" => 409,
-                        "response" => "true",
-                        "message" => "Record Already Present",
+                // if (in_array("$round_id", $arr)) {
+                //     DB::rollback();
+                //     $data = array(
+                //         "status" => 409,
+                //         "response" => "true",
+                //         "message" => "Record Already Present",
 
-                    );
-                    return response()->json($data, 409);
-                    // return $bid;
-                } else {
+                //     );
+                //     return response()->json($data, 409);
+                    
+                // } else {
                     $round = Round::where('id', $round_id)->first();
                     $package = Package::where('id', $package_id)->first();
                     $pp = $package->participation_fee;
@@ -279,7 +282,10 @@ class AgentController extends Controller
                             ->where('user_id', $user->id)
                             ->where('round_id', $round_id)->get();
                         $round = Round::where('id', $round_id)->first();
-                        $bet_date = $userAnswers[0]->created_at;
+                        // $bet_date = $userAnswers[0]->created_at;
+                        $now = Carbon::now();
+                        $now->toDateString();
+                        $bet_date = $now;
                         $games = $round->games;
                         $packages = $round->packages;
                         foreach($games as $game){
@@ -350,7 +356,8 @@ class AgentController extends Controller
 
                         return response()->json($data, 429);
                     } //EndCoinsCheckCondition
-                } //EndRecordCheckCondition
+                    //Insert Bracket Here
+                 //EndRecordCheckCondition
             } else {
                 $round = Round::where('id', $round_id)->first();
                 $package = Package::where('id', $package_id)->first();
@@ -383,7 +390,10 @@ class AgentController extends Controller
                         ->where('user_id', $user->id)
                         ->where('round_id', $round_id)->get();
                     $round = Round::where('id', $round_id)->first();
-                    $bet_date = $userAnswers[0]->created_at;
+                    // $bet_date = $userAnswers[0]->created_at;
+                    $now = Carbon::now();
+                        $now->toDateString();
+                        $bet_date = $now;
                     $games = $round->games;
                     $packages = $round->packages;
                     foreach($games as $game){
@@ -479,7 +489,10 @@ class AgentController extends Controller
                 ->where('user_id', $user->id)
                 ->where('round_id', $round_id)->get();
             $round = Round::where('id', $round_id)->first();
-            $bet_date = $userAnswers[0]->created_at;
+           
+            $now = Carbon::now();
+                        $now->toDateString();
+                        $bet_date = $now;
             $games = $round->games;
             $packages = $round->packages;
             foreach($games as $game){
