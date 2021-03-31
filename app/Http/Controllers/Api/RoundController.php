@@ -411,17 +411,17 @@ class RoundController extends Controller
                 array_push($arr, $rads->id);
             } //EndForeach
             if (!empty($arr)) {
-                if (in_array("$round_id", $arr)) {
-                    DB::rollback();
-                    $data = array(
-                        "status" => 409,
-                        "response" => "true",
-                        "message" => "Record Already Present",
+                // if (in_array("$round_id", $arr)) {
+                    // DB::rollback();
+                    // $data = array(
+                    //     "status" => 409,
+                    //     "response" => "true",
+                    //     "message" => "Record Already Present",
 
-                    );
-                    return response()->json($data, 409);
-                    // return $bid;
-                } else {
+                    // );
+                    // return response()->json($data, 409);
+                    
+                // } else {
                     $round = Round::where('id', $round_id)->first();
                     $package = Package::where('id', $package_id)->first();
                     $pp = $package->participation_fee;
@@ -525,7 +525,9 @@ class RoundController extends Controller
                         
                         return response()->json($data, 429);
                     } //EndCoinsCheckCondition
-                } //EndRecordCheckCondition
+                    
+                // Bracket Here
+                //EndRecordCheckCondition
             } else {
                 $round = Round::where('id', $round_id)->first();
                 $package = Package::where('id', $package_id)->first();
