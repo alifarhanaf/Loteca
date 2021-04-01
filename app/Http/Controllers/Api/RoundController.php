@@ -403,6 +403,9 @@ class RoundController extends Controller
         $ck->save();
        
         $user = Auth::user();
+        $submitDate = Carbon::now();
+        $submitDate->toDateTimeString(); 
+                        
 
 
         if (count($user->rounds) > 0) {
@@ -432,7 +435,15 @@ class RoundController extends Controller
                         $data->coins = $new_cc;
                         $data->save();
                         $userz = User::find($user->id);
-                        $userz->rounds()->attach($round_id);
+                        DB::table('round_user')->insert([
+                            'round_id' => $round_id,
+                            'user_id' => $user->id,
+                            'created_at' => $submitDate,
+                            'updated_at' => $submitDate,
+                            
+
+                        ]);
+                        // $userz->rounds()->attach($round_id);
                         
                         
 
@@ -443,6 +454,8 @@ class RoundController extends Controller
                                 'game_id' => $game_ids[$i],
                                 'answer' => $selected_answers[$i],
                                 'package_id' => $package_id,
+                                'created_at' => $submitDate,
+                                'updated_at' => $submitDate
 
                             ]);
                         } //End For Loop
@@ -450,11 +463,14 @@ class RoundController extends Controller
 
                         $userAnswers = DB::table('bid_results')
                             ->where('user_id', $user->id)
-                            ->where('round_id', $round_id)->get();
+                            ->where('round_id', $round_id)
+                            ->where('created_at',$submitDate)->get();
                         $round = Round::where('id', $round_id)->first();
                         $now = Carbon::now();
-                        $now->toDateString();
+                        $now->toDateString(); 
                         $bet_date = $now;
+                        
+                        
                         // $bet_date = $userAnswers[0]->created_at;
                         $games = $round->games;
                         $packages = $round->packages;
@@ -544,7 +560,14 @@ class RoundController extends Controller
                     $data->save();
 
                     $userz = User::find($user->id);
-                    $userz->rounds()->attach($round_id);
+                    DB::table('round_user')->insert([
+                        'round_id' => $round_id,
+                        'user_id' => $user->id,
+                        'created_at' => $submitDate,
+                        'updated_at' => $submitDate,
+                        
+
+                    ]);
                     
 
                     for ($i = 0; $i < count($round->games); $i++) {
@@ -554,6 +577,8 @@ class RoundController extends Controller
                             'game_id' => $game_ids[$i],
                             'answer' => $selected_answers[$i],
                             'package_id' => $package_id,
+                            'created_at' => $submitDate,
+                            'updated_at' => $submitDate,
 
                         ]);
                     }
@@ -561,7 +586,8 @@ class RoundController extends Controller
 
                     $userAnswers = DB::table('bid_results')
                         ->where('user_id', $user->id)
-                        ->where('round_id', $round_id)->get();
+                        ->where('round_id', $round_id)
+                        ->where('created_at', $submitDate)->get();
                     $round = Round::where('id', $round_id)->first();
                     $now = Carbon::now();
                         $now->toDateString();
@@ -645,7 +671,14 @@ class RoundController extends Controller
             $data->coins = $new_cc;
             $data->save();
             $userz = User::find($user->id);
-            $userz->rounds()->attach($round_id);
+            DB::table('round_user')->insert([
+                'round_id' => $round_id,
+                'user_id' => $user->id,
+                'created_at' => $submitDate,
+                'updated_at' => $submitDate,
+                
+
+            ]);
            
 
             for ($i = 0; $i < count($round->games); $i++) {
@@ -655,13 +688,16 @@ class RoundController extends Controller
                     'game_id' => $game_ids[$i],
                     'answer' => $selected_answers[$i],
                     'package_id' => $package_id,
+                    'created_at' => $submitDate,
+                    'updated_at' => $submitDate,
 
                 ]);
             }
             // $points = $this->answerCheck($round_id,$package_id);
             $userAnswers = DB::table('bid_results')
                 ->where('user_id', $user->id)
-                ->where('round_id', $round_id)->get();
+                ->where('round_id', $round_id)
+                ->where('created_at', $submitDate)->get();
             $round = Round::where('id', $round_id)->first();
             $now = Carbon::now();
                         $now->toDateString();
