@@ -197,7 +197,7 @@ class DashboardController extends Controller
             ->where('user_id', $ruc->id)
             ->where('round_id', $round_id)
             ->where('created_at',$roundUserDates[$i])->get();
-            return $userAnswers;
+            // return $userAnswers;
             $i = 0;
             foreach($userAnswers as $UA){
          
