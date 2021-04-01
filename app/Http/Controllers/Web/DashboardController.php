@@ -233,7 +233,7 @@ class DashboardController extends Controller
         $j = 0;
          
         foreach($roundUsersC as $ruc ){
-            dd($roundUserDates[$j]);
+            dd($roundUserDates[$j],$ruc->id,$round_id);
         
 
         $userAnswers = DB::table('bid_results')
