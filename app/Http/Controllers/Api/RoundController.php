@@ -217,13 +217,7 @@ class RoundController extends Controller
         }
         if(count($arr)>0){
             // array_values(array_unique($arr));
-            $rounds = [];
-            for($i=0;$i<count($arr);$i++){
-            $user = User::where('id',$arr[$i])->first();
-            array_push($rounds,$user);
-        }
-        // $rounds = $roundz;
-            // $rounds = Round::where('status',2)->findMany($arr);
+            $rounds = Round::where('status',2)->findMany($arr);
             // $closedLeagues = Round::where('status', 2)->orderBy('ending_date', 'DESC')->get();
 
        
