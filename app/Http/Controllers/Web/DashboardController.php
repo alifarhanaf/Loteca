@@ -229,7 +229,12 @@ class DashboardController extends Controller
         // $point->save();
 
         // }
-        $roundUsersC = User::findMany($roundUsersIds);
+        // $roundUsersC = User::findMany($roundUsersIds);
+        $roundUsersC = [];
+        for($i=0;$i<count($roundUsersIds);$i++){
+            $user = User::where('id',$roundUsersIds[$i])->first();
+            array_push($roundUsersC,$user);
+        }
         $j = 0;
          
         foreach($roundUsersC as $ruc ){
