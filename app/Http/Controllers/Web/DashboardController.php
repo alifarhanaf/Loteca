@@ -169,8 +169,8 @@ class DashboardController extends Controller
         if($winner){
             return redirect()->back()->with('error','Already Finalized This Round.');
         }
-        // DB::beginTransaction();
-        // try {
+        DB::beginTransaction();
+        try {
             
            
         $round_id = $id;
@@ -217,7 +217,7 @@ class DashboardController extends Controller
                 
             }
         }else{
-            // DB::rollback();
+            DB::rollback();
             return redirect()->back()->with('error','You have Not Added Game Results Yet.     Kindly Add Answers First.');
         }
         }
@@ -413,12 +413,12 @@ class DashboardController extends Controller
         
 
         // return true;
-        // DB::commit();
+        DB::commit();
         return redirect()->back()->with('success', 'Round Successfully Finalized',); 
-        // } catch (\Exception $ex) {
-        //     DB::rollback();
-        //     return redirect()->back()->with('error',$ex->getMessage());
-        // }
+        } catch (\Exception $ex) {
+            DB::rollback();
+            return redirect()->back()->with('error',$ex->getMessage());
+        }
        
         
 
