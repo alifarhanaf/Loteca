@@ -233,13 +233,14 @@ class DashboardController extends Controller
         $j = 0;
          
         foreach($roundUsersC as $ruc ){
+            dd($roundUserDates[$j]);
         
 
         $userAnswers = DB::table('bid_results')
         ->where('user_id', $ruc->id)
         ->where('round_id', $round_id)
         ->where('created_at',$roundUserDates[$j])->get();
-        return $userAnswers;
+        // return $userAnswers;
         $i = 0;
         foreach($userAnswers as $UA){
          
