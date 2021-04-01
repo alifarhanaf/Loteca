@@ -206,6 +206,12 @@ class LeaderBoardController extends Controller
                 if(empty($multipleWinners2) && $pt->points == ($totalGames-2)){
 
                     array_push($multipleWinners3,$pt->user); 
+                }if(empty($multipleWinners3) && $pt->points == ($totalGames-3)){
+
+                    array_push($multipleWinners4,$pt->user); 
+                }if(empty($multipleWinners4) && $pt->points == ($totalGames-4)){
+
+                    array_push($multipleWinners5,$pt->user); 
                 }
             }
             if(!empty($multipleWinners)){
@@ -215,6 +221,10 @@ class LeaderBoardController extends Controller
                 $arr[$i] =  $multipleWinners2;
             }elseif(!empty($multipleWinners3)){
                 $arr[$i] =  $multipleWinners3;
+            }elseif(!empty($multipleWinners4)){
+                $arr[$i] =  $multipleWinners4;
+            }elseif(!empty($multipleWinners5)){
+                $arr[$i] =  $multipleWinners5;
             }
           
         }
