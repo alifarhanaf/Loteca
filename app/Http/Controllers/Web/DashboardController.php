@@ -192,7 +192,7 @@ class DashboardController extends Controller
 
         }
         for($i=0;$i<count($roundUsersIds);$i++){
-            $ruc = User::where('id',$roundUsersIds[$i]);
+            $ruc = User::where('id',$roundUsersIds[$i])->first();
             $userAnswers = DB::table('bid_results')
             ->where('user_id', $ruc->id)
             ->where('round_id', $round_id)
