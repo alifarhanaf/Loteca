@@ -376,37 +376,39 @@ class DashboardController extends Controller
           
         }
         // return $arr;
-       
-        for ($i = 0; $i < count($packages); $i++) {
-            $totalCoinsApplied = $packages[$i]->accumulative_price;
-            $winnersTotal = count($arr[$i]);
-            $CoinPerHead = $totalCoinsApplied/$winnersTotal;
-            for($j=0;$j<count($arr[$i]);$j++){
-                $points = Point::where('round_id',$round_id)->where('package_id',$packages[$i]->id)->where('user_id',$arr[$i][$j])->where('created_at',$datz[$i][$j])->first();
-                 $points->winning_coins = $CoinPerHead;
-                 $points->save();
-                $winner = new Winner();
-                $winner->round_id = $round_id;
-                $winner->user_id = $arr[$i][$j];
-                $winner->package_id = $packages[$i]->id;
-                $winner->prize = $CoinPerHead;
-                $winner->save();
+       //Start Winners
+        // for ($i = 0; $i < count($packages); $i++) {
+        //     $totalCoinsApplied = $packages[$i]->accumulative_price;
+        //     $winnersTotal = count($arr[$i]);
+        //     $CoinPerHead = $totalCoinsApplied/$winnersTotal;
+        //     for($j=0;$j<count($arr[$i]);$j++){
+        //         $points = Point::where('round_id',$round_id)->where('package_id',$packages[$i]->id)->where('user_id',$arr[$i][$j])->where('created_at',$datz[$i][$j])->first();
+        //          $points->winning_coins = $CoinPerHead;
+        //          $points->save();
+        //         $winner = new Winner();
+        //         $winner->round_id = $round_id;
+        //         $winner->user_id = $arr[$i][$j];
+        //         $winner->package_id = $packages[$i]->id;
+        //         $winner->prize = $CoinPerHead;
+        //         $winner->save();
 
-            }
-            // foreach($arr[$i] as $a){
-            //      $points = Point::where('round_id',$round_id)->where('package_id',$packages[$i]->id)->where('user_id',$a)->first();
-            //      $points->winning_coins = $CoinPerHead;
-            //      $points->save();
-            //     $winner = new Winner();
-            //     $winner->round_id = $round_id;
-            //     $winner->user_id = $a;
-            //     $winner->package_id = $packages[$i]->id;
-            //     $winner->prize = $CoinPerHead;
-            //     $winner->save();
-            // }
+        //     }
+            
+        //     // foreach($arr[$i] as $a){
+        //     //      $points = Point::where('round_id',$round_id)->where('package_id',$packages[$i]->id)->where('user_id',$a)->first();
+        //     //      $points->winning_coins = $CoinPerHead;
+        //     //      $points->save();
+        //     //     $winner = new Winner();
+        //     //     $winner->round_id = $round_id;
+        //     //     $winner->user_id = $a;
+        //     //     $winner->package_id = $packages[$i]->id;
+        //     //     $winner->prize = $CoinPerHead;
+        //     //     $winner->save();
+        //     // }
             
 
-        }
+        // }
+        //EndWinners
 
         
        
