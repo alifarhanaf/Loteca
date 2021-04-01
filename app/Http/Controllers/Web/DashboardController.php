@@ -226,6 +226,7 @@ class DashboardController extends Controller
         $point->package_id = $userAnswers[0]->package_id;
         $point->points = $i;
         $point->total_points = $totalGames;
+        $point->created_at = $roundUserDates[$i];
         $point->save();
 
         }
@@ -299,6 +300,7 @@ class DashboardController extends Controller
         
         
         $arr = [];
+        $datz = [];
         for ($i = 0; $i < count($packages); $i++) {
             $multipleWinners = [];
             $multipleWinners2 = [];
@@ -306,6 +308,12 @@ class DashboardController extends Controller
             $multipleWinners4 = [];
             $multipleWinners5 = [];
             $multipleWinners6 = [];
+            $multipleWinnersDates = [];
+            $multipleWinnersDates2 = [];
+            $multipleWinnersDates3 = [];
+            $multipleWinnersDates4 = [];
+            $multipleWinnersDates5 = [];
+            $multipleWinnersDates6 = [];
             $points = Point::where('round_id',$round_id)->where('package_id',$packages[$i]->id)->orderBy('points', 'desc')->get();
            
             $totalGames = count($round->games);
@@ -314,41 +322,53 @@ class DashboardController extends Controller
                 
                 if($pt->points == $totalGames){    
                     array_push($multipleWinners,$pt->user->id); 
+                    array_push($multipleWinnersDates,$pt->created_at); 
                 }
                 if(empty($multipleWinners) && $pt->points == ($totalGames-1)){
 
                     array_push($multipleWinners2,$pt->user->id); 
+                    array_push($multipleWinnersDates2,$pt->created_at);
                 }
                 if(empty($multipleWinners2) && $pt->points == ($totalGames-2)){
 
                     array_push($multipleWinners3,$pt->user->id); 
+                    array_push($multipleWinnersDates3,$pt->created_at);
                 }
                 if(empty($multipleWinners3) && $pt->points == ($totalGames-3)){
 
-                    array_push($multipleWinners4,$pt->user->id); 
+                    array_push($multipleWinners4,$pt->user->id);
+                    array_push($multipleWinnersDates4,$pt->created_at); 
                 }
                 if(empty($multipleWinners4) && $pt->points == ($totalGames-4)){
 
-                    array_push($multipleWinners5,$pt->user->id); 
+                    array_push($multipleWinners5,$pt->user->id);
+                    array_push($multipleWinnersDates5,$pt->created_at); 
                 }
                 if(empty($multipleWinners5) && $pt->points == ($totalGames-5)){
 
                     array_push($multipleWinners6,$pt->user->id); 
+                    array_push($multipleWinnersDates6,$pt->created_at);
                 }
             }
             if(!empty($multipleWinners)){
                 
                 $arr[$i] =  $multipleWinners;
+                $datz[$i] =  $multipleWinnersDates;
             }elseif(!empty($multipleWinners2)){
                 $arr[$i] =  $multipleWinners2;
+                $datz[$i] =  $multipleWinnersDates2;
             }elseif(!empty($multipleWinners3)){
                 $arr[$i] =  $multipleWinners3;
+                $datz[$i] =  $multipleWinnersDates3;
             }elseif(!empty($multipleWinners4)){
                 $arr[$i] =  $multipleWinners4;
+                $datz[$i] =  $multipleWinnersDates4;
             }elseif(!empty($multipleWinners5)){
                 $arr[$i] =  $multipleWinners5;
+                $datz[$i] =  $multipleWinnersDates5;
             }elseif(!empty($multipleWinners6)){
                 $arr[$i] =  $multipleWinners6;
+                $datz[$i] =  $multipleWinnersDates6;
             }
 
             
@@ -360,17 +380,29 @@ class DashboardController extends Controller
             $totalCoinsApplied = $packages[$i]->accumulative_price;
             $winnersTotal = count($arr[$i]);
             $CoinPerHead = $totalCoinsApplied/$winnersTotal;
-            foreach($arr[$i] as $a){
-                 $points = Point::where('round_id',$round_id)->where('package_id',$packages[$i]->id)->where('user_id',$a)->first();
+            for($j=0;$j<count($arr[$i]);$j++){
+                $points = Point::where('round_id',$round_id)->where('package_id',$packages[$i]->id)->where('user_id',$arr[$i][$j])->where('created_at',$datz[$i][$j])->first();
                  $points->winning_coins = $CoinPerHead;
                  $points->save();
                 $winner = new Winner();
                 $winner->round_id = $round_id;
-                $winner->user_id = $a;
+                $winner->user_id = $arr[$i][$j];
                 $winner->package_id = $packages[$i]->id;
                 $winner->prize = $CoinPerHead;
                 $winner->save();
+
             }
+            // foreach($arr[$i] as $a){
+            //      $points = Point::where('round_id',$round_id)->where('package_id',$packages[$i]->id)->where('user_id',$a)->first();
+            //      $points->winning_coins = $CoinPerHead;
+            //      $points->save();
+            //     $winner = new Winner();
+            //     $winner->round_id = $round_id;
+            //     $winner->user_id = $a;
+            //     $winner->package_id = $packages[$i]->id;
+            //     $winner->prize = $CoinPerHead;
+            //     $winner->save();
+            // }
             
 
         }
