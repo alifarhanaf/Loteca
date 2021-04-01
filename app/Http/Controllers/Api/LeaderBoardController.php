@@ -189,6 +189,8 @@ class LeaderBoardController extends Controller
             $multipleWinners = [];
             $multipleWinners2 = [];
             $multipleWinners3 = [];
+            $multipleWinners4 = [];
+            $multipleWinners5 = [];
             $points = Point::where('round_id',$round_id)->where('package_id',$packages[$i]->id)->orderBy('points', 'desc')->get();
             $totalCoinsApplied = $packages[$i]->accumulative_price;
             $totalGames = count($round->games);
