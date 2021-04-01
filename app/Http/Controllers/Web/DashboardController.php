@@ -183,20 +183,22 @@ class DashboardController extends Controller
         // $roundUsers = RoundUser::where('round_id',$round_id)->get();
         $roundUsers = DB::table('round_user')->where('round_id',$round_id)->get();
         $roundUsersIds = [];
+        $roundUserDates = [];
         $test = [];
         $test1 = [];
         foreach($roundUsers as $ru){
             array_push($roundUsersIds,$ru->user_id);
+            array_push($roundUserDates,$ru->created_at);
 
         }
-        $roundUsersC = User::findMany($roundUsersIds);
-        foreach($roundUsersC as $ruc ){
-
-        $userAnswers = DB::table('bid_results')
-        ->where('user_id', $ruc->id)
-        ->where('round_id', $round_id)->get();
-        $i = 0;
-        foreach($userAnswers as $UA){
+        for($i=0;$i<count($roundUsersIds);$i++){
+            $ruc = User::find($roundUsersIds[$i]);
+            $userAnswers = DB::table('bid_results')
+            ->where('user_id', $ruc->id)
+            ->where('round_id', $round_id)
+            ->where('created_at',$roundUserDates[$i])->get();
+            $i = 0;
+            foreach($userAnswers as $UA){
          
             $gm = Game::where('id',$UA->game_id)->first();
             if($gm->results){
@@ -218,13 +220,6 @@ class DashboardController extends Controller
             return redirect()->back()->with('error','You have Not Added Game Results Yet.     Kindly Add Answers First.');
         }
         }
-        //EndForeach
-        // $data = array(
-        //     "oAnswer" => $test,
-        //     "gAnswer" => $test1
-        // );
-        // return $data;
-
         $point = new Point();
         $point->round_id = $round_id;
         $point->user_id = $ruc->id;
@@ -233,8 +228,46 @@ class DashboardController extends Controller
         $point->total_points = $totalGames;
         $point->save();
 
-        
         }
+        // $roundUsersC = User::findMany($roundUsersIds);
+        // foreach($roundUsersC as $ruc ){
+
+        // $userAnswers = DB::table('bid_results')
+        // ->where('user_id', $ruc->id)
+        // ->where('round_id', $round_id)->get();
+        // $i = 0;
+        // foreach($userAnswers as $UA){
+         
+        //     $gm = Game::where('id',$UA->game_id)->first();
+        //     if($gm->results){
+        //     $gameAnswer0 = $gm->results->Answer;
+        //        $oAnswer =  str_replace(' ', '', $gameAnswer0);
+        //        $uAnswer = str_replace(' ', '', $UA->answer);
+              
+        //     if(strtoupper($oAnswer) == strtoupper($uAnswer)){
+                
+        //         $i++;
+                
+        //     }
+        // }else{
+        //     DB::rollback();
+        //     return redirect()->back()->with('error','You have Not Added Game Results Yet.     Kindly Add Answers First.');
+        // }
+        // }
+        
+
+        // $point = new Point();
+        // $point->round_id = $round_id;
+        // $point->user_id = $ruc->id;
+        // $point->package_id = $userAnswers[0]->package_id;
+        // $point->points = $i;
+        // $point->total_points = $totalGames;
+        // $point->save();
+
+        
+        // }
+
+        //Old Commented
         // $userAnswers = DB::table('bid_results')
         // ->where('user_id', $user_id)
         // ->where('round_id', $round_id)->get();
