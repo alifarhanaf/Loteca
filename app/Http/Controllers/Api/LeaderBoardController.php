@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\User;
 use Carbon\Carbon;
+use App\Models\Game;
 use App\Models\Point;
 use App\Models\Round;
 use App\Models\Winner;
@@ -228,38 +229,50 @@ class LeaderBoardController extends Controller
     public function closedLeague(Request $request){
        
         $round_id = $request->round_id;
-        // $betting_date = $request->betting_date;
+        $betting_date = $request->betting_date;
         $round = Round::where('id',$round_id)->first();
         $packages = $round->packages;
-        // if($round->status == 1){
+        if($round->status == 1){
 
-        //     $userAnswers = DB::table('bid_results')
-        //                 ->where('user_id', Auth::user()->id)
-        //                 ->where('round_id', $round_id)
-        //                 ->where('created_at',$betting_date)->get();
+            $userAnswers = DB::table('bid_results')
+                        ->where('user_id', Auth::user()->id)
+                        ->where('round_id', $round_id)
+                        ->where('created_at',$betting_date)->get();
+            $arr2 = [];
+            for($k=0;$k<count($userAnswers);$k++){
+                $game = Game::where('id',$userAnswers[$k]->game_id)->first();
+                
+                $arr2[$k]['id'] = $userAnswers[$k]->id;
+                $arr2[$k]['team_a'] = $game->team_a;
+                $arr2[$k]['team_b'] = $game->team_b;
+                $arr2[$k]['winner'] = $userAnswers[$k]->answer;
+
+            }
+            
             
 
 
 
 
-        //     $data = array(
-        //         "status" => 200,
-        //         "response" => "true",
-        //         "message" => "Result Received",
-        //         "First Package Winners" => null,
-        //         "Second Package Winners" => null,
-        //         "Third Package Winners" => null,
-        //         "answers" => null,
-        //         "userAnswers" => '',
-        //         "round" => $round,
+            $data = array(
+                "status" => 200,
+                "response" => "true",
+                "message" => "Result Received",
+                "First Package Winners" => null,
+                "Second Package Winners" => null,
+                "Third Package Winners" => null,
+                "answers" => null,
+                "userAnswers" => $arr2,
+                "round" => $round,
     
     
-        //     );
+            );
     
     
-        //     return response()->json($data, 200);
+            return response()->json($data, 200);
 
-        // }
+        }else{
+
         $winnerCat1 = Winner::where('round_id',$round_id)->where('package_id',$packages[0]->id)->get();
         $array1 = [];
         foreach($winnerCat1 as $ws1){
@@ -337,6 +350,7 @@ class LeaderBoardController extends Controller
                 "Second Package Winners" => $arr[1],
                 "Third Package Winners" => $arr[2],
                 "answers" => $arr1,
+                "userAnswers" => null,
                 "round" => $round,
     
     
@@ -346,4 +360,6 @@ class LeaderBoardController extends Controller
             return response()->json($data, 200);
         
     }
+}
+
 }
