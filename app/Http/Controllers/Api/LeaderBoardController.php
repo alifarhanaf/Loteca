@@ -181,7 +181,7 @@ class LeaderBoardController extends Controller
         return response()->json($data, 200);
     }
     public function closedLeague(Request $request){
-        return $request;
+        dd($request);
         $round_id = $request->round_id;
         $round = Round::where('id',$round_id)->first();
         $packages = $round->packages;
