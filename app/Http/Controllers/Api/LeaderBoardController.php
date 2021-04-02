@@ -180,11 +180,11 @@ class LeaderBoardController extends Controller
 
         return response()->json($data, 200);
     }
-    public function test(Request $request){
-        return $request;
-    }
+    // public function test(Request $request){
+    //     return $request;
+    // }
     public function closedLeague(Request $request){
-        dd($request);
+        // dd($request);
         $round_id = $request->round_id;
         $round = Round::where('id',$round_id)->first();
         $packages = $round->packages;
@@ -210,7 +210,7 @@ class LeaderBoardController extends Controller
         $arr[0] = User::findMany($array1);
         $arr[1] = User::findMany($array2);
         $arr[2] = User::findMany($array3);
-        return $arr;
+        // return $arr;
 
 
         

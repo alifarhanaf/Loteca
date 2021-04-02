@@ -34,7 +34,6 @@ Route::post('/arrayCheck','Api\RoundController@arrayCheck');
 
 Route::middleware('auth:api')->group( function(){
     // Route::get('/user', 'Auth\ApiAuthController@user')->name('user.info');
-    Route::post('/leaguesss', 'Api\LeaderBoardController@test');
     Route::get('/mainRound','Api\RoundController@index');
     Route::post('/submitResult','Api\RoundController@betSubmit');
     Route::get('/lastRoundResult', 'Api\RoundController@llr');
@@ -47,7 +46,7 @@ Route::middleware('auth:api')->group( function(){
     Route::post('/userRecord','Api\CoinController@index');
     Route::post('/sendCoins','Api\CoinController@sendCoins');
     Route::post('/winner','Api\LeaderBoardController@winner');
-    Route::post('/leagueDetails', 'Api\LeaderBoardController@test');
+    Route::post('/leagueDetails', 'Api\LeaderBoardController@closedLeague');
     Route::post('/activeLeague', 'Api\MyLeagueController@activeLeague');
     Route::post('/mainRoundForAgent','Api\AgentController@index');
     Route::post('/ValidateUser','Api\AgentController@ValidateUser');
