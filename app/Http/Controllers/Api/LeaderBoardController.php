@@ -95,12 +95,13 @@ class LeaderBoardController extends Controller
             // }
             for ($i = 0; $i < count($points); $i++) {
                 $aa = DB::table('points')->where('user_id',$points[$i]->user_id)->get();
+                $user = User::where('id',$points[$i]->user_id)->with('images')->first();
                 // $aa = Point::where('user_id',$points[$i]->user_id)->get();
                 $count = 0;
                 foreach($aa as $a){
                     $count  = $count + $a->points;
                 }
-                $points[$i]->user['image'] = $points[$i]->user->images[0]->url;
+                $points[$i]->user['image'] = $user->images[0]->url;
                 $points[$i]->user['Winning Coins'] = $count*10;
                 if(!in_array($points[$i]->user, $multipleWinners, true)){
                     array_push($multipleWinners,$points[$i]->user);
