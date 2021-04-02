@@ -127,7 +127,7 @@ class LeaderBoardController extends Controller
                     
               
             }
-            return $multipleWinners;
+            // return $multipleWinners;
             
           
             // for ($i = 0; $i < count($points); $i++) {
