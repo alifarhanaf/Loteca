@@ -329,6 +329,20 @@ class LeaderBoardController extends Controller
                 $arr1[$i]['team_b'] = $games[$i]->team_b;
                 $arr1[$i]['winner'] = $games[$i]->results->Answer;
             }
+            $userAnswers = DB::table('bid_results')
+                        ->where('user_id', Auth::user()->id)
+                        ->where('round_id', $round_id)
+                        ->where('created_at',$betting_date)->get();
+            $arr2 = [];
+            for($k=0;$k<count($userAnswers);$k++){
+                $game = Game::where('id',$userAnswers[$k]->game_id)->first();
+                
+                $arr2[$k]['id'] = $userAnswers[$k]->id;
+                $arr2[$k]['team_a'] = $game->team_a;
+                $arr2[$k]['team_b'] = $game->team_b;
+                $arr2[$k]['winner'] = $userAnswers[$k]->answer;
+
+            }
 
 
         if (!array_key_exists("0",$arr)){
