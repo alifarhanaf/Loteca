@@ -209,9 +209,11 @@ class RoundController extends Controller
     {
         $userLeagues = DB::table('round_user')->where('user_id',Auth::user()->id)->get();
         $arr = [];
+        $Dates = [];
         
         foreach($userLeagues as $uL){
             array_push($arr, $uL->round_id);
+            array_push($Dates, $uL->created_at);
            
 
         }
@@ -220,6 +222,7 @@ class RoundController extends Controller
             $rounds = [];
         for($i=0;$i<count($arr);$i++){
             $rdz = Round::where('id',$arr[$i])->first();
+            $rdz['betting_date'] = $Dates[$i];
             array_push($rounds,$rdz);
         }
             // $rounds = Round::where('status',2)->findMany($arr);
