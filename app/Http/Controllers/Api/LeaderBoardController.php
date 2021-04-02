@@ -81,28 +81,22 @@ class LeaderBoardController extends Controller
     }
 
     public function leaderB(){
-        // return 'Hello';
+        
        
         
         $multipleWinners = [];
         $multipleWinnersMonthly = [];
      
    
-        
             $points = DB::table('points')->pluck('user_id');
-            // return $points;
-            // foreach($points as $pt){
-
-            // }
+           
             for ($i = 0; $i < count($points); $i++) {
                 $pts = DB::table('points')->where('user_id',$points[$i])->pluck('points');
                 $cts = DB::table('points')->where('user_id',$points[$i])->where( 'created_at', '>', Carbon::now()->subDays(30))->pluck('points');
-                // return $pts;
-                // $aa = DB::table('points')->where('user_id',$points[$i]->user_id)->get();
-                $user = User::where('id',$points[$i])->with('images')->first();
-                // $image = DB::table('images')->where('user_id',$points[$i]->user_id)->get();
-                // dd($image);
-                // $aa = Point::where('user_id',$points[$i]->user_id)->get();
+                
+                $usera = User::where('id',$points[$i])->with('images')->first();
+                $userb = User::where('id',$points[$i])->with('images')->first();
+                
                 $count = 0;
                 foreach($pts as $a){
                     $count  = $count + $a;
@@ -111,16 +105,18 @@ class LeaderBoardController extends Controller
                 foreach($cts as $b){
                     $ccount  = $ccount + $b;
                 }
+                // dd($count,$ccount);
 
-                $user['image'] = $user->images[0]->url;
-                $user['Winning Coins'] = $count*10;
-                if(!in_array($user, $multipleWinners, true)){
-                    array_push($multipleWinners,$user);
+                $usera['image'] = $usera->images[0]->url;
+                $usera['Winning Coins'] = $count*10;
+                if(!in_array($usera, $multipleWinners, true)){
+                    array_push($multipleWinners,$usera);
                 }
-                $user['image'] = $user->images[0]->url;
-                $user['Winning Coins'] = $ccount*10;
-                if(!in_array($user, $multipleWinnersMonthly, true)){
-                    array_push($multipleWinnersMonthly,$user);
+
+                $userb['image'] = $userb->images[0]->url;
+                $userb['Winning Coins'] = $ccount*10;
+                if(!in_array($userb, $multipleWinnersMonthly, true)){
+                    array_push($multipleWinnersMonthly,$userb);
                 }
 
 
