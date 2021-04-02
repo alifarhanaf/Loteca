@@ -6,6 +6,7 @@ use App\User;
 use Carbon\Carbon;
 use App\Models\Point;
 use App\Models\Round;
+use App\Models\Winner;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
@@ -183,53 +184,78 @@ class LeaderBoardController extends Controller
         $round_id = $request->round_id;
         $round = Round::where('id',$round_id)->first();
         $packages = $round->packages;
-        
-        $arr = [];
-        for ($i = 0; $i < count($packages); $i++) {
-            $multipleWinners = [];
-            $multipleWinners2 = [];
-            $multipleWinners3 = [];
-            $multipleWinners4 = [];
-            $multipleWinners5 = [];
-            $points = Point::where('round_id',$round_id)->where('package_id',$packages[$i]->id)->orderBy('points', 'desc')->get();
-            $totalCoinsApplied = $packages[$i]->accumulative_price;
-            $totalGames = count($round->games);
-            foreach($points as $pt){
+        $winnerCat1 = Winner::where('round_id',$round_id)->where('package_id',$packages[0]->id)->get();
+        $array1 = [];
+        foreach($winnerCat1 as $ws1){
+            array_push($array1,$ws1->user_id);
 
-                $pt->user['image'] = $pt->user->images[0]->url;
-                $pt->user['Winning Coins'] = $pt->winning_coins;
-                if($pt->points == $totalGames){    
-                    array_push($multipleWinners,$pt->user); 
-                }
-                if(empty($multipleWinners) && $pt->points == ($totalGames-1)){
-
-                    array_push($multipleWinners2,$pt->user); 
-                }
-                if(empty($multipleWinners2) && $pt->points == ($totalGames-2)){
-
-                    array_push($multipleWinners3,$pt->user); 
-                }if(empty($multipleWinners3) && $pt->points == ($totalGames-3)){
-
-                    array_push($multipleWinners4,$pt->user); 
-                }if(empty($multipleWinners4) && $pt->points == ($totalGames-4)){
-
-                    array_push($multipleWinners5,$pt->user); 
-                }
-            }
-            if(!empty($multipleWinners)){
-                
-                $arr[$i] =  $multipleWinners;
-            }elseif(!empty($multipleWinners2)){
-                $arr[$i] =  $multipleWinners2;
-            }elseif(!empty($multipleWinners3)){
-                $arr[$i] =  $multipleWinners3;
-            }elseif(!empty($multipleWinners4)){
-                $arr[$i] =  $multipleWinners4;
-            }elseif(!empty($multipleWinners5)){
-                $arr[$i] =  $multipleWinners5;
-            }
-          
         }
+        $winnerCat2 = Winner::where('round_id',$round_id)->where('package_id',$packages[1]->id)->get();
+        $array2 = [];
+        foreach($winnerCat2 as $ws2){
+            array_push($array2,$ws2->user_id);
+
+        }
+        $winnerCat3 = Winner::where('round_id',$round_id)->where('package_id',$packages[2]->id)->get();
+        $array3 = [];
+        foreach($winnerCat3 as $ws3){
+            array_push($array3,$ws3->user_id);
+
+        }
+        $arr= [];
+        $arr[0] = User::findMany($array1);
+        $arr[1] = User::findMany($array2);
+        $arr[2] = User::findMany($array3)
+
+
+        
+        
+        // $arr = [];
+        // for ($i = 0; $i < count($packages); $i++) {
+        //     $multipleWinners = [];
+        //     $multipleWinners2 = [];
+        //     $multipleWinners3 = [];
+        //     $multipleWinners4 = [];
+        //     $multipleWinners5 = [];
+        //     $points = Point::where('round_id',$round_id)->where('package_id',$packages[$i]->id)->orderBy('points', 'desc')->get();
+        //     $totalCoinsApplied = $packages[$i]->accumulative_price;
+        //     $totalGames = count($round->games);
+        //     foreach($points as $pt){
+
+        //         $pt->user['image'] = $pt->user->images[0]->url;
+        //         $pt->user['Winning Coins'] = $pt->winning_coins;
+        //         if($pt->points == $totalGames){    
+        //             array_push($multipleWinners,$pt->user); 
+        //         }
+        //         if(empty($multipleWinners) && $pt->points == ($totalGames-1)){
+
+        //             array_push($multipleWinners2,$pt->user); 
+        //         }
+        //         if(empty($multipleWinners2) && $pt->points == ($totalGames-2)){
+
+        //             array_push($multipleWinners3,$pt->user); 
+        //         }if(empty($multipleWinners3) && $pt->points == ($totalGames-3)){
+
+        //             array_push($multipleWinners4,$pt->user); 
+        //         }if(empty($multipleWinners4) && $pt->points == ($totalGames-4)){
+
+        //             array_push($multipleWinners5,$pt->user); 
+        //         }
+        //     }
+        //     if(!empty($multipleWinners)){
+                
+        //         $arr[$i] =  $multipleWinners;
+        //     }elseif(!empty($multipleWinners2)){
+        //         $arr[$i] =  $multipleWinners2;
+        //     }elseif(!empty($multipleWinners3)){
+        //         $arr[$i] =  $multipleWinners3;
+        //     }elseif(!empty($multipleWinners4)){
+        //         $arr[$i] =  $multipleWinners4;
+        //     }elseif(!empty($multipleWinners5)){
+        //         $arr[$i] =  $multipleWinners5;
+        //     }
+          
+        // }
 
         // $round = Round::where('id', $round_id)->first();
             $games = $round->games;
@@ -253,8 +279,8 @@ class LeaderBoardController extends Controller
         if (!array_key_exists("2",$arr)){
             $arr[2] = null;
         }
-        // $firstWinners =count($arr[0]);
-        // return $arr;
+        
+
         $data = array(
                 "status" => 200,
                 "response" => "true",
