@@ -88,20 +88,22 @@ class LeaderBoardController extends Controller
      
    
         
-            $points = DB::table('points')->get();
+            $points = DB::table('points')->pluck('user_id');
             // return $points;
             // foreach($points as $pt){
 
             // }
             for ($i = 0; $i < count($points); $i++) {
-                $aa = DB::table('points')->where('user_id',$points[$i]->user_id)->get();
-                $user = User::where('id',$points[$i]->user_id)->with('images')->first();
+                $pts = DB::table('points')->where('user_id',$points[$i])->pluck('points');
+                // return $pts;
+                // $aa = DB::table('points')->where('user_id',$points[$i]->user_id)->get();
+                $user = User::where('id',$points[$i])->with('images')->first();
                 // $image = DB::table('images')->where('user_id',$points[$i]->user_id)->get();
                 // dd($image);
                 // $aa = Point::where('user_id',$points[$i]->user_id)->get();
                 $count = 0;
-                foreach($aa as $a){
-                    $count  = $count + $a->points;
+                foreach($pts as $a){
+                    $count  = $count + $a;
                 }
                 $user['image'] = $user->images[0]->url;
                 $user['Winning Coins'] = $count*10;
