@@ -88,12 +88,12 @@ class LeaderBoardController extends Controller
    
         
             $points = Point::all();
-            return $points;
+            // return $points;
             
           
             for ($i = 0; $i < count($points); $i++) {
            
-                $aa = Point::where('user_id',$points[$i]->user->id)->get();
+                $aa = Point::where('user_id',$points[$i]->user_id)->get();
                 $count = 0;
                 foreach($aa as $a){
                     $count  = $count + $a->points;
@@ -118,7 +118,7 @@ class LeaderBoardController extends Controller
           
             for ($i = 0; $i < count($points); $i++) {
            
-                $aa = Point::where('user_id',$points[$i]->user->id)->where( 'created_at', '>', Carbon::now()->subDays(30))->get();
+                $aa = Point::where('user_id',$points[$i]->user_id)->where( 'created_at', '>', Carbon::now()->subDays(30))->get();
                 $count = 0;
                 foreach($aa as $a){
                     $count  = $count + $a->points;
