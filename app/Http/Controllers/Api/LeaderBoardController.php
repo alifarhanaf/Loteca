@@ -88,7 +88,7 @@ class LeaderBoardController extends Controller
    
         
             $points = Point::all();
-            // return $points;
+            return $points;
             
           
             for ($i = 0; $i < count($points); $i++) {
