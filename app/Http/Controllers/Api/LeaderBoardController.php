@@ -206,6 +206,7 @@ class LeaderBoardController extends Controller
         $arr[0] = User::findMany($array1);
         $arr[1] = User::findMany($array2);
         $arr[2] = User::findMany($array3);
+        return $arr;
 
 
         
