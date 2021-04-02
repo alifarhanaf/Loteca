@@ -87,7 +87,7 @@ class LeaderBoardController extends Controller
      
    
         
-            $points = Point::orderBy('points', 'desc')->get();
+            $points = Point::all();
             return $points;
             
           
