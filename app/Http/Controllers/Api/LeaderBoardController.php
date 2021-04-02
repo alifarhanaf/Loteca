@@ -95,7 +95,7 @@ class LeaderBoardController extends Controller
             // }
             for ($i = 0; $i < count($points); $i++) {
                 $aa = DB::table('points')->where('user_id',$points[$i]->user_id)->get();
-                $user = User::where('id',$points[$i]->user_id)->with('images')->first();
+                $user = DB::table('users')->where('id',$points[$i]->user_id)->with('images')->first();
                 // $aa = Point::where('user_id',$points[$i]->user_id)->get();
                 $count = 0;
                 foreach($aa as $a){
