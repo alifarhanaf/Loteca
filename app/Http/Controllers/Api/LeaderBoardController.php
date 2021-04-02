@@ -364,7 +364,7 @@ class LeaderBoardController extends Controller
                 "Second Package Winners" => $arr[1],
                 "Third Package Winners" => $arr[2],
                 "answers" => $arr1,
-                "userAnswers" => null,
+                "userAnswers" => $arr2,
                 "round" => $round,
     
     
