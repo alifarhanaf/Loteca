@@ -106,17 +106,22 @@ class LeaderBoardController extends Controller
                     $ccount  = $ccount + $b;
                 }
                 // dd($count,$ccount);
-
-                $usera['image'] = $usera->images[0]->url;
+                if($count > 0 ){
+                    $usera['image'] = $usera->images[0]->url;
                 $usera['Winning Coins'] = $count*10;
                 if(!in_array($usera, $multipleWinners, true)){
                     array_push($multipleWinners,$usera);
                 }
 
+                }
+
+                
+                if($ccount > 0 ){
                 $userb['image'] = $userb->images[0]->url;
                 $userb['Winning Coins'] = $ccount*10;
                 if(!in_array($userb, $multipleWinnersMonthly, true)){
                     array_push($multipleWinnersMonthly,$userb);
+                }
                 }
 
 
