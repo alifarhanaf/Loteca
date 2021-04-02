@@ -29,7 +29,7 @@ Route::post('/updatePassword','Auth\ApiAuthController@updatePassword');
 
 // Route::post('/finalizeRound','Web\DashboardController@finalizeRound');
 Route::post('/arrayCheck','Api\RoundController@arrayCheck');
-Route::get('/leaderBoard', 'Api\LeaderBoardController@leaderB');
+
 
 
 
@@ -40,6 +40,7 @@ Route::middleware('auth:api')->group( function(){
     Route::get('/lastRoundResult', 'Api\RoundController@llr');
     Route::get('/participatedleagues', 'Api\RoundController@participatedleagues');
     // Route::get('/leaderBoard', 'Api\LeaderBoardController@leaderB');
+    Route::get('/leaderBoard', 'Api\LeaderBoardController@leaderB');
     Route::get('/agents', 'Api\RoundController@agents');
     Route::post('/myleague', 'Api\MyLeagueController@index');
     Route::post('/updateProfile', 'Api\ProfileController@updateUser')->name('profileUpdate.api');

@@ -105,7 +105,7 @@
           {{ request()->is('user_grid') ? 'active' : ''}} 
           {{ request()->is('user_grid') ? 'show' : ''}}
           ">
-            <a href="" class="nav-link with-sub"><i class="typcn typcn-chart-bar-outline"></i>Users</a>
+            <a href="" class="nav-link with-sub"><i class="typcn typcn-group-outline"></i>Users</a>
             <ul class="nav-sub ">
               <li class="nav-sub-item {{ request()->is('user_grid') ? 'active' : ''}}"><a href="{{ route('user_grid') }}" class="nav-sub-link">All Users</a></li>
               {{-- <li class="nav-sub-item"><a href="chart-flot.html" class="nav-sub-link">Flot Charts</a></li>
@@ -151,6 +151,27 @@
             <a href="" class="nav-link with-sub"><i class="typcn typcn-archive"></i>Coins</a>
             <ul class="nav-sub">
               <li class="nav-sub-item {{ request()->is('send_coins') ? 'active' : ''}}"><a href="{{ route('coin.screen') }}" class="nav-sub-link">Send Coins</a></li>
+              {{-- <li class="nav-sub-item"><a href="util-border.html" class="nav-sub-link">Border</a></li>
+              <li class="nav-sub-item"><a href="util-display.html" class="nav-sub-link">Display</a></li>
+              <li class="nav-sub-item"><a href="util-flex.html" class="nav-sub-link">Flex</a></li>
+              <li class="nav-sub-item"><a href="util-height.html" class="nav-sub-link">Height</a></li>
+              <li class="nav-sub-item"><a href="util-margin.html" class="nav-sub-link">Margin</a></li>
+              <li class="nav-sub-item"><a href="util-padding.html" class="nav-sub-link">Padding</a></li>
+              <li class="nav-sub-item"><a href="util-position.html" class="nav-sub-link">Position</a></li>
+              <li class="nav-sub-item"><a href="util-typography.html" class="nav-sub-link">Typography</a></li>
+              <li class="nav-sub-item"><a href="util-width.html" class="nav-sub-link">Width</a></li>
+              <li class="nav-sub-item"><a href="util-extras.html" class="nav-sub-link">Extras</a></li> --}}
+            </ul>
+          </li><!-- nav-item -->
+          <li class="nav-item
+          {{ request()->is('leaderBoard') ? 'active' : ''}}
+          {{ request()->is('leaderBoard') ? 'show' : ''}}
+          {{-- {{ request()->is('transfer_coins') ? 'active' : ''}}
+          {{ request()->is('transfer_coins') ? 'show' : ''}} --}}
+          ">
+            <a href="" class="nav-link with-sub"><i class="typcn typcn-chart-bar-outline"></i>Leader Board</a>
+            <ul class="nav-sub">
+              <li class="nav-sub-item {{ request()->is('leader_board') ? 'active' : ''}}"><a href="{{ route('leaderBoard') }}" class="nav-sub-link">Leader Board</a></li>
               {{-- <li class="nav-sub-item"><a href="util-border.html" class="nav-sub-link">Border</a></li>
               <li class="nav-sub-item"><a href="util-display.html" class="nav-sub-link">Display</a></li>
               <li class="nav-sub-item"><a href="util-flex.html" class="nav-sub-link">Flex</a></li>

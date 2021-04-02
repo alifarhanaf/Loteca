@@ -10,6 +10,7 @@ use App\Models\Winner;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
 
 class LeaderBoardController extends Controller
 {
@@ -227,8 +228,38 @@ class LeaderBoardController extends Controller
     public function closedLeague(Request $request){
        
         $round_id = $request->round_id;
+        // $betting_date = $request->betting_date;
         $round = Round::where('id',$round_id)->first();
         $packages = $round->packages;
+        // if($round->status == 1){
+
+        //     $userAnswers = DB::table('bid_results')
+        //                 ->where('user_id', Auth::user()->id)
+        //                 ->where('round_id', $round_id)
+        //                 ->where('created_at',$betting_date)->get();
+            
+
+
+
+
+        //     $data = array(
+        //         "status" => 200,
+        //         "response" => "true",
+        //         "message" => "Result Received",
+        //         "First Package Winners" => null,
+        //         "Second Package Winners" => null,
+        //         "Third Package Winners" => null,
+        //         "answers" => null,
+        //         "userAnswers" => '',
+        //         "round" => $round,
+    
+    
+        //     );
+    
+    
+        //     return response()->json($data, 200);
+
+        // }
         $winnerCat1 = Winner::where('round_id',$round_id)->where('package_id',$packages[0]->id)->get();
         $array1 = [];
         foreach($winnerCat1 as $ws1){
@@ -251,16 +282,19 @@ class LeaderBoardController extends Controller
         $roundUsers1 = [];
         for($i=0;$i<count($array1);$i++){
             $user = User::where('id',$array1[$i])->first();
+            $user['image'] = $user->images[0]->url;
             array_push($roundUsers1,$user);
         }
         $roundUsers2 = [];
         for($i=0;$i<count($array2);$i++){
             $user = User::where('id',$array2[$i])->first();
+            $user['image'] = $user->images[0]->url;
             array_push($roundUsers2,$user);
         }
         $roundUsers3 = [];
         for($i=0;$i<count($array3);$i++){
             $user = User::where('id',$array3[$i])->first();
+            $user['image'] = $user->images[0]->url;
             array_push($roundUsers3,$user);
         }
         $arr[0] = $roundUsers1;

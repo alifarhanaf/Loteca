@@ -24,8 +24,8 @@ class LeaderBoardController extends Controller
                 $pts = DB::table('points')->where('user_id',$points[$i])->pluck('points');
                 $cts = DB::table('points')->where('user_id',$points[$i])->where( 'created_at', '>', Carbon::now()->subDays(30))->pluck('points');
                 
-                $usera = User::where('id',$points[$i])->with('images')->first();
-                $userb = User::where('id',$points[$i])->with('images')->first();
+                $usera = User::where('id',$points[$i])->with('images')->with('contacts')->first();
+                $userb = User::where('id',$points[$i])->with('images')->with('contacts')->first();
                 
                 $count = 0;
                 foreach($pts as $a){
@@ -38,7 +38,7 @@ class LeaderBoardController extends Controller
                 // dd($count,$ccount);
                 if($count > 0 ){
                     $usera['image'] = $usera->images[0]->url;
-                $usera['Winning Coins'] = $count*10;
+                $usera['winning_coins'] = $count*10;
                 if(!in_array($usera, $multipleWinners, true)){
                     array_push($multipleWinners,$usera);
                 }
@@ -48,7 +48,7 @@ class LeaderBoardController extends Controller
                 
                 if($ccount > 0 ){
                 $userb['image'] = $userb->images[0]->url;
-                $userb['Winning Coins'] = $ccount*10;
+                $userb['winning_coins'] = $ccount*10;
                 if(!in_array($userb, $multipleWinnersMonthly, true)){
                     array_push($multipleWinnersMonthly,$userb);
                 }
@@ -104,10 +104,10 @@ class LeaderBoardController extends Controller
             $multipleWinnersMonthly = array_values(array_unique($multipleWinnersMonthly));
             $multipleWinners = array_values(array_unique($multipleWinners));
             
-            $array = collect($multipleWinners)->sortBy('Winning Coins')->reverse()->toArray();
+            $array = collect($multipleWinners)->sortBy('winning_coins')->reverse()->toArray();
             $arraySorted = array_values($array);
 
-            $brray = collect($multipleWinnersMonthly)->sortBy('Winning Coins')->reverse()->toArray();
+            $brray = collect($multipleWinnersMonthly)->sortBy('winning_coins')->reverse()->toArray();
             $brraySorted = array_values($brray);
 
             $data = array(
