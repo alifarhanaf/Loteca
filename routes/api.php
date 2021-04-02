@@ -46,7 +46,7 @@ Route::middleware('auth:api')->group( function(){
     Route::post('/userRecord','Api\CoinController@index');
     Route::post('/sendCoins','Api\CoinController@sendCoins');
     Route::post('/winner','Api\LeaderBoardController@winner');
-    Route::post('/leagueDetails', 'Api\LeaderBoardController@closedLeague');
+    Route::post('/leagueDetails', 'Api\LeaderBoardController@test');
     Route::post('/activeLeague', 'Api\MyLeagueController@activeLeague');
     Route::post('/mainRoundForAgent','Api\AgentController@index');
     Route::post('/ValidateUser','Api\AgentController@ValidateUser');

@@ -180,6 +180,9 @@ class LeaderBoardController extends Controller
 
         return response()->json($data, 200);
     }
+    public function test(Request $request){
+        return $request;
+    }
     public function closedLeague(Request $request){
         dd($request);
         $round_id = $request->round_id;
