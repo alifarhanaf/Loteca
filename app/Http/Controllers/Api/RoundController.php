@@ -225,9 +225,7 @@ class RoundController extends Controller
             $rdz['betting_date'] = $Dates[$i];
             array_push($rounds,$rdz);
         }
-            // $rounds = Round::where('status',2)->findMany($arr);
-            // $closedLeagues = Round::where('status', 2)->orderBy('ending_date', 'DESC')->get();
-
+            
        
         $data = array(
             "status" => 200,

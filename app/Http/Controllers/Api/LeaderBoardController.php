@@ -80,6 +80,7 @@ class LeaderBoardController extends Controller
     }
 
     public function leaderB(){
+        return 'Hello';
        
         
         $multipleWinners = [];
