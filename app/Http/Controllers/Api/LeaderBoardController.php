@@ -207,9 +207,24 @@ class LeaderBoardController extends Controller
 
         }
         $arr= [];
-        $arr[0] = User::findMany($array1);
-        $arr[1] = User::findMany($array2);
-        $arr[2] = User::findMany($array3);
+        $roundUsers1 = [];
+        for($i=0;$i<count($array1);$i++){
+            $user = User::where('id',$array1[$i])->first();
+            array_push($roundUsers1,$user);
+        }
+        $roundUsers2 = [];
+        for($i=0;$i<count($array2);$i++){
+            $user = User::where('id',$array2[$i])->first();
+            array_push($roundUsers2,$user);
+        }
+        $roundUsers3 = [];
+        for($i=0;$i<count($array3);$i++){
+            $user = User::where('id',$array3[$i])->first();
+            array_push($roundUsers3,$user);
+        }
+        $arr[0] = $roundUsers1;
+        $arr[1] = $roundUsers2;
+        $arr[2] = $roundUsers3;
         // return $arr;
 
 
