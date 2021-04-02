@@ -107,7 +107,7 @@ class LeaderBoardController extends Controller
                     
               
             }
-            // return $multipleWinners;
+            return $multipleWinners;
           
             $multipleWinnersMonthly = [];
      
