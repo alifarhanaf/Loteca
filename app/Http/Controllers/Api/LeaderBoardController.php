@@ -88,7 +88,7 @@ class LeaderBoardController extends Controller
    
         
             $points = Point::all();
-            return $points;
+            // return $points;
             
           
             for ($i = 0; $i < count($points); $i++) {
@@ -107,13 +107,13 @@ class LeaderBoardController extends Controller
                     
               
             }
-            return $multipleWinners;
+            // return $multipleWinners;
           
             $multipleWinnersMonthly = [];
      
    
         
-            $points = Point::orderBy('points', 'desc')->where( 'created_at', '>', Carbon::now()->subDays(30))->get();
+            $points = Point::where( 'created_at', '>', Carbon::now()->subDays(30))->get();
             
           
             for ($i = 0; $i < count($points); $i++) {
