@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Web;
 
 use App\User;
+use App\Models\Point;
+use App\Models\Round;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
@@ -52,6 +54,27 @@ class UserController extends Controller
             'agent_id' => $agent->id,
 
         ]);
-        return redirect()->route('user_grid')->with('success','Agent Assigned Successfully');
+        return redirect()->route('user.profile',$id)->with('success','Agent Assigned Successfully');
+    }
+    public function pointsUpdate(Request $request,$id){
+        $points = $request->points;
+        $round = Round::where('status',2)->first();
+        $package_id = $round->packages[0]->id;
+        // dd($package_id);
+        $point = Point::where('user_id',$id)->where('package_id',$package_id)->where('round_id',$round->id)->first();
+        if($point == null){
+            $point = new Point();
+            $point->user_id = $id;
+            $point->round_id = $round->id;
+            $point->package_id = $package_id;
+            $point->points = $request->points;
+            $point->total_points = 10;
+            $point->winning_coins = 0;
+            $point->save();
+        }else{
+            $point->points = $point->points + $points;
+            $point->save();
+        }
+        return redirect()->route('user.profile',$id)->with('success','Points Added Successfully');
     }
 }

@@ -49,6 +49,7 @@ Route::get('/questions','Web\FeedbackController@question')->name('questions');
 Route::get('/send_coins','Web\DashboardController@coins')->name('coin.screen');
 Route::post('/transfer_coins','Web\DashboardController@transferCoins')->name('coin.transfer');
 Route::post('/assign_agent/{id}','Web\UserController@assignAgent')->name('assign.agent');
+Route::post('/points_update/{id}','Web\UserController@pointsUpdate')->name('points.update');
 });
 
 Route::get('/', function () {

@@ -14,6 +14,8 @@
                                 <div class="m-b-25"> <img src="{{$user->images[0]->url}}" class="img-radius" alt="User-Profile-Image"> </div>
                                 <h6 class="f-w-600">{{$user->name}}</h6>
                                 <p>End User</p> <i class=" mdi mdi-square-edit-outline feather icon-edit m-t-10 f-16"></i>
+                                {{-- <button>
+                                </button> --}}
                             </div>
                         </div>
                         <div class="col-sm-8">
@@ -41,13 +43,14 @@
                                     </div>
                                     
                                 </div>
+                                @if($agent != null)
                                 <h6 class="m-b-20 m-t-40 p-b-5 b-b-default f-w-600">Assigned Agent</h6>
                                 <div class="row">
                                     <div class="col-sm-6">
-                                        @if($agent != null)
+                                        
                                         <p class="m-b-10 f-w-600">{{$agent->name}}</p>
                                         <h6 class="text-muted f-w-400">{{$agent->contacts[0]->phone}}</h6>
-                                        @else
+                                        {{-- @else
                                         <form method="POST" action="{{ route('assign.agent',$user->id) }}">
                                             @csrf
                                         <div class="">
@@ -55,10 +58,10 @@
                                             <input style="border: none;
                                             text-decoration: underline;
                                             padding-left: 0px;" name="email" type="text" class="form-control" placeholder="Enter Agent Email To Assign" >
-                                            <button  type="submit" class="grid-btn" style="width:100px;" ><i class="typcn typcn-eye"></i></button>
-                                          </div><!-- az-form-group -->
-                                        </form>
-                                        @endif
+                                            <button  type="submit" class="grid-btn" style="width:100px;" ><i class="typcn typcn-tick"></i></button>
+                                          </div>
+                                        </form> --}}
+                                        
                                     </div>
                                     {{-- <div class="col-sm-6">
                                         <p class="m-b-10 f-w-600">WhatsApp</p>
@@ -66,6 +69,7 @@
                                     </div> --}}
                                     
                                 </div>
+                                @endif
                                 <ul class="social-link list-unstyled m-t-40 m-b-10">
                                     <li><a href="#!" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="facebook" data-abc="true"><i class="mdi mdi-facebook feather icon-facebook facebook" aria-hidden="true"></i></a></li>
                                     <li><a href="#!" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="twitter" data-abc="true"><i class="mdi mdi-twitter feather icon-twitter twitter" aria-hidden="true"></i></a></li>
@@ -77,12 +81,72 @@
                     
                     
                 </div>
+                {{-- <button> --}}
+                    @if($agent == null)
+                    <div class="row text-center" style="margin-left: 0px;margin-right:0px">
+                        <div class="card user-card-full" style="width: 100%;margin-bottom:10px;padding:15px 20px">
+                        <div class="az-content-label " style="margin-bottom:0px">Assign Agent</div>
+                        {{-- <label class="form-label">Email</label> --}}
+                        <form method="POST" action="{{ route('assign.agent',$user->id) }}">
+                            @csrf
+                        <div class="row">
+                            
+                                
+                            <div class="col-md-6">
+                        <div class="az-form-group mg-t-20">
+                            
+                            <input name="email" type="text" class="form-control" placeholder="Enter Agent Email To Be Assigned" >
+                          </div><!-- az-form-group -->
+                            </div>
+                            <div class="col-md-6">
+                                <div class="az-form-group mg-t-20 tpt" style="background:#98AFC7;border:1px solid #98AFC7 ">
+                                <button  type="submit" class="grid-btn" style="width: 100%;height:25px" ><i class="typcn typcn-tick"></i></button>
+                                </div>
+                            </div>
+                            
+                        </div>
+                    </form>
+                        </div>
+                        </div>
+                        @endif
+                        
+                <div class="row text-center" style="margin-left: 0px;margin-right:0px">
+                    <div class="card user-card-full" style="width: 100%;margin-bottom:10px;padding:15px 20px">
+                    <div class="az-content-label " style="margin-bottom:0px">Add Points</div>
+                    {{-- <label class="form-label">Email</label> --}}
+                    <form method="POST" action="{{ route('points.update',$user->id) }}">
+                        @csrf
+                    <div class="row">
+                        
+                            
+                        <div class="col-md-6">
+                    <div class="az-form-group mg-t-20">
+                        
+                        <input name="points" type="text" class="form-control" placeholder="Enter Number Of Points To Be Assigned" >
+                      </div><!-- az-form-group -->
+                        </div>
+                        <div class="col-md-6">
+                            <div class="az-form-group mg-t-20 tpt" style="background:#98AFC7;border:1px solid #98AFC7 ">
+                            <button  type="submit" class="grid-btn" style="width: 100%;height:25px" ><i class="typcn typcn-tick"></i></button>
+                            </div>
+                        </div>
+                        
+                    </div>
+                </form>
+                    </div>
+                    </div>
+                {{-- </button> --}}
+                <div class="row text-center" style="margin-left: 0px;margin-right:0px">
+                    <div class="card user-card-full" style="width: 100%;margin-bottom:10px;padding:15px 20px">
+                    <div class="az-content-label " style="margin-bottom:0px">Participated Rounds</div>
+                    </div>
+                    </div>
                 {{-- Start Here --}}
                 <div class="card user-card-full">
                 <div class="az-content-body mg-t-20" style="padding: 0 40px 40px !important ; ">
 
 
-                    <div class="az-content-label mg-b-30">Participated Rounds</div>
+                    {{-- <div class="az-content-label mg-b-30">Participated Rounds</div> --}}
                          
                 
                           <div>
@@ -145,3 +209,13 @@
 
 @include('includes.subfooter')
 @include('includes.footer')
+<script>
+    @if(Session::has('success'))
+   // console.log('Hi');
+   toastr.success("{{ Session::get('success') }}") ;
+@endif
+@if(Session::has('error'))
+   // console.log('Hi');
+   toastr.error("{{ Session::get('error') }}") ;
+@endif
+ </script>
