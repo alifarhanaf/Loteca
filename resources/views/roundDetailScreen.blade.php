@@ -107,9 +107,9 @@
     
             </div>
             @if(isset($gms->results))
-            <p class="mg-t-15" style="text-align: center"><b>Original Answer:</b> {{$gms->results->Answer}}</p>
+            <p class="mg-t-10" style="text-align: center"><b>Original Answer:</b> {{$gms->results->Answer}}</p>
             @endif
-            <p class="mg-t-15" style="text-align: center"><b>Happening Date:</b> {{$gms->happening_date}}</p>
+            <p class="mg-t-5 mg-b-5" style="text-align: center"><b>Happening Date:</b> {{$gms->happening_date}}</p>
             
            
            
