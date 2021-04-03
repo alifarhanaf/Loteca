@@ -13,6 +13,9 @@ class RoundController extends Controller
         
         $round->packages;
         $round->games;
+        foreach($round->games as $ga){
+            $ga->results;
+        }
         // return $round;
         // $games = Game::OrderBy('created_at', 'desc')->get();
         // return $games;
@@ -21,6 +24,7 @@ class RoundController extends Controller
         $data = array(
             "round"=> $round,
         );
+        // return $data;
         return view ('roundDetailScreen')->with($data);
         // ->with($data);
 
