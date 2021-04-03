@@ -170,14 +170,15 @@
                                   <td>{{$round->name}}</td>
                                   <td>{{$round->starting_date}}</td>
                                   <td>
-                                    <span class="{{$round->status == 1 ? 'badge badge-pill badge-primary': 'badge badge-pill badge-warning'}}" style="width: 50px;">
-                                      {{$round->status == 1 ? 'Live':'Closed'}}
-                                    </td>
-                                  <td>
                                       
                                     {{$round->ending_date}}
                                       
                                     </td>
+                                  <td>
+                                    <span class="{{$round->status == 1 ? 'badge badge-pill badge-primary': 'badge badge-pill badge-warning'}}" style="width: 50px;">
+                                      {{$round->status == 1 ? 'Live':'Closed'}}
+                                    </td>
+                                  
                                   <td>
                                     <div class="row d-flex justify-content-end" style="margin-right: 8%">
                                         <form action="{{ route ('roundDetail',$round->id) }}" >
