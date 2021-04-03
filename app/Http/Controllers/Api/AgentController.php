@@ -289,30 +289,34 @@ class AgentController extends Controller
                         $games = $round->games;
                         $packages = $round->packages;
                         foreach($games as $game){
-                            // return $round->id;
-                            $ressult1 = DB::table('bid_results')
-                        ->where('user_id', $user->id)
-                        ->where('round_id', $round->id)
-                        ->where('game_id', $game->id)
-                        ->get();
-                        // return $ressult1;
-                        $gta =  str_replace(' ', '', $game->team_a);
-                        $gtb = str_replace(' ', '', $game->team_b);
-                        $gtd = 'Draw';
-                        $gto = str_replace(' ', '', $ressult1[0]->answer);
-                        if(strtoupper($gta) == strtoupper($gto)){
-                            $game['widegtSwitch0']= true ;
-                            $game['widegtSwitch1']= false ;
-                            $game['widegtSwitch2']= false ;
-                        }else if(strtoupper($gtb) == strtoupper($gto)){
-                            $game['widegtSwitch0']= false ;
-                            $game['widegtSwitch1']= false ;
-                            $game['widegtSwitch2']= true ;
-                        }else if(strtoupper($gtd) == strtoupper($gto)){
-                            $game['widegtSwitch0']= false ;
-                            $game['widegtSwitch1']= true ;
-                            $game['widegtSwitch2']= false ;
-                        }
+                            $game['widegtSwitch0']= null ;
+                            $game['widegtSwitch1']= null ;
+                            $game['widegtSwitch2']= null ;
+
+                        //     // return $round->id;
+                        //     $ressult1 = DB::table('bid_results')
+                        // ->where('user_id', $user->id)
+                        // ->where('round_id', $round->id)
+                        // ->where('game_id', $game->id)
+                        // ->get();
+                        // // return $ressult1;
+                        // $gta =  str_replace(' ', '', $game->team_a);
+                        // $gtb = str_replace(' ', '', $game->team_b);
+                        // $gtd = 'Draw';
+                        // $gto = str_replace(' ', '', $ressult1[0]->answer);
+                        // if(strtoupper($gta) == strtoupper($gto)){
+                        //     $game['widegtSwitch0']= true ;
+                        //     $game['widegtSwitch1']= false ;
+                        //     $game['widegtSwitch2']= false ;
+                        // }else if(strtoupper($gtb) == strtoupper($gto)){
+                        //     $game['widegtSwitch0']= false ;
+                        //     $game['widegtSwitch1']= false ;
+                        //     $game['widegtSwitch2']= true ;
+                        // }else if(strtoupper($gtd) == strtoupper($gto)){
+                        //     $game['widegtSwitch0']= false ;
+                        //     $game['widegtSwitch1']= true ;
+                        //     $game['widegtSwitch2']= false ;
+                        // }
                     }
 
                         $roundComplete = array(
@@ -397,30 +401,33 @@ class AgentController extends Controller
                     $games = $round->games;
                     $packages = $round->packages;
                     foreach($games as $game){
-                        // return $round->id;
-                        $ressult1 = DB::table('bid_results')
-                    ->where('user_id', $user->id)
-                    ->where('round_id', $round->id)
-                    ->where('game_id', $game->id)
-                    ->get();
-                    // return $ressult1;
-                    $gta =  str_replace(' ', '', $game->team_a);
-                    $gtb = str_replace(' ', '', $game->team_b);
-                    $gtd = 'Draw';
-                    $gto = str_replace(' ', '', $ressult1[0]->answer);
-                    if(strtoupper($gta) == strtoupper($gto)){
-                        $game['widegtSwitch0']= true ;
-                        $game['widegtSwitch1']= false ;
-                        $game['widegtSwitch2']= false ;
-                    }else if(strtoupper($gtb) == strtoupper($gto)){
-                        $game['widegtSwitch0']= false ;
-                        $game['widegtSwitch1']= false ;
-                        $game['widegtSwitch2']= true ;
-                    }else if(strtoupper($gtd) == strtoupper($gto)){
-                        $game['widegtSwitch0']= false ;
-                        $game['widegtSwitch1']= true ;
-                        $game['widegtSwitch2']= false ;
-                    }
+                        $game['widegtSwitch0']= null ;
+                        $game['widegtSwitch1']= null ;
+                        $game['widegtSwitch2']= null ;
+                    //     // return $round->id;
+                    //     $ressult1 = DB::table('bid_results')
+                    // ->where('user_id', $user->id)
+                    // ->where('round_id', $round->id)
+                    // ->where('game_id', $game->id)
+                    // ->get();
+                    // // return $ressult1;
+                    // $gta =  str_replace(' ', '', $game->team_a);
+                    // $gtb = str_replace(' ', '', $game->team_b);
+                    // $gtd = 'Draw';
+                    // $gto = str_replace(' ', '', $ressult1[0]->answer);
+                    // if(strtoupper($gta) == strtoupper($gto)){
+                    //     $game['widegtSwitch0']= true ;
+                    //     $game['widegtSwitch1']= false ;
+                    //     $game['widegtSwitch2']= false ;
+                    // }else if(strtoupper($gtb) == strtoupper($gto)){
+                    //     $game['widegtSwitch0']= false ;
+                    //     $game['widegtSwitch1']= false ;
+                    //     $game['widegtSwitch2']= true ;
+                    // }else if(strtoupper($gtd) == strtoupper($gto)){
+                    //     $game['widegtSwitch0']= false ;
+                    //     $game['widegtSwitch1']= true ;
+                    //     $game['widegtSwitch2']= false ;
+                    // }
                 }
 
                     $roundComplete = array(

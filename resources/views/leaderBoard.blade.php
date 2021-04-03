@@ -16,12 +16,12 @@
           <div class="content">
             <div class="container">
               
-               
-                <div class="row">
+               <div class="card user-card-full" style="width: 100%">
+                <div class="row ">
                    @foreach ($leaderBoardMonthly as $item)
                        
                    
-                    <div class="col-md-4">
+                    <div class="col-md-4 ">
                         <div class="text-center card-box">
                             <div class="member-card pt-2 pb-2">
                                 <div class="thumb-lg member-thumb mx-auto"><img src={{$item['images']['0']['url']}} class="rounded-circle img-thumbnail" alt="profile-image"></div>
@@ -29,9 +29,7 @@
                                     <h4>{{$item['name']}}</h4>
                                     <p class="text-muted">End User <span>| </span><span><a href="#" class="text-pink">Loteca 2.0</a></span></p>
                                 </div>
-                                {{-- <p>Helo</p> --}}
                                 
-                                {{-- <button type="button" class="btn btn-primary mt-3 btn-rounded waves-effect w-md waves-light">Message Now</button> --}}
                                 <div class="mt-3">
                                     <div class="row ">
                                        <div class="child">
@@ -62,6 +60,7 @@
 
                 </div>
                 <!-- end row -->
+            </div>
                 
                
               

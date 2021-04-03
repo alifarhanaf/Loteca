@@ -110,8 +110,23 @@ class LeaderBoardController extends Controller
             $brray = collect($multipleWinnersMonthly)->sortBy('winning_coins')->reverse()->toArray();
             $brraySorted = array_values($brray);
 
+            $newArray = [];
+            if (array_key_exists("0",$arraySorted)){
+                $newArray[0] = $arraySorted[0];
+            }
+            if (array_key_exists("1",$arraySorted)){
+                $newArray[1] = $arraySorted[1];
+            }
+            if (array_key_exists("2",$arraySorted)){
+                $newArray[2] = $arraySorted[2];
+            }
+            // if (array_key_exists("3",$arraySorted)){
+            //     $newArray[3] = $arraySorted[3];
+            // }
+            
+
             $data = array(
-                "leaderBoardMonthly" => $brraySorted,
+                "leaderBoardMonthly" => $newArray,
                 "leaderBoardAllTime" => $arraySorted,
     
     
