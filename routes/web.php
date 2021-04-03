@@ -32,7 +32,8 @@ Route::get('/round_edit/{id}', 'Web\DashboardController@editRound')->name('edit.
 Route::post('/submit_round_edit/{id}', 'Web\DashboardController@editRoundSubmit')->name('edit.round.submit');
 Route::get('/game_answers','Web\DashboardController@gameAnswerGrid')->name('game_answer_grid');
 Route::post('/submit_answers/{id}','Web\DashboardController@submitAnswer')->name('submit_game_answer');
-Route::get('/leader_board','Web\LeaderBoardController@leaderB')->name('leaderBoard');
+Route::get('/leader_board_monthly','Web\LeaderBoardController@leaderB')->name('leaderBoardMonthly');
+Route::get('/leader_board','Web\LeaderBoardController@leaderBAll')->name('leaderBoard');
 Route::get('/sendMail','Web\DashboardController@sendMail');
 Route::get('/create_game','Web\DashboardController@createGame')->name('create_game');
 Route::get('/user_grid','Web\UserController@userGrid')->name('user_grid');

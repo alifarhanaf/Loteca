@@ -164,14 +164,17 @@
             </ul>
           </li><!-- nav-item -->
           <li class="nav-item
-          {{ request()->is('leaderBoard') ? 'active' : ''}}
-          {{ request()->is('leaderBoard') ? 'show' : ''}}
+          {{ request()->is('leader_board_monthly') ? 'active' : ''}}
+          {{ request()->is('leader_board_monthly') ? 'show' : ''}}
+          {{ request()->is('leader_board') ? 'active' : ''}}
+          {{ request()->is('leader_board') ? 'show' : ''}}
           {{-- {{ request()->is('transfer_coins') ? 'active' : ''}}
           {{ request()->is('transfer_coins') ? 'show' : ''}} --}}
           ">
             <a href="" class="nav-link with-sub"><i class="typcn typcn-chart-bar-outline"></i>Leader Board</a>
             <ul class="nav-sub">
-              <li class="nav-sub-item {{ request()->is('leader_board') ? 'active' : ''}}"><a href="{{ route('leaderBoard') }}" class="nav-sub-link">Leader Board</a></li>
+              <li class="nav-sub-item {{ request()->is('leader_board_monthly') ? 'active' : ''}}"><a href="{{ route('leaderBoardMonthly') }}" class="nav-sub-link">Leader Board Monthly</a></li>
+              <li class="nav-sub-item {{ request()->is('leader_board') ? 'active' : ''}}"><a href="{{ route('leaderBoard') }}" class="nav-sub-link">All Time Leader Board</a></li>
               {{-- <li class="nav-sub-item"><a href="util-border.html" class="nav-sub-link">Border</a></li>
               <li class="nav-sub-item"><a href="util-display.html" class="nav-sub-link">Display</a></li>
               <li class="nav-sub-item"><a href="util-flex.html" class="nav-sub-link">Flex</a></li>
