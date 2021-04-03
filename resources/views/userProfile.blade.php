@@ -154,9 +154,10 @@
                               <thead>
                                 <tr>
                                   <th class="wd-20p">Image</th>
-                                  <th class="wd-25p">Round Name</th>
-                                  <th class="wd-20p">Starting Date</th>
+                                  <th class="wd-20p">Round Name</th>
+                                  <th class="wd-15p">Starting Date</th>
                                   <th class="wd-15p">Ending Date</th>
+                                  <th class="wd-10p">Status</th>
                                   <th class="wd-20p">Actions</th>
                                 </tr>
                               </thead>
@@ -168,6 +169,10 @@
                                   <td><img src="https://img.icons8.com/bubbles/100/000000/user.png" alt="Girl in a jacket" width="25" height="25"></td>
                                   <td>{{$round->name}}</td>
                                   <td>{{$round->starting_date}}</td>
+                                  <td>
+                                    <span class="{{$round->status == 1 ? 'badge badge-pill badge-primary': 'badge badge-pill badge-warning'}}" style="width: 50px;">
+                                      {{$round->status == 1 ? 'Live':'Closed'}}
+                                    </td>
                                   <td>
                                       
                                     {{$round->ending_date}}
