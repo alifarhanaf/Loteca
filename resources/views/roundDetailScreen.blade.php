@@ -77,7 +77,7 @@
         <div class="team-front">
         <img src="{{ asset('/public/storage/Flags/league.png')}}" class="img-fluid" />
         <h5 style="margin-bottom: 0px">{{$gms->name}}</h5>
-        <p class="mg-b-15">{{$gms->team_a}} Vs {{$gms->team_b}}</p>
+        <p class="">{{$gms->team_a}} Vs {{$gms->team_b}}</p>
         </div>
         
         <div class="team-back">
