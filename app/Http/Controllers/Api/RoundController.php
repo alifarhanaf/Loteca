@@ -473,6 +473,16 @@ class RoundController extends Controller
                             ->where('user_id', $user->id)
                             ->where('round_id', $round_id)
                             ->where('created_at',$submitDate)->get();
+                            $ansArray = [];
+                            for($k=0;$k<count($userAnswers);$k++){
+                                $game = Game::where('id',$userAnswers[$k]->game_id)->first();
+                                
+                                $ansArray[$k]['id'] = $userAnswers[$k]->id;
+                                $ansArray[$k]['team_a'] = $game->team_a;
+                                $ansArray[$k]['team_b'] = $game->team_b;
+                                $ansArray[$k]['winner'] = $userAnswers[$k]->answer;
+                
+                            }
                         $round = Round::where('id', $round_id)->first();
                         $now = Carbon::now();
                         $now->toDateString(); 
@@ -535,7 +545,7 @@ class RoundController extends Controller
                             "bet_date" => $bet_date,
                             "user" => $user,
                             "round" => $roundComplete,
-                            "userAnswers" => $userAnswers,
+                            "userAnswers" => $ansArray,
 
 
 
@@ -596,6 +606,16 @@ class RoundController extends Controller
                         ->where('user_id', $user->id)
                         ->where('round_id', $round_id)
                         ->where('created_at', $submitDate)->get();
+                        $ansArray = [];
+                            for($k=0;$k<count($userAnswers);$k++){
+                                $game = Game::where('id',$userAnswers[$k]->game_id)->first();
+                                
+                                $ansArray[$k]['id'] = $userAnswers[$k]->id;
+                                $ansArray[$k]['team_a'] = $game->team_a;
+                                $ansArray[$k]['team_b'] = $game->team_b;
+                                $ansArray[$k]['winner'] = $userAnswers[$k]->answer;
+                
+                            }
                     $round = Round::where('id', $round_id)->first();
                     $now = Carbon::now();
                         $now->toDateString();
@@ -653,7 +673,7 @@ class RoundController extends Controller
                         "bet_date" => $bet_date,
                         "user" => $user,
                         "round" => $roundComplete,
-                        "userAnswers" => $userAnswers,
+                        "userAnswers" => $ansArray,
                     );
                     DB::commit();
                     return response()->json($data, 201);
@@ -706,6 +726,16 @@ class RoundController extends Controller
                 ->where('user_id', $user->id)
                 ->where('round_id', $round_id)
                 ->where('created_at', $submitDate)->get();
+                $ansArray = [];
+                            for($k=0;$k<count($userAnswers);$k++){
+                                $game = Game::where('id',$userAnswers[$k]->game_id)->first();
+                                
+                                $ansArray[$k]['id'] = $userAnswers[$k]->id;
+                                $ansArray[$k]['team_a'] = $game->team_a;
+                                $ansArray[$k]['team_b'] = $game->team_b;
+                                $ansArray[$k]['winner'] = $userAnswers[$k]->answer;
+                
+                            }
             $round = Round::where('id', $round_id)->first();
             $now = Carbon::now();
                         $now->toDateString();
@@ -763,7 +793,7 @@ class RoundController extends Controller
                 "bet_date" => $bet_date,
                 "user" => $user,
                 "round" => $roundComplete,
-                "userAnswers" => $userAnswers,
+                "userAnswers" => $ansArray,
             );
             DB::commit();
             return response()->json($data, 201);
