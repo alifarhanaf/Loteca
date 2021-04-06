@@ -6,6 +6,7 @@ use App\User;
 use Carbon\Carbon;
 use App\Models\Round;
 use App\Models\Package;
+use App\Models\CoinTransfer;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
@@ -256,11 +257,27 @@ class AgentController extends Controller
                     $pp = $package->participation_fee;
                     $cc = $agent->coins;
                     if ($cc >= $pp) {
-                        $new_cc = $cc - $pp;
-                        $data = User::find($agent->id);
-                        $data->coins = $new_cc;
-                        $data->save();
+
+                        // Start Here
+                        $dd = $cc - $pp;
+                        $sender = User::find($agent->id);
+                        $sender->coins = $dd ;
+                        $sender->save();
+                        $receiver = User::find($user_id);
+                        $receiver->coins = $receiver->coins + $pp;
+                        $receiver->save();
+                        $ct = new CoinTransfer(); 
+                        $ct->sender_id = $sender->id;
+                        $ct->receiver_id = $receiver->id;
+                        $ct->sent_coins = $pp;
+                        $ct->save();
+                        $user = User::find($user_id);
+                       
+                        $ff = $user->coins;
+                        $ee = $ff - $pp;
                         $userz = User::find($user->id);
+                        $userz->coins = $ee;
+                        $userz->save();
                         $userz->rounds()->attach($round_id);
 
 
@@ -368,13 +385,33 @@ class AgentController extends Controller
                 $pp = $package->participation_fee;
                 $cc = $agent->coins;
                 if ($cc >= $pp) {
-                    $new_cc = $cc - $pp;
-                    $data = User::find($agent->id);
-                    $data->coins = $new_cc;
-                    $data->save();
+                    // $new_cc = $cc - $pp;
+                    // $data = User::find($agent->id);
+                    // $data->coins = $new_cc;
+                    // $data->save();
 
-                    $userz = User::find($user->id);
-                    $userz->rounds()->attach($round_id);
+                    // $userz = User::find($user->id);
+                    // $userz->rounds()->attach($round_id);
+                    $dd = $cc - $pp;
+                        $sender = User::find($agent->id);
+                        $sender->coins = $dd ;
+                        $sender->save();
+                        $receiver = User::find($user_id);
+                        $receiver->coins = $receiver->coins + $pp;
+                        $receiver->save();
+                        $ct = new CoinTransfer(); 
+                        $ct->sender_id = $sender->id;
+                        $ct->receiver_id = $receiver->id;
+                        $ct->sent_coins = $pp;
+                        $ct->save();
+                        $user = User::find($user_id);
+                       
+                        $ff = $user->coins;
+                        $ee = $ff - $pp;
+                        $userz = User::find($user->id);
+                        $userz->coins = $ee;
+                        $userz->save();
+                        $userz->rounds()->attach($round_id);
 
 
                     for ($i = 0; $i < count($round->games); $i++) {
@@ -472,12 +509,32 @@ class AgentController extends Controller
         $pp = $package->participation_fee;
         $cc = $agent->coins;
         if ($cc >= $pp) {
-            $new_cc = $cc - $pp;
-            $data = User::find($agent->id);
-            $data->coins = $new_cc;
-            $data->save();
+            $dd = $cc - $pp;
+            $sender = User::find($agent->id);
+            $sender->coins = $dd ;
+            $sender->save();
+            $receiver = User::find($user_id);
+            $receiver->coins = $receiver->coins + $pp;
+            $receiver->save();
+            $ct = new CoinTransfer(); 
+            $ct->sender_id = $sender->id;
+            $ct->receiver_id = $receiver->id;
+            $ct->sent_coins = $pp;
+            $ct->save();
+            $user = User::find($user_id);
+           
+            $ff = $user->coins;
+            $ee = $ff - $pp;
             $userz = User::find($user->id);
+            $userz->coins = $ee;
+            $userz->save();
             $userz->rounds()->attach($round_id);
+            // $new_cc = $cc - $pp;
+            // $data = User::find($agent->id);
+            // $data->coins = $new_cc;
+            // $data->save();
+            // $userz = User::find($user->id);
+            // $userz->rounds()->attach($round_id);
 
 
             for ($i = 0; $i < count($round->games); $i++) {
