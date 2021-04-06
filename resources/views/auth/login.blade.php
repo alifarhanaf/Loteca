@@ -20,7 +20,7 @@
     <!-- Style -->
     
 
-    <title>Login #7</title>
+    <title>Loteca 2.0</title>
   </head>
   <body>
   

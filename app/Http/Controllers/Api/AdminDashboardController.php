@@ -21,7 +21,7 @@ class AdminDashboardController extends Controller
             $com_percentage = $user->comissions->comission_percentage;
         // return $user->comissions->comission_percentage;
         
-        $history1 = CoinTransfer::where('sender_id', '=', $user->id)->where('withdraw', 0)->where( 'created_at', '>', Carbon::today())->get();
+        $history1 = CoinTransfer::where('sender_id', '=', $user->id)->where( 'created_at', '>', Carbon::today())->get();
         $total_sales1 = 0; 
         $comission1 = 0;
         foreach($history1 as $h1){
@@ -36,7 +36,7 @@ class AdminDashboardController extends Controller
         
 
 
-        $history2 = CoinTransfer::where('sender_id', '=', $user->id)->where('withdraw', 0)->where( 'created_at', '>', Carbon::now()->subDays(7))->get();
+        $history2 = CoinTransfer::where('sender_id', '=', $user->id)->where( 'created_at', '>', Carbon::now()->subDays(7))->get();
         $total_sales2 = 0; 
         $comission2 = 0;
         foreach($history2 as $h2){
@@ -50,7 +50,7 @@ class AdminDashboardController extends Controller
         }
 
 
-        $history3 = CoinTransfer::where('sender_id', '=', $user->id)->where('withdraw', 0)->where( 'created_at', '>', Carbon::now()->subDays(30))->get();
+        $history3 = CoinTransfer::where('sender_id', '=', $user->id)->where( 'created_at', '>', Carbon::now()->subDays(30))->get();
         $total_sales3 = 0; 
         $comission3 = 0;
         foreach($history3 as $h3){
@@ -62,7 +62,7 @@ class AdminDashboardController extends Controller
 
         }
 
-        $history4 = CoinTransfer::where('sender_id', '=', $user->id)->where('withdraw', 0)->get();
+        $history4 = CoinTransfer::where('sender_id', '=', $user->id)->get();
         $total_sales4 = 0; 
         $comission4 = 0;
         foreach($history4 as $h4){
@@ -71,6 +71,18 @@ class AdminDashboardController extends Controller
             $ac = ($cc * $com_percentage)/100;
             $comission4 = $comission4 + $ac;
             $comission4 = round($comission4, 1);
+
+        }
+        $history5 = CoinTransfer::where('sender_id', '=', $user->id)->where('withdraw',0)->get();
+        $total_sales5 = 0; 
+        $comission5 = 0;
+        foreach($history5 as $h5){
+            // $total_sales5 = $total_sales5 + $h5->sent_coins;
+            $cc = $h5->sent_coins;
+            $ac = ($cc * $com_percentage)/100;
+            $comission5 = $comission5 + $ac;
+            $comission5 = round($comission5, 1);
+
 
         }
     
@@ -107,6 +119,7 @@ class AdminDashboardController extends Controller
             "monthly_data" => $monthly_data,
             "all_time_data" => $all_time_data,
             "user" => $user,
+            "available_for_withdraw" => $comission5,
 
         )
         );

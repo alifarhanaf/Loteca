@@ -456,7 +456,7 @@ class DashboardController extends Controller
             array_push($ids,$rs->game_id);
 
         }
-        $games = Game::whereNotIn('id', $ids)->get();
+        $games = Game::whereNotIn('id', $ids)->where('happening_date','<',Carbon::today())->get();
        
         $data = array(
             "games"=> $games,

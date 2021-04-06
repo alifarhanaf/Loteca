@@ -82,8 +82,8 @@
                   <span class="d-block">High Performing Players on Monthly Bases</span>
                 </div>
                 <div class="chart-legend">
-                  <div><span>Online Revenue</span> <span class="bg-indigo"></span></div>
-                  <div><span>Offline Revenue</span> <span class="bg-teal"></span></div>
+                  <div><span class="bg-indigo"></span> </div>
+                  <div><span class="bg-teal"></span> </div>
                 </div>
               </div><!-- card-header -->
               <div class="row text-center">
@@ -160,7 +160,7 @@
               <div class="col-md-6">
                 <div class="card card-dashboard-map-one" style="height: auto !important">
                   <label class="az-content-label">Total Agents</label>
-                  <span class="d-block mg-b-20">{{$totalAgents}}</span>
+                  <span class="d-block mg-b-20"><b>{{$totalAgents}}</b></span>
                   
                 </div><!-- card -->
             
@@ -188,11 +188,11 @@
               <div class="card-header">
                 <div>
                   <label class="az-content-label">Top Agents</label>
-                  <span class="d-block">High Performing Players on Monthly Bases</span>
+                  <span class="d-block">High Performing Agents</span>
                 </div>
                 <div class="chart-legend">
-                  <div><span>Online Revenue</span> <span class="bg-indigo"></span></div>
-                  <div><span>Offline Revenue</span> <span class="bg-teal"></span></div>
+                  <div><span class="bg-indigo"></span></div>
+                  <div><span class="bg-teal"></span></div>
                 </div>
               </div><!-- card-header -->
               <div class="row text-center">

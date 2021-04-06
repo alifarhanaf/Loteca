@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\User;
+use App\Models\WithDraw;
 use App\Models\CoinTransfer;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -50,6 +51,27 @@ class CoinController extends Controller
             $ct->receiver_id = $receiver->id;
             $ct->sent_coins = $request->coins;
             $ct->save();
+            $com_percentage = $user->comissions->comission_percentage;
+            $history5 = CoinTransfer::where('sender_id', '=', $user->id)->get();
+            $total_sales5 = 0; 
+
+            $comission5 = 0;
+            foreach($history5 as $h5){
+            // $total_sales5 = $total_sales5 + $h5->sent_coins;
+            $cc = $h5->sent_coins;
+            $ac = ($cc * $com_percentage)/100;
+            $comission5 = $comission5 + $ac;
+            $comission5 = round($comission5, 1);
+
+
+            }
+            if(count($user->withdraws)>0){
+                $withdrawTable = new WithDraw();
+                $withdrawTable->total_comission = $comission5;
+                $withdrawTable->save(); 
+
+            }
+            
             $agent = Auth::user();
             $updatedUser = User::where('email',$request->email)->first();
 
