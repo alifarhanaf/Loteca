@@ -25,7 +25,14 @@ class DashboardController extends Controller
     }
     public function createRound(){
         //   Carbon::today()->toDateString();
-        $games = Game::where('happening_date', '>=', Carbon::today()->toDateString())->get();
+        $results = Result::all();
+        $ids = [];
+        foreach($results as $rs){
+            array_push($ids,$rs->game_id);
+
+        }
+        $games = Game::whereNotIn('id', $ids)->where('happening_date','<',Carbon::today())->get();
+        // $games = Game::where('happening_date', '>=', Carbon::today()->toDateString())->get();
         // return $games;
         $data = array(
             "games"=> $games,
@@ -267,9 +274,9 @@ class DashboardController extends Controller
         }
         }
         $vy = $userAnswers->toArray();
-        if(!array_key_exists(0,$vy) ){
-            dd($ruc,$roundUserDates[$j]);
-        }
+        // if(!array_key_exists(0,$vy) ){
+        //     dd($ruc,$roundUserDates[$j]);
+        // }
 
 
         $point = new Point();
