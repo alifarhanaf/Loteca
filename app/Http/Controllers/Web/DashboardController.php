@@ -246,7 +246,7 @@ class DashboardController extends Controller
         ->where('round_id', $round_id)
         ->where('created_at',$roundUserDates[$j])->get();
         // return $userAnswers;
-        if($userAnswers == null){
+        if(count($userAnswers) < 0 ){
             dd($ruc,$roundUserDates[$j]);
         }
         $i = 0;
