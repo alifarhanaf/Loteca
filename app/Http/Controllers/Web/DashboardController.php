@@ -246,9 +246,7 @@ class DashboardController extends Controller
         ->where('round_id', $round_id)
         ->where('created_at',$roundUserDates[$j])->get();
         // return $userAnswers;
-        if(count($userAnswers) < 0 ){
-            dd($ruc,$roundUserDates[$j]);
-        }
+        
         $i = 0;
         foreach($userAnswers as $UA){
          
@@ -268,12 +266,14 @@ class DashboardController extends Controller
             return redirect()->back()->with('error','You have Not Added Game Results Yet.     Kindly Add Answers First.');
         }
         }
-        
+        // if(!array_key_exists(0,$userAnswers) ){
+        //     dd($ruc,$roundUserDates[$j]);
+        // }
 
         $point = new Point();
         $point->round_id = $round_id;
         $point->user_id = $ruc->id;
-        $point->package_id = $userAnswers[0]->package_id;
+        $point->package_id = $userAnswers['0']->package_id;
         $point->points = $i;
         $point->total_points = $totalGames;
         $point->save();
