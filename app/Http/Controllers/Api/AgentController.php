@@ -233,6 +233,7 @@ class AgentController extends Controller
 
         $user = User::find($user_id);
         $agent = Auth::user();
+        $submitDate = Carbon::now();
 
 
         if (count($user->rounds) > 0) {
@@ -278,7 +279,14 @@ class AgentController extends Controller
                         $userz = User::find($user->id);
                         $userz->coins = $ee;
                         $userz->save();
-                        $userz->rounds()->attach($round_id);
+                        DB::table('round_user')->insert([
+                            'round_id' => $round_id,
+                            'user_id' => $user->id,
+                            'created_at' => $submitDate,
+                            'updated_at' => $submitDate,
+                            
+
+                        ]);
 
 
 
@@ -289,7 +297,8 @@ class AgentController extends Controller
                                 'game_id' => $game_ids[$i],
                                 'answer' => $selected_answers[$i],
                                 'package_id' => $package_id,
-                                'created_at' => DB::raw('now()'),
+                                'created_at' => $submitDate,
+                                'updated_at' => $submitDate
 
                             ]);
                         } //End For Loop
@@ -297,7 +306,8 @@ class AgentController extends Controller
 
                         $userAnswers = DB::table('bid_results')
                             ->where('user_id', $user->id)
-                            ->where('round_id', $round_id)->get();
+                            ->where('round_id', $round_id)
+                            ->where('created_at',$submitDate)->get();
                         $round = Round::where('id', $round_id)->first();
                         // $bet_date = $userAnswers[0]->created_at;
                         $now = Carbon::now();
@@ -411,7 +421,14 @@ class AgentController extends Controller
                         $userz = User::find($user->id);
                         $userz->coins = $ee;
                         $userz->save();
-                        $userz->rounds()->attach($round_id);
+                        DB::table('round_user')->insert([
+                            'round_id' => $round_id,
+                            'user_id' => $user->id,
+                            'created_at' => $submitDate,
+                            'updated_at' => $submitDate,
+                            
+    
+                        ]);
 
 
                     for ($i = 0; $i < count($round->games); $i++) {
@@ -421,7 +438,8 @@ class AgentController extends Controller
                             'game_id' => $game_ids[$i],
                             'answer' => $selected_answers[$i],
                             'package_id' => $package_id,
-                            'created_at' => DB::raw('now()'),
+                            'created_at' => $submitDate,
+                            'updated_at' => $submitDate,
 
                         ]);
                     }
@@ -429,7 +447,8 @@ class AgentController extends Controller
 
                     $userAnswers = DB::table('bid_results')
                         ->where('user_id', $user->id)
-                        ->where('round_id', $round_id)->get();
+                        ->where('round_id', $round_id)
+                        ->where('created_at', $submitDate)->get();
                     $round = Round::where('id', $round_id)->first();
                     // $bet_date = $userAnswers[0]->created_at;
                     $now = Carbon::now();
@@ -528,7 +547,14 @@ class AgentController extends Controller
             $userz = User::find($user->id);
             $userz->coins = $ee;
             $userz->save();
-            $userz->rounds()->attach($round_id);
+            DB::table('round_user')->insert([
+                'round_id' => $round_id,
+                'user_id' => $user->id,
+                'created_at' => $submitDate,
+                'updated_at' => $submitDate,
+                
+
+            ]);
             // $new_cc = $cc - $pp;
             // $data = User::find($agent->id);
             // $data->coins = $new_cc;
@@ -544,14 +570,16 @@ class AgentController extends Controller
                     'game_id' => $game_ids[$i],
                     'answer' => $selected_answers[$i],
                     'package_id' => $package_id,
-                    'created_at' => DB::raw('now()'),
+                    'created_at' => $submitDate,
+                    'updated_at' => $submitDate,
 
                 ]);
             }
             // $points = $this->answerCheck($round_id,$package_id);
             $userAnswers = DB::table('bid_results')
                 ->where('user_id', $user->id)
-                ->where('round_id', $round_id)->get();
+                ->where('round_id', $round_id)
+                ->where('created_at', $submitDate)->get();
             $round = Round::where('id', $round_id)->first();
            
             $now = Carbon::now();
@@ -560,30 +588,33 @@ class AgentController extends Controller
             $games = $round->games;
             $packages = $round->packages;
             foreach($games as $game){
-                // return $round->id;
-                $ressult1 = DB::table('bid_results')
-            ->where('user_id', $user->id)
-            ->where('round_id', $round->id)
-            ->where('game_id', $game->id)
-            ->get();
-            // return $ressult1;
-            $gta =  str_replace(' ', '', $game->team_a);
-            $gtb = str_replace(' ', '', $game->team_b);
-            $gtd = 'Draw';
-            $gto = str_replace(' ', '', $ressult1[0]->answer);
-            if(strtoupper($gta) == strtoupper($gto)){
-                $game['widegtSwitch0']= true ;
-                $game['widegtSwitch1']= false ;
-                $game['widegtSwitch2']= false ;
-            }else if(strtoupper($gtb) == strtoupper($gto)){
-                $game['widegtSwitch0']= false ;
-                $game['widegtSwitch1']= false ;
-                $game['widegtSwitch2']= true ;
-            }else if(strtoupper($gtd) == strtoupper($gto)){
-                $game['widegtSwitch0']= false ;
-                $game['widegtSwitch1']= true ;
-                $game['widegtSwitch2']= false ;
-            }
+                $game['widegtSwitch0']= null ;
+                $game['widegtSwitch1']= null ;
+                $game['widegtSwitch2']= null ;
+
+            //     $ressult1 = DB::table('bid_results')
+            // ->where('user_id', $user->id)
+            // ->where('round_id', $round->id)
+            // ->where('game_id', $game->id)
+            // ->get();
+           
+            // $gta =  str_replace(' ', '', $game->team_a);
+            // $gtb = str_replace(' ', '', $game->team_b);
+            // $gtd = 'Draw';
+            // $gto = str_replace(' ', '', $ressult1[0]->answer);
+            // if(strtoupper($gta) == strtoupper($gto)){
+            //     $game['widegtSwitch0']= true ;
+            //     $game['widegtSwitch1']= false ;
+            //     $game['widegtSwitch2']= false ;
+            // }else if(strtoupper($gtb) == strtoupper($gto)){
+            //     $game['widegtSwitch0']= false ;
+            //     $game['widegtSwitch1']= false ;
+            //     $game['widegtSwitch2']= true ;
+            // }else if(strtoupper($gtd) == strtoupper($gto)){
+            //     $game['widegtSwitch0']= false ;
+            //     $game['widegtSwitch1']= true ;
+            //     $game['widegtSwitch2']= false ;
+            // }
         }
 
             $roundComplete = array(
