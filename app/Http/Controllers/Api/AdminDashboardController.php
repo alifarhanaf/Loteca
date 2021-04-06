@@ -62,7 +62,7 @@ class AdminDashboardController extends Controller
 
         }
 
-        $history4 = CoinTransfer::where('sender_id', '=', $user->id)->get();
+        $history4 = CoinTransfer::where('sender_id', '=', $user->id)->where('withdraw', 0)->get();
         $total_sales4 = 0; 
         $comission4 = 0;
         foreach($history4 as $h4){
