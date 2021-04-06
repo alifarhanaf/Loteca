@@ -21,7 +21,7 @@ class AdminDashboardController extends Controller
             $com_percentage = $user->comissions->comission_percentage;
         // return $user->comissions->comission_percentage;
         
-        $history1 = CoinTransfer::where('sender_id', '=', $user->id)->where( 'created_at', '>', Carbon::today())->get();
+        $history1 = CoinTransfer::where('sender_id', '=', $user->id)->where('withdraw', 0)->where( 'created_at', '>', Carbon::today())->get();
         $total_sales1 = 0; 
         $comission1 = 0;
         foreach($history1 as $h1){
