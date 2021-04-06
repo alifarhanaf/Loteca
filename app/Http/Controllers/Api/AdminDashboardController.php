@@ -36,7 +36,7 @@ class AdminDashboardController extends Controller
         
 
 
-        $history2 = CoinTransfer::where('sender_id', '=', $user->id)->where( 'created_at', '>', Carbon::now()->subDays(7))->get();
+        $history2 = CoinTransfer::where('sender_id', '=', $user->id)->where('withdraw', 0)->where( 'created_at', '>', Carbon::now()->subDays(7))->get();
         $total_sales2 = 0; 
         $comission2 = 0;
         foreach($history2 as $h2){
@@ -50,7 +50,7 @@ class AdminDashboardController extends Controller
         }
 
 
-        $history3 = CoinTransfer::where('sender_id', '=', $user->id)->where( 'created_at', '>', Carbon::now()->subDays(30))->get();
+        $history3 = CoinTransfer::where('sender_id', '=', $user->id)->where('withdraw', 0)->where( 'created_at', '>', Carbon::now()->subDays(30))->get();
         $total_sales3 = 0; 
         $comission3 = 0;
         foreach($history3 as $h3){
