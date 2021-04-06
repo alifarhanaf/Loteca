@@ -16,7 +16,7 @@ class CreateWithDrawsTable extends Migration
         Schema::create('with_draws', function (Blueprint $table) {
             $table->id();
             $table->text('total_comission');
-            $table->text('withdraw_comission')->default(0);
+            $table->text('withdraw_comission')->nullable();
             $table->bigInteger('user_id')->unsigned();
             $table->foreign('user_id')->references('id')->on('users')
             ->onDelete('cascade');
