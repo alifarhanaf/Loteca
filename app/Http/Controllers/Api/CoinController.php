@@ -51,7 +51,7 @@ class CoinController extends Controller
             $ct->receiver_id = $receiver->id;
             $ct->sent_coins = $request->coins;
             $ct->save();
-            $com_percentage = $user->comissions->comission_percentage;
+            $com_percentage = $user->comissions[0]->comission_percentage;
             $history5 = CoinTransfer::where('sender_id', '=', $user->id)->get();
             $total_sales5 = 0; 
 

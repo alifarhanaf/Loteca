@@ -18,7 +18,7 @@ class AdminDashboardController extends Controller
         $user->images;
         // return $user->roles;
         if($user->roles == '2'){
-            $com_percentage = $user->comissions->comission_percentage;
+            $com_percentage = $user->comissions[0]->comission_percentage;
         // return $user->comissions->comission_percentage;
         
         $history1 = CoinTransfer::where('sender_id', '=', $user->id)->where( 'created_at', '>', Carbon::today())->get();
