@@ -20,6 +20,13 @@ class AdminDashboardController extends Controller
         // return $user->roles;
         if($user->roles == '2'){
             $com_percentage = $user->comissions[0]->comission_percentage;
+            $comissions = array(
+            "id" => $user->comissions[0]->id,
+            "comission_percentage"=> $user->comissions[0]->comission_percentage,
+                    "user_id"=>  $user->comissions[0]->user_id,
+                    "created_at"=>  $user->comissions[0]->created_at,
+                    "updated_at"=>  $user->comissions[0]->updated_at
+        );
         // return $user->comissions->comission_percentage;
         
         $history1 = CoinTransfer::where('sender_id', '=', $user->id)->where( 'created_at', '>', Carbon::today())->get();
@@ -109,13 +116,9 @@ class AdminDashboardController extends Controller
             "comission" => $comission4,
             
         );
-        $user['comissions'] = array(
-            "id" => "Hello",
-            "comission_percentage"=> $user->comissions[0]->comission_percentage,
-                    "user_id"=>  $user->comissions[0]->user_id,
-                    "created_at"=>  $user->comissions[0]->created_at,
-                    "updated_at"=>  $user->comissions[0]->updated_at
-        );
+        unset($user->comissions);
+        $user['comissions'] = $comissions;
+        
         $data = array(
         "status"=>200,
         "response"=>"true",
