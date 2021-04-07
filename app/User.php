@@ -51,10 +51,15 @@ class User extends Authenticatable
     }
     public function comissions()
     {
-        return $this->hasOne('App\Models\Comission');
+        return $this->hasMany('App\Models\Comission');
     }
     public function points()
     {
         return $this->hasOne('App\Models\Point');
+    }
+    public function withdraws()
+    
+    {
+        return $this->hasOne('App\Models\WithDraw');
     }
 }

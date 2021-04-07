@@ -57,7 +57,6 @@ class CoinController extends Controller
 
             $comission5 = 0;
             foreach($history5 as $h5){
-            // $total_sales5 = $total_sales5 + $h5->sent_coins;
             $cc = $h5->sent_coins;
             $ac = ($cc * $com_percentage)/100;
             $comission5 = $comission5 + $ac;
@@ -69,6 +68,11 @@ class CoinController extends Controller
                 $withdrawTable = new WithDraw();
                 $withdrawTable->total_comission = $comission5;
                 $withdrawTable->save(); 
+
+            }else{
+                $withdraw = WithDraw::find($user->withdraws->id);
+                $withdraw->total_comission = $comission5;
+                $withdraw->save(); 
 
             }
             
