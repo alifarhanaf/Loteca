@@ -110,6 +110,7 @@ class CoinController extends Controller
         $i = 0;
         foreach($coinsTransfer as $ct){
             $user = User::where('id',$ct->receiver_id)->first();
+            dd($user,$user->contacts);
             $arr[$i]['user_email'] = $user->contacts[0]->email;
             $arr[$i]['user_phone'] = $user->contacts[0]->phone;
             $arr[$i]['user_whatsapp'] = $user->contacts[0]->whatsapp;
