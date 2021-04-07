@@ -128,10 +128,17 @@ class AgentController extends Controller
         return view('agentProfile')->with($data);
     }
     public function updateComission(Request $request,$id){
-        $user = User::find($id);
-        $cid = $user->comissions[0]->id;
-        $comission = Comission::find($cid);
+        $agent = User::find($id);
+
+        // $cid = $user->comissions[0]->id;
+        foreach($agent->comissions as $ac){
+            $comission = Comission::find($ac->id);
+            $comission->default = 0;
+            $comission->save();
+        }
+        $comission = new Comission();
         $comission->comission_percentage = $request->percent;
+        $comission->comission_percentage = $agent->id;
         $comission->save();
         return redirect()->route('agent_grid')->with('success','Comission Updated Successfully');
 

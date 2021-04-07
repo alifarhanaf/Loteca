@@ -65,10 +65,11 @@ class ApiAuthController extends Controller
             $comission = New Comission();
             $comission->comission_percentage = $request->percent;
             $comission->user_id = $user->id;
+            $comission->default = 1;
             $comission->save();
         
         
-        // return $user;
+       
        
        
          return redirect()->back()->with('success','Agent Registered Successfully');

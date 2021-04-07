@@ -90,8 +90,6 @@ class AdminDashboardController extends Controller
             $ac = ($cc * $com_percentage)/100;
             $comission5 = $comission5 + $ac;
             $comission5 = round($comission5, 1);
-
-
         }
     
 
