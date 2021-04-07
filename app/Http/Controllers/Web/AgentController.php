@@ -34,7 +34,8 @@ class AgentController extends Controller
         $user->images;
         // return $user->roles;
         if($user->roles == '2'){
-            $com_percentage = $user->comissions[0]->comission_percentage;
+            $comm = $user->comissions->where('default',1)->first();
+            $com_percentage = $comm->comission_percentage;
         // return $user->comissions->comission_percentage;
         
         $history1 = CoinTransfer::where('sender_id', '=', $user->id)->where( 'created_at', '>', Carbon::today())->get();
