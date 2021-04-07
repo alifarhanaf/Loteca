@@ -109,7 +109,7 @@ class AdminDashboardController extends Controller
             "comission" => $comission4,
             
         );
-        $user->comissions = array(
+        $user['comissions'] = array(
             "id" => $user->comissions[0]->id,
             "comission_percentage"=> $user->comissions[0]->comission_percentage,
                     "user_id"=>  $user->comissions[0]->user_id,
