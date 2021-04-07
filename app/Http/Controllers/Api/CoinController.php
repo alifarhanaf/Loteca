@@ -119,9 +119,9 @@ class CoinController extends Controller
             $arr[$i]['transferred_coins'] = $ct->sent_coins ;
             $arr[$i]['transfer_date'] = $ct->created_at ;
             if($ct->withdraw == 0){
-                $arr[$i]['type'] = "Coins Transfer" ;
+                $arr[$i]['type'] = 0 ;
             }else{
-                $arr[$i]['type'] = "Bet Placed" ;
+                $arr[$i]['type'] = 1 ;
             }
             $i++;
             
