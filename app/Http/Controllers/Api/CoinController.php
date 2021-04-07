@@ -118,6 +118,11 @@ class CoinController extends Controller
             $arr[$i]['image'] = $user->images[0]->url;
             $arr[$i]['transferred_coins'] = $ct->sent_coins ;
             $arr[$i]['transfer_date'] = $ct->created_at ;
+            if($ct->withdraw == 0){
+                $arr[$i]['type'] = "Coins Transfer" ;
+            }else{
+                $arr[$i]['type'] = "Bet Placed" ;
+            }
             $i++;
             
 
