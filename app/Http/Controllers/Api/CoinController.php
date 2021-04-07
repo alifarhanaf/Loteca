@@ -104,4 +104,28 @@ class CoinController extends Controller
         // return $request->all();
 
     }
+    public function coinsRecord(){
+        $coinsTransfer = CoinTransfer::where('sender_id',Auth::user()->id)->get();
+        $arr = [];
+        $i = 0;
+        foreach($coinsTransfer as $ct){
+            $user = User::find($ct->receiver_id);
+            $arr[$i]['user_email'] = $user->email;
+            $arr[$i]['user_phone'] = $user->contacts[0]->phone;
+            $arr[$i]['user_whatsapp'] = $user->contacts[0]->whatsapp;
+            $arr[$i]['image'] = $user->images[0]->url;
+            $arr[$i]['transferred_coins'] = $ct->sent_coins ;
+            $arr[$i]['transfer_date'] = $ct->created_at ;
+            
+
+        }
+        $data = array(
+            "status" => 200,
+            "response" => "true",
+            "message" => "Record Retrieved Successfully" ,
+            "records" => $arr,
+
+        );
+        return response()->json($data,200);
+    }
 }
