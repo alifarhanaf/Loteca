@@ -138,7 +138,8 @@ class AgentController extends Controller
         }
         $comission = new Comission();
         $comission->comission_percentage = $request->percent;
-        $comission->comission_percentage = $agent->id;
+        $comission->user_id = $agent->id;
+        $comission->default = 1;
         $comission->save();
         return redirect()->route('agent_grid')->with('success','Comission Updated Successfully');
 
