@@ -16,6 +16,7 @@ class AdminDashboardController extends Controller
         $user =  Auth::user();
         $user->contacts;
         $user->images;
+        
         // return $user->roles;
         if($user->roles == '2'){
             $com_percentage = $user->comissions[0]->comission_percentage;
@@ -108,7 +109,7 @@ class AdminDashboardController extends Controller
             "comission" => $comission4,
             
         );
-        
+        $user->comissions = $user->comissions[0];
         $data = array(
         "status"=>200,
         "response"=>"true",
