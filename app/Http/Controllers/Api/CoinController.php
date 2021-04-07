@@ -64,7 +64,7 @@ class CoinController extends Controller
 
 
             }
-            if($user->withdraws){
+            if($user->withdraws == null){
                 $withdrawTable = new WithDraw();
                 $withdrawTable->total_comission = $comission5;
                 $withdrawTable->save(); 
