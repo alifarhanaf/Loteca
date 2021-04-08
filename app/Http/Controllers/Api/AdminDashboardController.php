@@ -257,7 +257,7 @@ class AdminDashboardController extends Controller
         foreach ($newArray as $na){
             if($na['dateTwo'] == null){
                 
-            $history1 = CoinTransfer::where('sender_id', 13)->where('withdraw',1)->where( 'created_at', '>', Carbon::today())->whereBetween('created_at', [$na['dateOne'], Carbon::today()])->get();
+            $history1 = CoinTransfer::where('sender_id', $user->id)->where('withdraw',1)->where( 'created_at', '>', Carbon::today())->whereBetween('created_at', [$na['dateOne'], Carbon::today()])->get();
             
         
         $comission1 = 0;
@@ -274,7 +274,7 @@ class AdminDashboardController extends Controller
 
             }else{
                
-            $history1 = CoinTransfer::where('sender_id', 13)->where('withdraw',1)->where( 'created_at', '>', Carbon::today())->whereBetween('created_at', [$na['dateOne'], $na['dateTwo']])->get();
+            $history1 = CoinTransfer::where('sender_id', $user->id)->where('withdraw',1)->where( 'created_at', '>', Carbon::today())->whereBetween('created_at', [$na['dateOne'], $na['dateTwo']])->get();
            
         
         $comission1 = 0;
@@ -302,7 +302,7 @@ class AdminDashboardController extends Controller
         foreach ($newArray as $na){
             if($na['dateTwo'] == null){
                 
-            $history2 = CoinTransfer::where('sender_id', 13)->where('withdraw',1)->where( 'created_at', '>', Carbon::now()->subDays(7))->whereBetween('created_at', [$na['dateOne'], Carbon::today()])->get();
+            $history2 = CoinTransfer::where('sender_id', $user->id)->where('withdraw',1)->where( 'created_at', '>', Carbon::now()->subDays(7))->whereBetween('created_at', [$na['dateOne'], Carbon::today()])->get();
             
         
         $comission2 = 0;
@@ -319,7 +319,7 @@ class AdminDashboardController extends Controller
 
             }else{
                
-            $history2 = CoinTransfer::where('sender_id', 13)->where('withdraw',1)->where( 'created_at', '>', Carbon::now()->subDays(7))->whereBetween('created_at', [$na['dateOne'], $na['dateTwo']])->get();
+            $history2 = CoinTransfer::where('sender_id', $user->id)->where('withdraw',1)->where( 'created_at', '>', Carbon::now()->subDays(7))->whereBetween('created_at', [$na['dateOne'], $na['dateTwo']])->get();
            
         
         $comission2 = 0;
@@ -348,7 +348,7 @@ class AdminDashboardController extends Controller
         foreach ($newArray as $na){
             if($na['dateTwo'] == null){
                 
-            $history3 = CoinTransfer::where('sender_id', 13)->where('withdraw',1)->where( 'created_at', '>', Carbon::now()->subDays(30))->whereBetween('created_at', [$na['dateOne'], Carbon::today()])->get();
+            $history3 = CoinTransfer::where('sender_id', $user->id)->where('withdraw',1)->where( 'created_at', '>', Carbon::now()->subDays(30))->whereBetween('created_at', [$na['dateOne'], Carbon::today()])->get();
             
         
         $comission3 = 0;
@@ -365,7 +365,7 @@ class AdminDashboardController extends Controller
 
             }else{
                
-            $history3 = CoinTransfer::where('sender_id', 13)->where('withdraw',1)->where( 'created_at', '>', Carbon::now()->subDays(30))->whereBetween('created_at', [$na['dateOne'], $na['dateTwo']])->get();
+            $history3 = CoinTransfer::where('sender_id', $user->id)->where('withdraw',1)->where( 'created_at', '>', Carbon::now()->subDays(30))->whereBetween('created_at', [$na['dateOne'], $na['dateTwo']])->get();
            
         
         $comission3 = 0;
@@ -394,7 +394,7 @@ class AdminDashboardController extends Controller
         foreach ($newArray as $na){
             if($na['dateTwo'] == null){
                 
-            $history4 = CoinTransfer::where('sender_id', 13)->where('withdraw',1)->whereBetween('created_at', [$na['dateOne'], Carbon::today()])->get();
+            $history4 = CoinTransfer::where('sender_id', $user->id)->where('withdraw',1)->whereBetween('created_at', [$na['dateOne'], Carbon::today()])->get();
             
         
         $comission4 = 0;
@@ -411,7 +411,7 @@ class AdminDashboardController extends Controller
 
             }else{
                
-            $history4 = CoinTransfer::where('sender_id', 13)->where('withdraw',1)->whereBetween('created_at', [$na['dateOne'], $na['dateTwo']])->get();
+            $history4 = CoinTransfer::where('sender_id', $user->id)->where('withdraw',1)->whereBetween('created_at', [$na['dateOne'], $na['dateTwo']])->get();
            
         
         $comission4 = 0;
