@@ -139,7 +139,8 @@ class AdminDashboardController extends Controller
     // }
     public function test(){
         // return 'Hi';
-        return Carbon::now();
+        $value =  Carbon::now();
+        return Carbon::parse($value . 'Asia/Karachi')->tz('GMT +5');
         $user =  User::find(13);
         $user->contacts;
         $user->images;
