@@ -101,7 +101,7 @@ class CoinController extends Controller
                 return response()->json($data,209);
 
         }
-        // return $request->all();
+        
 
     }
     public function coinsRecord(){
