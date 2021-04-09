@@ -12,13 +12,18 @@ class RoundController extends Controller
 {
     public function roundPage($id){
         $round =  Round::find($id);
+        $check = 0;
         
         $packages = $round->packages;
         $round->games;
         foreach($round->games as $ga){
             $ga->results;
         }
-        if($round->status == 2){
+        $winnerCheck = Winner::where('round_id',$round->id)->get();
+        if($winnerCheck != null){
+            $check = 1;
+        }
+        if($round->status == 2 && $winnerCheck != null){
             $winnerCat1 = Winner::where('round_id',$round->id)->where('package_id',$packages[0]->id)->get();
         $array1 = [];
         $wc1 = [];
@@ -101,6 +106,7 @@ class RoundController extends Controller
             "firstRoundWinners" => $arr[0],
             "secondRoundWinners" => $arr[1],
             "thirdRoundWinners" => $arr[2],
+            "check" => $check,
         );
         // return $data;
         return view ('roundDetailScreen')->with($data);
