@@ -9,6 +9,7 @@ use App\Models\Round;
 use App\Models\CoinTransfer;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Models\WithDraw;
 use Illuminate\Support\Facades\Auth;
 
 class AdminDashboardController extends Controller
@@ -429,10 +430,17 @@ class AdminDashboardController extends Controller
             }
             
         }
+
         // return $totalComission4;
         // return $total_sales4; 
 
         //FourthEndHere
+        $availableForWithDraw = WithDraw::where('user_id',$user->id)->first();
+        if($availableForWithDraw->withdraw_comission == null){
+            $afw = $availableForWithDraw->total_comission;
+        }else{
+            $afw = $availableForWithDraw->total_comission - $availableForWithDraw->withdraw_comission;
+        }
             //To Here
             $comissions = array(
             "id" => $user->comissions[0]->id,
@@ -542,7 +550,7 @@ class AdminDashboardController extends Controller
             "monthly_data" => $monthly_data,
             "all_time_data" => $all_time_data,
             "user" => $user,
-            "available_for_withdraw" => 100,
+            "available_for_withdraw" => $afw,
 
         )
         );
