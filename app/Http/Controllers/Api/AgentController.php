@@ -275,6 +275,89 @@ class AgentController extends Controller
                         $ct->sent_coins = $pp;
                         $ct->withdraw = 1;
                         $ct->save();
+                        // Start Here
+
+                        $comissions = $sender->comissions;
+                        $newArray = [] ;
+                        $comissionArray = json_decode(json_encode($comissions), true);
+                        $lastIndex = array_key_last($comissionArray);
+                        for($i=0;$i<count($comissions);$i++){
+                           
+                            // return $comissions[$i];
+                            if($i != $lastIndex ){
+                                $dateOne = $comissions[$i]->created_at;
+                                $dateTwo = $comissions[$i+1]->created_at;
+                                $newArray[$i]['dateOne'] = $dateOne;
+                                $newArray[$i]['dateTwo'] = $dateTwo;
+                                $newArray[$i]['percentage'] = $comissions[$i]->comission_percentage;
+                            }else{
+                                $dateOne = $comissions[$i]->created_at;
+                                $dateTwo = null;
+                                $newArray[$i]['dateOne'] = $dateOne;
+                                $newArray[$i]['dateTwo'] = $dateTwo;
+                                $newArray[$i]['percentage'] = $comissions[$i]->comission_percentage;
+                            }
+                
+                            
+                            
+                           
+                           
+                        }
+
+
+        $totalComission4 = 0;
+        foreach ($newArray as $na){
+            if($na['dateTwo'] == null){
+                
+            $history4 = CoinTransfer::where('sender_id', $sender->id)->where('withdraw',1)->whereBetween('created_at', [$na['dateOne'], Carbon::now()])->get();
+            
+        
+        $comission4 = 0;
+        foreach($history4 as $h4){
+            // $total_sales4 = $total_sales4 + $h4->sent_coins;
+            $cc = $h4->sent_coins;
+            $ac = ($cc * $na['percentage'])/100;
+            $comission4 = $comission4 + $ac;
+            $comission4 = round($comission4, 1);
+
+        }
+        $totalComission4 = $totalComission4+$comission4;
+
+
+            }else{
+               
+            $history4 = CoinTransfer::where('sender_id', $sender->id)->where('withdraw',1)->whereBetween('created_at', [$na['dateOne'], $na['dateTwo']])->get();
+           
+        
+        $comission4 = 0;
+        foreach($history4 as $h4){
+            // $total_sales4 = $total_sales4 + $h4->sent_coins;
+            $cc = $h4->sent_coins;
+            $ac = ($cc * $na['percentage'])/100;
+            $comission4 = $comission4 + $ac;
+            $comission4 = round($comission4, 1);
+
+        }
+        $totalComission4 = $totalComission4+$comission4;
+
+
+            }
+            
+        }
+        dd($totalComission4);
+        $comm = WithDraw::where('user_id',$sender->id)->get();
+        if(count($comm)>0){
+            $withD = WithDraw::find($comm[0]->id);
+            $withD->total_comission = $totalComission4;
+            $withD->save();
+
+        }else{
+            $withD = new WithDraw();
+            $withD->total_comission = $totalComission4;
+            $withD->save();
+        }
+
+                        // End Here
                         $user = User::find($user_id);
                        
                         $ff = $user->coins;
@@ -648,6 +731,89 @@ class AgentController extends Controller
             $ct->sent_coins = $pp;
             $ct->withdraw = 1;
             $ct->save();
+            // Start Here
+
+            $comissions = $sender->comissions;
+            $newArray = [] ;
+            $comissionArray = json_decode(json_encode($comissions), true);
+            $lastIndex = array_key_last($comissionArray);
+            for($i=0;$i<count($comissions);$i++){
+               
+                // return $comissions[$i];
+                if($i != $lastIndex ){
+                    $dateOne = $comissions[$i]->created_at;
+                    $dateTwo = $comissions[$i+1]->created_at;
+                    $newArray[$i]['dateOne'] = $dateOne;
+                    $newArray[$i]['dateTwo'] = $dateTwo;
+                    $newArray[$i]['percentage'] = $comissions[$i]->comission_percentage;
+                }else{
+                    $dateOne = $comissions[$i]->created_at;
+                    $dateTwo = null;
+                    $newArray[$i]['dateOne'] = $dateOne;
+                    $newArray[$i]['dateTwo'] = $dateTwo;
+                    $newArray[$i]['percentage'] = $comissions[$i]->comission_percentage;
+                }
+    
+                
+                
+               
+               
+            }
+
+
+$totalComission4 = 0;
+foreach ($newArray as $na){
+if($na['dateTwo'] == null){
+    
+$history4 = CoinTransfer::where('sender_id', $sender->id)->where('withdraw',1)->whereBetween('created_at', [$na['dateOne'], Carbon::now()])->get();
+
+
+$comission4 = 0;
+foreach($history4 as $h4){
+// $total_sales4 = $total_sales4 + $h4->sent_coins;
+$cc = $h4->sent_coins;
+$ac = ($cc * $na['percentage'])/100;
+$comission4 = $comission4 + $ac;
+$comission4 = round($comission4, 1);
+
+}
+$totalComission4 = $totalComission4+$comission4;
+
+
+}else{
+   
+$history4 = CoinTransfer::where('sender_id', $sender->id)->where('withdraw',1)->whereBetween('created_at', [$na['dateOne'], $na['dateTwo']])->get();
+
+
+$comission4 = 0;
+foreach($history4 as $h4){
+// $total_sales4 = $total_sales4 + $h4->sent_coins;
+$cc = $h4->sent_coins;
+$ac = ($cc * $na['percentage'])/100;
+$comission4 = $comission4 + $ac;
+$comission4 = round($comission4, 1);
+
+}
+$totalComission4 = $totalComission4+$comission4;
+
+
+}
+
+}
+dd($totalComission4);
+$comm = WithDraw::where('user_id',$sender->id)->get();
+if(count($comm)>0){
+$withD = WithDraw::find($comm[0]->id);
+$withD->total_comission = $totalComission4;
+$withD->save();
+
+}else{
+$withD = new WithDraw();
+$withD->total_comission = $totalComission4;
+$withD->save();
+}
+
+            // End Here
             $user = User::find($user_id);
            
             $ff = $user->coins;
