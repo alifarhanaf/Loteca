@@ -120,7 +120,7 @@ class LeaderBoardController extends Controller
                 $cids = DB::table('points')->where('user_id',$points[$i])->where('round_id',$rd)->max('points');
                 $totalPoints = $totalPoints+$cids;
             }
-            $usera = User::where('id',$points[$i])->with('images')->first();
+            $usera = User::where('id',$points[$i])->with('images')->with('contacts')->first();
             if($totalPoints > 0 ){
                 $usera['image'] = $usera->images[0]->url;
             $usera['winning_coins'] = $totalPoints*10;
