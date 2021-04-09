@@ -459,16 +459,15 @@ class AgentController extends Controller
 
 
         $totalComission4 = 0;
-        $total_sales4 = 0; 
         foreach ($newArray as $na){
             if($na['dateTwo'] == null){
                 
-            $history4 = CoinTransfer::where('sender_id', $user->id)->where('withdraw',1)->whereBetween('created_at', [$na['dateOne'], Carbon::now()])->get();
+            $history4 = CoinTransfer::where('sender_id', $sender->id)->where('withdraw',1)->whereBetween('created_at', [$na['dateOne'], Carbon::now()])->get();
             
         
         $comission4 = 0;
         foreach($history4 as $h4){
-            $total_sales4 = $total_sales4 + $h4->sent_coins;
+            // $total_sales4 = $total_sales4 + $h4->sent_coins;
             $cc = $h4->sent_coins;
             $ac = ($cc * $na['percentage'])/100;
             $comission4 = $comission4 + $ac;
@@ -480,12 +479,12 @@ class AgentController extends Controller
 
             }else{
                
-            $history4 = CoinTransfer::where('sender_id', $user->id)->where('withdraw',1)->whereBetween('created_at', [$na['dateOne'], $na['dateTwo']])->get();
+            $history4 = CoinTransfer::where('sender_id', $sender->id)->where('withdraw',1)->whereBetween('created_at', [$na['dateOne'], $na['dateTwo']])->get();
            
         
         $comission4 = 0;
         foreach($history4 as $h4){
-            $total_sales4 = $total_sales4 + $h4->sent_coins;
+            // $total_sales4 = $total_sales4 + $h4->sent_coins;
             $cc = $h4->sent_coins;
             $ac = ($cc * $na['percentage'])/100;
             $comission4 = $comission4 + $ac;
