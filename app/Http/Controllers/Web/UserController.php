@@ -61,7 +61,7 @@ class UserController extends Controller
         $round = Round::where('status',2)->first();
         $package_id = $round->packages[0]->id;
         // dd($package_id);
-        $point = Point::where('user_id',$id)->where('package_id',$package_id)->where('round_id',$round->id)->first();
+        $point = Point::where('user_id',$id)->where('package_id',$package_id)->where('round_id',$round->id)->max('points');
         if($point == null){
             $point = new Point();
             $point->user_id = $id;
