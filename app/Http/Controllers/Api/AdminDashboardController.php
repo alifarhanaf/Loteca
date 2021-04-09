@@ -436,7 +436,9 @@ class AdminDashboardController extends Controller
 
         //FourthEndHere
         $availableForWithDraw = WithDraw::where('user_id',$user->id)->first();
-        if($availableForWithDraw->withdraw_comission == null){
+        if($availableForWithDraw == null ){
+            $afw = 0;
+        }elseif($availableForWithDraw->withdraw_comission == null){
             $afw = $availableForWithDraw->total_comission;
         }else{
             $afw = $availableForWithDraw->total_comission - $availableForWithDraw->withdraw_comission;
