@@ -64,6 +64,7 @@ class MyLeagueController extends Controller
             'packages' => $packages,
             'games' => $games,
         );
+        
         $data = array( 
             "status"=>200,
             "response"=>"true",

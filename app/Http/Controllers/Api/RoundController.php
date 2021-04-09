@@ -207,7 +207,7 @@ class RoundController extends Controller
     }
     public function participatedleagues()
     {
-        $userLeagues = DB::table('round_user')->where('user_id',Auth::user()->id)->get();
+        $userLeagues = DB::table('round_user')->where('user_id',Auth::user()->id)->orderBy('created_at', 'desc')->get();
         $arr = [];
         $Dates = [];
         
@@ -225,6 +225,7 @@ class RoundController extends Controller
             $rdz['betting_date'] = $Dates[$i];
             array_push($rounds,$rdz);
         }
+
             
        
         $data = array(
