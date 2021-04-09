@@ -344,7 +344,7 @@ class AgentController extends Controller
             }
             
         }
-        dd($totalComission4);
+        // dd($totalComission4);
         $comm = WithDraw::where('user_id',$sender->id)->get();
         if(count($comm)>0){
             $withD = WithDraw::find($comm[0]->id);
@@ -580,7 +580,7 @@ class AgentController extends Controller
             }
             
         }
-        dd($totalComission4);
+        // dd($totalComission4);
         $comm = WithDraw::where('user_id',$sender->id)->get();
         if(count($comm)>0){
             $withD = WithDraw::find($comm[0]->id);
@@ -800,7 +800,7 @@ $totalComission4 = $totalComission4+$comission4;
 }
 
 }
-dd($totalComission4);
+// dd($totalComission4);
 $comm = WithDraw::where('user_id',$sender->id)->get();
 if(count($comm)>0){
 $withD = WithDraw::find($comm[0]->id);
