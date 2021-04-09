@@ -60,6 +60,54 @@
 	</div>
 </div>
 
+{{-- Start HERE --}}
+<div class="row ">
+    <div class="card user-card-full" style="width: 100%; flex-direction: row; margin-bottom:0px;">
+     @foreach ($firstRoundWinners as $item)
+         
+     
+      <div class="col-md-4 ">
+          <div class="text-center card-box" style="margin-bottom: 0px;">
+              <div class="member-card pt-2 pb-2">
+                  <div class="thumb-lg member-thumb mx-auto"><img src={{$item['images']['0']['url']}} class="rounded-circle img-thumbnail" alt="profile-image"></div>
+                  <div class="">
+                      <h4>{{$item['name']}}</h4>
+                      <p class="text-muted">End User <span>| </span><span><a href="#" class="text-pink">Loteca 2.0</a></span></p>
+                  </div>
+                  
+                  <div class="mt-3">
+                      <div class="row ">
+                         <div class="child">
+                            <div style=" background: #fdfdfd">
+                            <p style="margin-bottom:0.2rem;margin-top:0.2rem">
+                               <b>Points:</b>  {{$item['winningCoins']}}
+                             </p>
+                            </div>
+                            <div class="mt-2" style="padding-right:20px;padding-left:20px;background: #fdfdfd">
+                          <p style="margin-bottom:0.2rem" class="mt-2">
+                            <b>Email:</b>  {{$item['contacts']['0']['email']}}
+                          </p>
+                          <p>
+                            <b>Phone:</b> {{$item['contacts']['0']['phone']}}
+                          </p>
+                            </div>
+                         </div>
+                         
+                      </div>
+                  </div>
+              </div>
+          </div>
+      </div>
+      <!-- end col -->
+      @endforeach
+      
+
+
+  </div>
+  <!-- end row -->
+</div>
+{{-- End Here --}}
+
 <div class="az-form-group mg-t-20">
     <h5 style="text-align: center">Games</h5>
 </div>
@@ -108,6 +156,8 @@
             </div>
             @if(isset($gms->results))
             <p class="mg-t-10" style="text-align: center"><b>Original Answer:</b> {{$gms->results->Answer}}</p>
+            @else
+            <p class="mg-t-10" style="text-align: center"><b>Original Answer:</b> N/A</p>
             @endif
             <p class="mg-t-5 mg-b-5" style="text-align: center"><b>Happening Date:</b> {{$gms->happening_date}}</p>
             
