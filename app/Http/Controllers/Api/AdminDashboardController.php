@@ -552,7 +552,7 @@ class AdminDashboardController extends Controller
             "monthly_data" => $monthly_data,
             "all_time_data" => $all_time_data,
             "user" => $user,
-            "available_for_withdraw" => $afw,
+            "available_for_withdraw" => intval($afw),
 
         )
         );
