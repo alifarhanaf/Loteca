@@ -12,7 +12,7 @@ class RoundController extends Controller
 {
     public function roundPage($id){
         $round =  Round::find($id);
-        $check = 0;
+        $check = 1;
         
         $packages = $round->packages;
         $round->games;
@@ -20,8 +20,9 @@ class RoundController extends Controller
             $ga->results;
         }
         $winnerCheck = Winner::where('round_id',$round->id)->get();
-        if($winnerCheck != null){
-            $check = 1;
+        
+        if(count($winnerCheck) == 0){
+            $check = 0;
         }
         if($round->status == 2 && $winnerCheck != null){
             $winnerCat1 = Winner::where('round_id',$round->id)->where('package_id',$packages[0]->id)->get();
@@ -101,6 +102,7 @@ class RoundController extends Controller
         // return $games;
         // $sorted = $games->orderBy('created_at', 'desc');
         // $games = Game::sortBy('created_at', 'ASC')->get();
+        // dd($check);
         $data = array(
             "round"=> $round,
             "firstRoundWinners" => $arr[0],

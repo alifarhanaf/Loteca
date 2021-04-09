@@ -62,6 +62,7 @@
 
 
 @if($check == 1 )
+   
 
 {{-- Start HERE --}}
 <div class="az-form-group mg-t-20">
@@ -214,6 +215,7 @@
 <!-- end row -->
 </div>
 {{-- End Here --}}
+
 @endif
 
 <div class="az-form-group mg-t-20">
