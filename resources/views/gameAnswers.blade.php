@@ -13,11 +13,11 @@
             <table id="example2" class="table">
               <thead>
                 <tr>
-                  <th class="wd-15p">Championship</th>
-                  <th class="wd-20p">First Team</th>
-                  <th class="wd-20p">Second Team</th>
-                  <th class="wd-10p">Happening Date</th>
-                  <th class="wd-20p">Add Answer</th>
+                  <th class="wd-10p">Championship</th>
+                  <th class="wd-15p">First Team</th>
+                  <th class="wd-15p">Second Team</th>
+                  <th class="wd-15p">Happening Date</th>
+                  <th class="wd-30p">Add Answer</th>
                   <th class="wd-15p">Actions</th>
                 </tr>
               </thead>
@@ -36,9 +36,19 @@
                     
                     <form action="{{ route('submit_game_answer',$game->id) }}" method="POST" >
                         {{ csrf_field() }}
-                    <td><u>
-                        <input style="padding: 0px; border:none;" name="name" type="text" class="form-control" placeholder="Enter Game Answer" >
-                    </u>
+                    <td>
+                      
+                      <label class="radio-inline" style="border: 1px solid black; border-radius:15px; padding-right:5px;padding-left:5px; background: #cdd4e0">
+                        
+                        <input style="margin-top: 5px;" type="radio" name="optradio" value="{{$game->team_a}}"> &nbsp {{$game->team_a}}
+                      </label>
+                      
+                      <label class="radio-inline" style="border: 1px solid black; border-radius:15px; padding-right:5px;padding-left:5px; background: #cdd4e0">
+                        <input style="margin-top: 5px;" type="radio" name="optradio" value="{{$game->team_b}}">&nbsp {{$game->team_b}}
+                      </label>
+                      <label class="radio-inline" style="border: 1px solid black; border-radius:15px; padding-right:5px;padding-left:5px; background: #cdd4e0">
+                        <input style="margin-top: 5px;" type="radio" name="optradio" value="Draw">&nbsp Draw
+                      </label>
                     </td>
                   <td>
                   

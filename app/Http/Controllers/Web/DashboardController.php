@@ -479,7 +479,7 @@ class DashboardController extends Controller
         DB::beginTransaction();
         try {
         $result = New Result();
-        $result->Answer = $request->name;
+        $result->Answer = $request->optradio;
         $result->game_id = $id;
         $result->save();
         // return $request->all();

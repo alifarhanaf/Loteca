@@ -223,7 +223,6 @@ class AdminDashboardController extends Controller
         
         // return $user->roles;
         if($user->roles == '2'){
-            $com_percentage = $user->comissions[0]->comission_percentage;
             //Here
             $comissions = $user->comissions;
         $newArray = [] ;

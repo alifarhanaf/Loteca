@@ -35,6 +35,7 @@
 	<div class="container  mg-t-20" >
         
 	<div class="row" style="width: inherit">
+        
 	@foreach ($round->packages as $pkgs)
     <!--team-1-->
 	<div class="col-lg-4">
