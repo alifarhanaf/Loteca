@@ -123,7 +123,7 @@ class LeaderBoardController extends Controller
             $usera = User::where('id',$points[$i])->with('images')->first();
             if($totalPoints > 0 ){
                 $usera['image'] = $usera->images[0]->url;
-            $usera['Winning Coins'] = $totalPoints*10;
+            $usera['winning_coins'] = $totalPoints*10;
             if(!in_array($usera, $multipleWinners, true)){
                 array_push($multipleWinners,$usera);
             }
