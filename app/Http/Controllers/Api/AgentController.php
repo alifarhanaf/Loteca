@@ -500,7 +500,7 @@ class AgentController extends Controller
         }
         $comm = WithDraw::where('user_id',$sender->id)->get();
         if(count($comm)>0){
-            $withD = WithDraw::where('user_id',$sender->id)->first();
+            $withD = WithDraw::find($comm[0]->id);
             $withD->total_comission = $totalComission4;
             $withD->save();
 
