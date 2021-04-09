@@ -24,7 +24,7 @@
               <tbody>
                 @foreach ($agents as $agent)
                 <tr>
-                  <td><img src="{{$agent->images[0]->url}}" alt="Girl in a jacket" width="25" height="25"></td>
+                  <td><img src="{{$agent->images[0]->url}}" alt="Agent" width="25" height="25"></td>
                   <td>{{$agent->name}}</td>
                   <td>{{$agent->email}}</td>
                   <td>
@@ -42,8 +42,8 @@
                 <div class="row d-flex justify-content-end" style="margin-right: 8%">
                     <form 
                 action="{{ route('agent.profile',$agent->id) }}" 
-                method="POST" >
-                    {{ csrf_field() }}
+               >
+                    
                    
                     <button  type="submit" class="grid-btn" style="width:100px;" ><i class="typcn typcn-eye"></i></button>
                 </form>
