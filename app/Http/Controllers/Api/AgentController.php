@@ -272,6 +272,7 @@ class AgentController extends Controller
                         $ct->sender_id = $sender->id;
                         $ct->receiver_id = $receiver->id;
                         $ct->sent_coins = $pp;
+                        $ct->withdraw = 1;
                         $ct->save();
                         $user = User::find($user_id);
                        
@@ -424,6 +425,7 @@ class AgentController extends Controller
                         $ct->sender_id = $sender->id;
                         $ct->receiver_id = $receiver->id;
                         $ct->sent_coins = $pp;
+                        $ct->withdraw = 1;
                         $ct->save();
                         $user = User::find($user_id);
                        
@@ -560,6 +562,7 @@ class AgentController extends Controller
             $ct->sender_id = $sender->id;
             $ct->receiver_id = $receiver->id;
             $ct->sent_coins = $pp;
+            $ct->withdraw = 1;
             $ct->save();
             $user = User::find($user_id);
            
