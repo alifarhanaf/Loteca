@@ -12,6 +12,67 @@ use App\Http\Controllers\Controller;
 class LeaderBoardController extends Controller
 {
     public function leaderB(){
+
+
+        $multipleWinners = [];
+        $points = DB::table('points')->where( 'created_at', '>', Carbon::now()->subDays(30))->pluck('user_id');
+        $points = json_decode(json_encode($points), true);
+        $points = array_values(array_unique($points)) ;
+        for ($i = 0; $i < count($points); $i++) {
+            $totalPoints = 0;
+            $rids = DB::table('points')->where('user_id',$points[$i])->where( 'created_at', '>', Carbon::now()->subDays(30))->pluck('round_id');
+            $rids = json_decode(json_encode($rids), true);
+            $rids = array_values(array_unique($rids)) ;
+            foreach($rids as $rd){
+                $cids = DB::table('points')->where('user_id',$points[$i])->where('round_id',$rd)->where( 'created_at', '>', Carbon::now()->subDays(30))->max('points');
+                $totalPoints = $totalPoints+$cids;
+            }
+            $usera = User::where('id',$points[$i])->with('images')->with('contacts')->first();
+            if($totalPoints > 0 ){
+                $usera['image'] = $usera->images[0]->url;
+            $usera['winning_coins'] = $totalPoints*10;
+            if(!in_array($usera, $multipleWinners, true)){
+                array_push($multipleWinners,$usera);
+            }
+
+            }
+        }
+       
+        
+                
+                $multipleWinners = array_values(array_unique($multipleWinners));
+                
+                $array = collect($multipleWinners)->sortBy('winning_coins')->reverse()->toArray();
+                $arraySorted = array_values($array);
+    
+    
+                $newArray = [];
+                if (array_key_exists("0",$arraySorted)){
+                    $newArray[0] = $arraySorted[0];
+                }
+                if (array_key_exists("1",$arraySorted)){
+                    $newArray[1] = $arraySorted[1];
+                }
+                if (array_key_exists("2",$arraySorted)){
+                    $newArray[2] = $arraySorted[2];
+                }
+                
+               
+    
+                $data = array(
+                    
+                    "leaderBoardMonthly" => $newArray,
+                    "leaderBoardMonthlyAll" => $arraySorted,
+        
+        
+                );
+                // return $data;
+                return view ('monthlyLeaderBoard')->with($data);
+        
+        
+
+
+
        
         
         $multipleWinners = [];
