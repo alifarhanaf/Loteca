@@ -105,61 +105,39 @@ class LeaderBoardController extends Controller
             
         }
         public function leaderBAll(){
+
+
+        $multipleWinners = [];
+        $points = DB::table('points')->pluck('user_id');
+        $points = json_decode(json_encode($points), true);
+        $points = array_values(array_unique($points)) ;
+        for ($i = 0; $i < count($points); $i++) {
+            $totalPoints = 0;
+            $rids = DB::table('points')->where('user_id',$points[$i])->pluck('round_id');
+            $rids = json_decode(json_encode($rids), true);
+            $rids = array_values(array_unique($rids)) ;
+            foreach($rids as $rd){
+                $cids = DB::table('points')->where('user_id',$points[$i])->where('round_id',$rd)->max('points');
+                $totalPoints = $totalPoints+$cids;
+            }
+            $usera = User::where('id',$points[$i])->with('images')->first();
+            if($totalPoints > 0 ){
+                $usera['image'] = $usera->images[0]->url;
+            $usera['Winning Coins'] = $totalPoints*10;
+            if(!in_array($usera, $multipleWinners, true)){
+                array_push($multipleWinners,$usera);
+            }
+
+            }
+        }
        
         
-            $multipleWinners = [];
-            $multipleWinnersMonthly = [];
-         
-       
-                $points = DB::table('points')->pluck('user_id');
-               
-                for ($i = 0; $i < count($points); $i++) {
-                    $pts = DB::table('points')->where('user_id',$points[$i])->pluck('points');
-                    $cts = DB::table('points')->where('user_id',$points[$i])->where( 'created_at', '>', Carbon::now()->subDays(30))->pluck('points');
-                    
-                    $usera = User::where('id',$points[$i])->with('images')->with('contacts')->first();
-                    $userb = User::where('id',$points[$i])->with('images')->with('contacts')->first();
-                    
-                    $count = 0;
-                    foreach($pts as $a){
-                        $count  = $count + $a;
-                    }
-                    $ccount = 0;
-                    foreach($cts as $b){
-                        $ccount  = $ccount + $b;
-                    }
-                    // dd($count,$ccount);
-                    if($count > 0 ){
-                        $usera['image'] = $usera->images[0]->url;
-                    $usera['winning_coins'] = $count*10;
-                    if(!in_array($usera, $multipleWinners, true)){
-                        array_push($multipleWinners,$usera);
-                    }
-    
-                    }
-    
-                    
-                    if($ccount > 0 ){
-                    $userb['image'] = $userb->images[0]->url;
-                    $userb['winning_coins'] = $ccount*10;
-                    if(!in_array($userb, $multipleWinnersMonthly, true)){
-                        array_push($multipleWinnersMonthly,$userb);
-                    }
-                    }
-    
-    
-                        
-                  
-                }
                 
-                $multipleWinnersMonthly = array_values(array_unique($multipleWinnersMonthly));
                 $multipleWinners = array_values(array_unique($multipleWinners));
                 
                 $array = collect($multipleWinners)->sortBy('winning_coins')->reverse()->toArray();
                 $arraySorted = array_values($array);
     
-                $brray = collect($multipleWinnersMonthly)->sortBy('winning_coins')->reverse()->toArray();
-                $brraySorted = array_values($brray);
     
                 $newArray = [];
                 if (array_key_exists("0",$arraySorted)){
@@ -171,21 +149,11 @@ class LeaderBoardController extends Controller
                 if (array_key_exists("2",$arraySorted)){
                     $newArray[2] = $arraySorted[2];
                 }
-                $newArray1 = [];
-                if (array_key_exists("0",$brraySorted)){
-                    $newArray1[0] = $brraySorted[0];
-                }
-                if (array_key_exists("1",$brraySorted)){
-                    $newArray1[1] = $brraySorted[1];
-                }
-                if (array_key_exists("2",$brraySorted)){
-                    $newArray1[2] = $brraySorted[2];
-                }
+                
                
     
                 $data = array(
-                    "leaderBoardMonthly" => $newArray1,
-                    "leaderBoardMonthlyAll" => $brraySorted,
+                    
                     "leaderBoardAllTime" => $newArray,
                     "leaderBoardAllTimeAll" => $arraySorted,
         
