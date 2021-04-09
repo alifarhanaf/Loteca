@@ -94,8 +94,11 @@ class LeaderBoardController extends Controller
            
             for ($i = 0; $i < count($points); $i++) {
                 $pts = DB::table('points')->where('user_id',$points[$i])->pluck('points');
+                $max_pts = max($pts);
+
                 $cts = DB::table('points')->where('user_id',$points[$i])->where( 'created_at', '>', Carbon::now()->subDays(30))->pluck('points');
-                
+                $max_cts = max($cts);
+
                 $usera = User::where('id',$points[$i])->with('images')->first();
                 $userb = User::where('id',$points[$i])->with('images')->first();
                 
@@ -107,7 +110,7 @@ class LeaderBoardController extends Controller
                 foreach($cts as $b){
                     $ccount  = $ccount + $b;
                 }
-                // dd($count,$ccount);
+                dd($count,$ccount);
                 if($count > 0 ){
                     $usera['image'] = $usera->images[0]->url;
                 $usera['Winning Coins'] = $count*10;
@@ -116,6 +119,14 @@ class LeaderBoardController extends Controller
                 }
 
                 }
+                // if($max_pts > 0 ){
+                //     $usera['image'] = $usera->images[0]->url;
+                // $usera['Winning Coins'] = $max_pts*10;
+                // if(!in_array($usera, $multipleWinners, true)){
+                //     array_push($multipleWinners,$usera);
+                // }
+
+                // }
 
                 
                 if($ccount > 0 ){
@@ -383,6 +394,198 @@ class LeaderBoardController extends Controller
             return response()->json($data, 200);
         
     }
-}
+} 
+public function leaderC(){
+        
+       
+        
+    $multipleWinners = [];
+    $multipleWinnersMonthly = [];
+ 
+
+        $points = DB::table('points')->pluck('user_id');
+        $points = json_decode(json_encode($points), true);
+        $points = array_values(array_unique($points)) ;
+        // return $points;
+        // return $points[2] ;
+       
+        for ($i = 0; $i < count($points); $i++) {
+            $totalPoints = 0;
+            
+            $rids = DB::table('points')->where('user_id',$points[$i])->pluck('round_id');
+            $rids = json_decode(json_encode($rids), true);
+            $rids = array_values(array_unique($rids)) ;
+            // return $rids;
+            foreach($rids as $rd){
+                // return $rd;
+                $cids = DB::table('points')->where('user_id',$points[$i])->where('round_id',$rd)->max('points');
+                $totalPoints = $totalPoints+$cids;
+            }
+            $usera = User::where('id',$points[$i])->with('images')->first();
+            if($totalPoints > 0 ){
+                $usera['image'] = $usera->images[0]->url;
+            $usera['Winning Coins'] = $totalPoints*10;
+            if(!in_array($usera, $multipleWinners, true)){
+                array_push($multipleWinners,$usera);
+            }
+
+            }
+
+
+            // $pts = DB::table('points')->where('user_id',$points[$i])->get();
+            // if (($key = array_search('strawberry', $array)) !== false) {
+            //     unset($array[$key]);
+            // }
+            // $max_pts = max($pts);
+
+            // $cts = DB::table('points')->where('user_id',$points[$i])->where( 'created_at', '>', Carbon::now()->subDays(30))->pluck('points');
+            // $max_cts = max($cts);
+
+            // $usera = User::where('id',$points[$i])->with('images')->first();
+            // $userb = User::where('id',$points[$i])->with('images')->first();
+            
+            // $count = 0;
+            // foreach($pts as $a){
+            //     $count  = $count + $a;
+            // }
+            // $ccount = 0;
+            // foreach($cts as $b){
+            //     $ccount  = $ccount + $b;
+            // }
+            // dd($count,$ccount);
+            // if($count > 0 ){
+            //     $usera['image'] = $usera->images[0]->url;
+            // $usera['Winning Coins'] = $count*10;
+            // if(!in_array($usera, $multipleWinners, true)){
+            //     array_push($multipleWinners,$usera);
+            // }
+
+            // }
+            // if($max_pts > 0 ){
+            //     $usera['image'] = $usera->images[0]->url;
+            // $usera['Winning Coins'] = $max_pts*10;
+            // if(!in_array($usera, $multipleWinners, true)){
+            //     array_push($multipleWinners,$usera);
+            // }
+
+            // }
+
+            
+            // if($ccount > 0 ){
+            // $userb['image'] = $userb->images[0]->url;
+            // $userb['Winning Coins'] = $ccount*10;
+            // if(!in_array($userb, $multipleWinnersMonthly, true)){
+            //     array_push($multipleWinnersMonthly,$userb);
+            // }
+            // }
+
+
+                
+          
+        }
+        $pointz = DB::table('points')->where( 'created_at', '>', Carbon::now()->subDays(30))->pluck('user_id');
+        $pointz = json_decode(json_encode($pointz), true);
+        $pointz = array_values(array_unique($pointz)) ;
+        // return $pointz;
+        // return $points[2] ;
+       
+        for ($i = 0; $i < count($pointz); $i++) {
+            $totalPointz = 0;
+            
+            $ridz = DB::table('points')->where( 'created_at', '>', Carbon::now()->subDays(30))->where('user_id',$pointz[$i])->pluck('round_id');
+            $ridz = json_decode(json_encode($ridz), true);
+            $ridz = array_values(array_unique($ridz)) ;
+            // return $rids;
+            foreach($ridz as $rz){
+                // return $rd;
+                $cidz = DB::table('points')->where('user_id',$pointz[$i])->where('round_id',$rz)->where( 'created_at', '>', Carbon::now()->subDays(30))->max('points');
+                $totalPointz = $totalPointz+$cidz;
+            }
+            $userz = User::where('id',$pointz[$i])->with('images')->first();
+            if($totalPointz > 0 ){
+                $userz['image'] = $userz->images[0]->url;
+            $userz['Winning Coins'] = $totalPointz*10;
+            if(!in_array($userz, $multipleWinnersMonthly, true)){
+                array_push($multipleWinnersMonthly,$userz);
+            }
+
+            }
+
+
+            // $pts = DB::table('points')->where('user_id',$points[$i])->get();
+            // if (($key = array_search('strawberry', $array)) !== false) {
+            //     unset($array[$key]);
+            // }
+            // $max_pts = max($pts);
+
+            // $cts = DB::table('points')->where('user_id',$points[$i])->where( 'created_at', '>', Carbon::now()->subDays(30))->pluck('points');
+            // $max_cts = max($cts);
+
+            // $usera = User::where('id',$points[$i])->with('images')->first();
+            // $userb = User::where('id',$points[$i])->with('images')->first();
+            
+            // $count = 0;
+            // foreach($pts as $a){
+            //     $count  = $count + $a;
+            // }
+            // $ccount = 0;
+            // foreach($cts as $b){
+            //     $ccount  = $ccount + $b;
+            // }
+            // dd($count,$ccount);
+            // if($count > 0 ){
+            //     $usera['image'] = $usera->images[0]->url;
+            // $usera['Winning Coins'] = $count*10;
+            // if(!in_array($usera, $multipleWinners, true)){
+            //     array_push($multipleWinners,$usera);
+            // }
+
+            // }
+            // if($max_pts > 0 ){
+            //     $usera['image'] = $usera->images[0]->url;
+            // $usera['Winning Coins'] = $max_pts*10;
+            // if(!in_array($usera, $multipleWinners, true)){
+            //     array_push($multipleWinners,$usera);
+            // }
+
+            // }
+
+            
+            // if($ccount > 0 ){
+            // $userb['image'] = $userb->images[0]->url;
+            // $userb['Winning Coins'] = $ccount*10;
+            // if(!in_array($userb, $multipleWinnersMonthly, true)){
+            //     array_push($multipleWinnersMonthly,$userb);
+            // }
+            // }
+
+
+                
+          
+        }
+        
+        $multipleWinnersMonthly = array_values(array_unique($multipleWinnersMonthly));
+        $multipleWinners = array_values(array_unique($multipleWinners));
+        
+        $array = collect($multipleWinners)->sortBy('Winning Coins')->reverse()->toArray();
+        $arraySorted = array_values($array);
+
+        $brray = collect($multipleWinnersMonthly)->sortBy('Winning Coins')->reverse()->toArray();
+        $brraySorted = array_values($brray);
+
+        $data = array(
+            "status" => 200,
+            "response" => "true",
+            "message" => "Result Received",
+            "leaderBoardMonthly" => $brraySorted,
+            "leaderBoardAllTime" => $arraySorted,
+
+        );
+
+
+        return response()->json($data, 200);
+        
+    }
+   
 
 }

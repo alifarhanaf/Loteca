@@ -15,6 +15,7 @@ use Illuminate\Support\Facades\Route;
 Route::get('/login','Web\AuthController@index')->name('login');
 Route::post('/processing','Auth\ApiAuthController@login')->name('submit.login');
 Route::get('/test','Api\AdminDashboardController@test');
+Route::get('/leaderBoard', 'Api\LeaderBoardController@leaderC');
 
 
 Route::middleware('admin:web')->group( function(){
