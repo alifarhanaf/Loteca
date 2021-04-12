@@ -205,7 +205,10 @@
 <table cellpadding="0" cellspacing="0" role="presentation" style="table-layout: fixed; vertical-align: top; border-spacing: 0; border-collapse: collapse; mso-table-lspace: 0pt; mso-table-rspace: 0pt;" valign="top" width="100%">
 <tr style="vertical-align: top;" valign="top">
 <td align="center" style="word-break: break-word; vertical-align: top; padding-bottom: 0px; padding-left: 0px; padding-right: 0px; padding-top: 35px; text-align: center; width: 100%;" valign="top" width="100%">
-<h1 style="color:#8412c0;direction:ltr;font-family:'Cabin', Arial, 'Helvetica Neue', Helvetica, sans-serif;font-size:28px;font-weight:normal;letter-spacing:normal;line-height:120%;text-align:center;margin-top:0;margin-bottom:0;"><strong>Reset Your Password?</strong></h1>
+<h1 style="color:#8412c0;direction:ltr;font-family:'Cabin', Arial, 'Helvetica Neue', Helvetica, sans-serif;font-size:28px;font-weight:normal;letter-spacing:normal;line-height:120%;text-align:center;margin-top:0;margin-bottom:0;"><strong>
+	{{-- Reset Your Password? --}}
+	Redefina sua senha?
+</strong></h1>
 </td>
 </tr>
 </table>
@@ -213,7 +216,11 @@
 <div style="color:#393d47;font-family:'Cabin', Arial, 'Helvetica Neue', Helvetica, sans-serif;line-height:1.5;padding-top:10px;padding-right:45px;padding-bottom:0px;padding-left:45px;">
 <div class="txtTinyMce-wrapper" style="line-height: 1.5; font-size: 12px; font-family: 'Cabin', Arial, 'Helvetica Neue', Helvetica, sans-serif; color: #393d47; mso-line-height-alt: 18px;">
 
-<p style="text-align: center; line-height: 1.5; word-break: break-word; font-family: 'Cabin', Arial, 'Helvetica Neue', Helvetica, sans-serif; font-size: 18px; mso-line-height-alt: 27px; margin: 0;"><span style="font-size: 18px; color: #aa67cf;">This is a confirmation message to Reset your password.</span></p>
+<p style="text-align: center; line-height: 1.5; word-break: break-word; font-family: 'Cabin', Arial, 'Helvetica Neue', Helvetica, sans-serif; font-size: 18px; mso-line-height-alt: 27px; margin: 0;"><span style="font-size: 18px; color: #aa67cf;">
+	
+	Esta é uma mensagem de confirmação para redefinir sua senha.
+	{{-- This is a confirmation message to Reset your password. --}}
+</span></p>
 </div>
 </div>
 <!--[if mso]></td></tr></table><![endif]-->
@@ -234,7 +241,10 @@
 </table>
 <!--[if mso]><table width="100%" cellpadding="0" cellspacing="0" border="0"><tr><td style="padding-right: 45px; padding-left: 45px; padding-top: 10px; padding-bottom: 10px; font-family: Arial, sans-serif"><![endif]-->
 <div style="color:#393d47;font-family:'Cabin', Arial, 'Helvetica Neue', Helvetica, sans-serif;line-height:1.5;padding-top:10px;padding-right:45px;padding-bottom:10px;padding-left:45px;">
-<div class="txtTinyMce-wrapper" style="line-height: 1.5; font-size: 12px; font-family: 'Cabin', Arial, 'Helvetica Neue', Helvetica, sans-serif; text-align: center; color: #393d47; mso-line-height-alt: 18px;"><span style="font-size: 13px; color: #8412c0; mso-ansi-font-size: 14px;">Kindly Copy Below Code and Paste it in your application:</span></div>
+<div class="txtTinyMce-wrapper" style="line-height: 1.5; font-size: 12px; font-family: 'Cabin', Arial, 'Helvetica Neue', Helvetica, sans-serif; text-align: center; color: #393d47; mso-line-height-alt: 18px;"><span style="font-size: 13px; color: #8412c0; mso-ansi-font-size: 14px;">
+	Copie o código abaixo e cole-o em seu aplicativo:
+	{{-- Kindly Copy Below Code and Paste it in your application: --}}
+</span></div>
 </div>
 <!--[if mso]></td></tr></table><![endif]-->
 <div align="center" class="button-container" style="padding-top:10px;padding-right:10px;padding-bottom:10px;padding-left:10px;">
@@ -244,7 +254,13 @@
 <!--[if mso]><table width="100%" cellpadding="0" cellspacing="0" border="0"><tr><td style="padding-right: 10px; padding-left: 10px; padding-top: 10px; padding-bottom: 15px; font-family: Arial, sans-serif"><![endif]-->
 <div style="color:#393d47;font-family:'Cabin', Arial, 'Helvetica Neue', Helvetica, sans-serif;line-height:1.2;padding-top:10px;padding-right:10px;padding-bottom:15px;padding-left:10px;">
 <div class="txtTinyMce-wrapper" style="line-height: 1.2; font-size: 12px; font-family: 'Cabin', Arial, 'Helvetica Neue', Helvetica, sans-serif; color: #393d47; mso-line-height-alt: 14px;">
-<p style="font-size: 10px; line-height: 1.2; word-break: break-word; text-align: center; font-family: 'Cabin', Arial, 'Helvetica Neue', Helvetica, sans-serif; mso-line-height-alt: 12px; margin: 0;"><span style="font-size: 10px; color: #aa67cf;"><span style="">If you didn't request to change your password, </span><span style="">you don't have to do anything.Just Ignore this mail.</span></span></p>
+<p style="font-size: 10px; line-height: 1.2; word-break: break-word; text-align: center; font-family: 'Cabin', Arial, 'Helvetica Neue', Helvetica, sans-serif; mso-line-height-alt: 12px; margin: 0;"><span style="font-size: 10px; color: #aa67cf;"><span style="">
+	{{-- If you didn't request to change your password,  --}}
+	Se você não pediu para mudar sua senha,
+</span><span style="">
+	{{-- you don't have to do anything.Just Ignore this mail. --}}
+	você não precisa fazer nada. Basta ignorar este e-mail.
+</span></span></p>
 </div>
 </div>
 <!--[if mso]></td></tr></table><![endif]-->
@@ -293,8 +309,14 @@
 <!--[if mso]><table width="100%" cellpadding="0" cellspacing="0" border="0"><tr><td style="padding-right: 0px; padding-left: 0px; padding-top: 0px; padding-bottom: 0px; font-family: Arial, sans-serif"><![endif]-->
 <div style="color:#393d47;font-family:Arial, Helvetica Neue, Helvetica, sans-serif;line-height:1.2;padding-top:0px;padding-right:0px;padding-bottom:0px;padding-left:0px;">
 <div class="txtTinyMce-wrapper" style="line-height: 1.2; font-size: 12px; color: #393d47; font-family: Arial, Helvetica Neue, Helvetica, sans-serif; mso-line-height-alt: 14px;">
-<p style="text-align: center; line-height: 1.2; word-break: break-word; font-size: 11px; mso-line-height-alt: 13px; margin: 0;"><span style="font-size: 11px; color: #8a3b8f;">Thanks For Becoming a part of Loteca Family.</span></p>
-<p style="text-align: center; line-height: 1.2; word-break: break-word; font-size: 11px; mso-line-height-alt: 13px; margin: 0;"><span style="font-size: 11px; color: #8a3b8f;">Extend your arms in welcome to the future.The best is yet to come!</span></p>
+<p style="text-align: center; line-height: 1.2; word-break: break-word; font-size: 11px; mso-line-height-alt: 13px; margin: 0;"><span style="font-size: 11px; color: #8a3b8f;">
+	{{-- Thanks For Becoming a part of Loteca Family. --}}
+	Obrigado por fazer parte da Família Loteca.
+</span></p>
+<p style="text-align: center; line-height: 1.2; word-break: break-word; font-size: 11px; mso-line-height-alt: 13px; margin: 0;"><span style="font-size: 11px; color: #8a3b8f;">
+	{{-- Extend your arms in welcome to the future.The best is yet to come! --}}
+	Estenda os braços e dê as boas-vindas ao futuro. O melhor ainda está por vir!
+</span></p>
 <p style="text-align: center; line-height: 1.2; word-break: break-word; mso-line-height-alt: 14px; margin: 0;"> </p>
 <p style="text-align: center; line-height: 1.2; word-break: break-word; font-size: 11px; mso-line-height-alt: 13px; margin: 0;"><span style="font-size: 11px;"><span style="color: #8a3b8f;">Your Street 12, 34567 AB City  /  info@example.com / (+1) 123 456 789</span><a href="http://www.example.com" style="color: #8a3b8f;"></a></span></p>
 <p style="line-height: 1.2; word-break: break-word; mso-line-height-alt: 14px; margin: 0;"> </p>
@@ -347,7 +369,10 @@
 <tr style="vertical-align: top;" valign="top">
 <td align="center" style="word-break: break-word; vertical-align: top; text-align: center; padding-top: 5px; padding-bottom: 5px; padding-left: 5px; padding-right: 6px;" valign="top"><a href="https://www.brixtonsolutions.com/"><img align="center" alt="Designed with BEE" class="icon" height="32" src="{{ asset('/storage/mail/bee.png')}}" style="border:0;" width="null"/></a></td>
 <td style="word-break: break-word; font-family: Arial, Helvetica Neue, Helvetica, sans-serif; font-size: 15px; color: #9d9d9d; vertical-align: middle; letter-spacing: undefined;" valign="middle">
-    <a href="https://www.brixtonsolutions.com/" style="color:#9d9d9d;text-decoration:none;">Designed By Brixton Inc.</a>
+    <a href="mailto:farhanaliyt@gmail.com" style="color:#9d9d9d;text-decoration:none;">
+		{{-- Designed By Brixton Inc. --}}
+		Projetado e desenvolvido por Brixton Inc. Quer se conectar ?
+	</a>
 </td>
 </tr>
 </table>
