@@ -169,6 +169,19 @@ class DashboardController extends Controller
         return redirect()->back()->with('success','Round Closed Successfully');
 
     }
+    public function openRound($id){
+        $round_id = $id;
+        $round = Round::find($round_id); 
+        if($round->status == 1){
+            return redirect()->back()->with('success','Round Already Open');
+        }else{
+            $round->status = 1;
+            $round->save();
+            return redirect()->back()->with('success','Round Opened Successfully');
+        }
+        
+
+    }
     
 
     public function finalizeRound(Request $request,$id){

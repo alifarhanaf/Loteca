@@ -29,6 +29,7 @@ Route::post('/game_submit','Web\DashboardController@submitGame')->name('submit.g
 Route::post('/round_submit','Web\DashboardController@submitRound')->name('submit.round');
 Route::post('/finalize_round/{id}','Web\DashboardController@finalizeRound')->name('finalize.round');
 Route::post('/close_round/{id}','Web\DashboardController@closeRound')->name('close.round');
+Route::post('/open_round/{id}','Web\DashboardController@openRound')->name('open.round');
 Route::delete('/delete_round/{id}','Web\DashboardController@destroyRound')->name('delete.round');
 Route::get('/round_edit/{id}', 'Web\DashboardController@editRound')->name('edit.round');
 Route::post('/submit_round_edit/{id}', 'Web\DashboardController@editRoundSubmit')->name('edit.round.submit');

@@ -51,6 +51,14 @@
                   </form>
                   &nbsp
                   <form 
+                  action="{{ route('open.round',$round->id) }}" 
+                  method="POST" >
+                      {{ csrf_field() }}
+                     
+                      <button  type="submit" class="grid-btn"><i class="typcn typcn-lock-open"></i></button>
+                  </form>
+                  &nbsp
+                  <form 
                   action="{{ route('finalize.round',$round->id) }}" 
                   method="POST" >
                       {{ csrf_field() }}
