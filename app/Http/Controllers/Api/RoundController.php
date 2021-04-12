@@ -244,24 +244,26 @@ class RoundController extends Controller
         }else{
         
             $data = array(
-                "status" => 404,
-                "response" => "false",
-                "message" => "No Result Found",
+                "status" => 200,
+                "response" => "true",
+                "message" => "Result Received",
+                "participatedLeagues" => [],
             );
     
     
-            return response()->json($data, 404);
+            return response()->json($data, 200);
         }
     }else{
         
         $data = array(
-            "status" => 404,
-            "response" => "false",
-            "message" => "No Result Found",
+            "status" => 200,
+                "response" => "true",
+                "message" => "Result Received",
+                "participatedLeagues" => [],
         );
 
 
-        return response()->json($data, 404);
+        return response()->json($data, 200);
     }
         
     }
