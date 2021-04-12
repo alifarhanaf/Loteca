@@ -208,6 +208,9 @@ class RoundController extends Controller
     public function participatedleagues()
     {
         $userLeagues = DB::table('round_user')->where('user_id',Auth::user()->id)->orderBy('created_at', 'desc')->get();
+        if($userLeagues){
+
+        
         $arr = [];
         $Dates = [];
         
@@ -249,6 +252,17 @@ class RoundController extends Controller
     
             return response()->json($data, 200);
         }
+    }else{
+        
+        $data = array(
+            "status" => 404,
+            "response" => "false",
+            "message" => "No Result Found",
+        );
+
+
+        return response()->json($data, 200);
+    }
         
     }
     public function leaderBoard()
