@@ -250,7 +250,7 @@ class RoundController extends Controller
             );
     
     
-            return response()->json($data, 200);
+            return response()->json($data, 404);
         }
     }else{
         
@@ -261,7 +261,7 @@ class RoundController extends Controller
         );
 
 
-        return response()->json($data, 200);
+        return response()->json($data, 404);
     }
         
     }
