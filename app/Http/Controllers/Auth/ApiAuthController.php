@@ -308,7 +308,7 @@ class ApiAuthController extends Controller
     }
     public function changePasswordCode(Request $request){
         // $code = Str::random(10);
-        
+
         $code = random_int(10000, 99999);
         
         $to_name = "User";
@@ -324,7 +324,7 @@ class ApiAuthController extends Controller
             "status"=>200,
             "response"=>"true",
             "message" => "Code Sent Successfully",
-            "code" => $code,
+            "code" => "$code",
          );
          return response()->json($data,200);
 
