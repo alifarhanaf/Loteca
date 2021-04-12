@@ -46,7 +46,7 @@ class ApiAuthController extends Controller
         $user->coins = '0';
         $user->remember_token = request('remember_token');
         $user->roles = 2;
-        $user->auth_code = $code;
+        $user->auth_code = "$code";
         $user->save();
         // dd($request->role);
        
@@ -110,7 +110,7 @@ class ApiAuthController extends Controller
         $user->coins = '0';
         $user->remember_token = request('remember_token');
         $user->roles = request('role');
-        $user->auth_code = $code;
+        $user->auth_code = "$code";
         $user->save();
         // dd($request->role);
        
