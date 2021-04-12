@@ -560,6 +560,11 @@ class AdminDashboardController extends Controller
         }
 
     }
+    public function tt(){
+        $code = random_int(10000, 99999);
+        return $code;
+
+    }
 
     
 }

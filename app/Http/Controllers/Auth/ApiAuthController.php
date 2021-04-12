@@ -37,7 +37,8 @@ class ApiAuthController extends Controller
             }
         $request['password']=Hash::make($request['password']);
         $request['remember_token'] = Str::random(10);
-        $code = Str::random(10);
+        // $code = Str::random(10);
+        $code = random_int(10000, 99999);
         $user = new User();
         $user->name = request('name');
         $user->email = request('email');
@@ -100,7 +101,8 @@ class ApiAuthController extends Controller
         }
         $request['password']=Hash::make($request['password']);
         $request['remember_token'] = Str::random(10);
-        $code = Str::random(10);
+        // $code = Str::random(10);
+        $code = random_int(10000, 99999);
         $user = new User();
         $user->name = request('name');
         $user->email = request('email');
@@ -258,7 +260,8 @@ class ApiAuthController extends Controller
     }
     public function resendCode(){
         $user =  Auth::user();
-        $code = Str::random(10);
+        // $code = Str::random(10);
+        $code = random_int(10000, 99999);
         $usr = User::find($user->id);
         $usr->auth_code = $code;
         $usr->save();
@@ -304,7 +307,9 @@ class ApiAuthController extends Controller
 
     }
     public function changePasswordCode(Request $request){
-        $code = Str::random(10);
+        // $code = Str::random(10);
+        
+        $code = random_int(10000, 99999);
         
         $to_name = "User";
         $to_email = $request->email;
