@@ -13,7 +13,7 @@ class ProfileController extends Controller
 {
     public function updateUser(Request $request){
         // dd($request->image);
-        dd($request) ;
+        // dd($request) ;
 
         $user = Auth::user();
         
