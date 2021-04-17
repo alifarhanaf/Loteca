@@ -26,7 +26,7 @@ class ProfileController extends Controller
         $user->email = request('email');
         $user->roles = request('role');
         $user->save();
-        $user->contacts;
+        
 
         $contact = Contact::find($contact[0]->id);
         $contact->phone = request('phone');
@@ -52,9 +52,12 @@ class ProfileController extends Controller
         $image->user_id = Auth::user()->id;
         $image->save();
         }
+        $user = User::find($user->id);
         // $user->images[0]->url= 'https://phpstack-526382-1675862.cloudwaysapps.com'.$user->images[0]->url;
         $token = $user->createToken('Laravel Password Grant Client')->accessToken;
-       
+        
+        $user->contacts;
+        $user->images;
         if($user->roles == 1){
             $role = 'User';
         }else if ($user->roles == 2){
