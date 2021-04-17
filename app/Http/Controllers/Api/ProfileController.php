@@ -39,11 +39,18 @@ class ProfileController extends Controller
         $pathsave =  '/storage/UserImages/';
         $request->image->move($path, $imageName);
         $imageurl = $pathsave.$imageName;
+        $image = Image::find($user->images[0]->id);
+        if($image){
+            $image->url =  $imageurl;
+            $image->save();
+        }else{
+
+        
         $image = new Image();
         $image->url =$imageurl;
         $image->user_id = Auth::user()->id;
         $image->save();
-
+        }
         $data = array( 
             "status"=>200,
             "response"=>"true",
