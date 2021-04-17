@@ -913,6 +913,7 @@ $withD->save();
                 'games' => $games,
             );
             $agent = User::find(Auth::user()->id);
+            $agent['phone'] = $agent->contacts[0]->phone;
             $data = array(
                 "status" => 200,
                 "response" => "true",

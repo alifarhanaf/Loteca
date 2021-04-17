@@ -6,11 +6,12 @@ use App\User;
 use Carbon\Carbon;
 use App\Models\Point;
 use App\Models\Round;
+use App\Models\WithDraw;
 use App\Models\CoinTransfer;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Models\WithDraw;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 
 class AdminDashboardController extends Controller
 {
@@ -560,9 +561,17 @@ class AdminDashboardController extends Controller
         }
 
     }
-    public function tt(){
-        $code = random_int(10000, 99999);
-        return $code;
+    public function alr(){
+        // $a = 0 ;
+        $s = 0 ;
+        for($a=1;$a<=50;$a+=3){
+            $s = $s+$a;
+        }
+        return $s;
+
+
+        
+
 
     }
 
