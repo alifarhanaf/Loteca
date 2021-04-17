@@ -26,7 +26,7 @@ Route::post('/register','Auth\ApiAuthController@register')->name('register.api')
 Route::post('/logout', 'Auth\ApiAuthController@logout')->name('logout.api');
 Route::post('/resetPasswordCode','Auth\ApiAuthController@changePasswordCode');
 Route::post('/updatePassword','Auth\ApiAuthController@updatePassword');
-Route::post('/updateProfile', 'Api\ProfileController@updateUser')->name('profileUpdate.api');
+
 
 // Route::post('/finalizeRound','Web\DashboardController@finalizeRound');
 Route::post('/arrayCheck','Api\RoundController@arrayCheck');
@@ -41,6 +41,7 @@ Route::middleware('auth:api')->group( function(){
     Route::get('/lastRoundResult', 'Api\RoundController@llr');
     Route::get('/participatedleagues', 'Api\RoundController@participatedleagues');
     // Route::get('/leaderBoard', 'Api\LeaderBoardController@leaderB');
+    Route::post('/updateProfile', 'Api\ProfileController@updateUser')->name('profileUpdate.api');
     Route::get('/leaderBoard', 'Api\LeaderBoardController@leaderC');
     Route::get('/agents', 'Api\RoundController@agents');
     Route::post('/myleague', 'Api\MyLeagueController@index');
