@@ -40,17 +40,19 @@ class ProfileController extends Controller
         $request->image->move($path, $imageName);
         $imageurl = $pathsave.$imageName;
         $image = Image::find($user->images[0]->id);
+        $newURL = 'https://phpstack-526382-1675862.cloudwaysapps.com'.$imageurl;
         if($image){
-            $image->url =  $imageurl;
+            $image->url =  $newURL;
             $image->save();
         }else{
 
         
         $image = new Image();
-        $image->url =$imageurl;
+        $image->url =$newURL;
         $image->user_id = Auth::user()->id;
         $image->save();
         }
+        // $user->images[0]->url= 'https://phpstack-526382-1675862.cloudwaysapps.com'.$user->images[0]->url;
         $data = array( 
             "status"=>200,
             "response"=>"true",
