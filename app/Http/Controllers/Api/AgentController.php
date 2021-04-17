@@ -455,6 +455,7 @@ class AgentController extends Controller
 
                         );
                         $agent = User::find(Auth::user()->id);
+                        $agent['phone'] = $agent->contacts[0]->phone;
 
                         $data = array(
                             "status" => 200,
@@ -688,6 +689,7 @@ class AgentController extends Controller
                         'games' => $games,
                     );
                     $agent = User::find(Auth::user()->id);
+                    $agent['phone'] = $agent->contacts[0]->phone;
                     $data = array(
                         "status" => 200,
                         "response" => "true",
