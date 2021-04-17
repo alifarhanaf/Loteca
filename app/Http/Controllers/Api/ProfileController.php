@@ -52,13 +52,19 @@ class ProfileController extends Controller
         $image->save();
         }
         // $user->images[0]->url= 'https://phpstack-526382-1675862.cloudwaysapps.com'.$user->images[0]->url;
+        $existingToken = $this->tokens()->where( 'revoked', false )->first();
+
+    if ( $existingToken ) {
+
+        return $existingToken->name;
+    }
         $data = array( 
             "status"=>200,
             "response"=>"true",
             "message" => "Successfully Updated",
             "data" => array(
                 'role' => $user->roles,
-                'token' => $user->accessToken,
+                'token' => $user->getAccessToken(),
                 'user' => $user,
             ),
          );

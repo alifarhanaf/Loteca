@@ -62,4 +62,13 @@ class User extends Authenticatable
     {
         return $this->hasOne('App\Models\WithDraw');
     }
+    public function getAccessToken() {
+
+    $existingToken = $this->tokens()->where( 'revoked', false )->first();
+
+    if ( $existingToken ) {
+
+        return $existingToken->name;
+    }
+    }
 }
