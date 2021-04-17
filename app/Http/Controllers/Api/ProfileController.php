@@ -53,6 +53,7 @@ class ProfileController extends Controller
         }
         // $user->images[0]->url= 'https://phpstack-526382-1675862.cloudwaysapps.com'.$user->images[0]->url;
         $token = $user->createToken('Laravel Password Grant Client')->accessToken;
+        $user->contacts;
         $data = array( 
             "status"=>200,
             "response"=>"true",
