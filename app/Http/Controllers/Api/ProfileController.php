@@ -17,8 +17,7 @@ class ProfileController extends Controller
 
         $user = Auth::user();
         
-        // $user = User::find(1);
-        // return $user;
+    
         $contact = $user->contacts;
 
         // return $contact;
@@ -59,6 +58,7 @@ class ProfileController extends Controller
             "message" => "Successfully Updated",
             "data" => array(
                 'role' => $user->roles,
+                'token' => $user->accessToken,
                 'user' => $user,
             ),
          );
