@@ -553,6 +553,7 @@ class RoundController extends Controller
 
                         );
                         $user = User::find(Auth::user()->id);
+                        $user['phone'] = $user->contacts[0]->phone;
 
                         $data = array(
                             "status" => 200,
@@ -682,6 +683,7 @@ class RoundController extends Controller
                         'games' => $games,
                     );
                     $user = User::find(Auth::user()->id);
+                    $user['phone'] = $user->contacts[0]->phone;
                     $data = array(
                         "status" => 200,
                         "response" => "true",
@@ -802,6 +804,7 @@ class RoundController extends Controller
                 'games' => $games,
             );
             $user = User::find(Auth::user()->id);
+            $user['phone'] = $user->contacts[0]->phone;
             $data = array(
                 "status" => 200,
                 "response" => "true",
