@@ -54,12 +54,20 @@ class ProfileController extends Controller
         // $user->images[0]->url= 'https://phpstack-526382-1675862.cloudwaysapps.com'.$user->images[0]->url;
         $token = $user->createToken('Laravel Password Grant Client')->accessToken;
         $user->contacts;
+        if($user->roles == 1){
+            $role = 'User';
+        }else if ($user->roles == 2){
+            $role = 'Agent';
+        }else if($user->roles == 3){
+            $role = 'Manager';
+            // return Redirect::to('dashboard');
+        }
         $data = array( 
             "status"=>200,
             "response"=>"true",
             "message" => "Successfully Updated",
             "data" => array(
-                'role' => $user->roles,
+                'role' => $role,
                 'token' => $token,
                 'user' => $user,
             ),
