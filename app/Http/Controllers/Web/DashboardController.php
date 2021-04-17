@@ -119,7 +119,7 @@ class DashboardController extends Controller
     }
 
     public function submitGame(Request $request){
-        dd($request);
+        // dd($request);
         
         DB::beginTransaction();
         try {

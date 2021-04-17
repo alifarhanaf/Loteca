@@ -15,6 +15,7 @@ class ProfileController extends Controller
         // dd($request->image);
         // dd($request) ;
 
+
         $user = Auth::user();
         
     
@@ -33,7 +34,7 @@ class ProfileController extends Controller
         $contact->whatsapp = request('whatsapp');
         $contact->email = request('email');
         $contact->save();
-
+        if ($request->hasFile('image')) {
         $imageName = time().'.'.$request->image->extension();  
         $path = base_path() . '/public/storage/UserImages/';
         $pathsave =  '/storage/UserImages/';
@@ -51,6 +52,7 @@ class ProfileController extends Controller
         $image->url =$newURL;
         $image->user_id = Auth::user()->id;
         $image->save();
+        }
         }
         $user = User::find($user->id);
         // $user->images[0]->url= 'https://phpstack-526382-1675862.cloudwaysapps.com'.$user->images[0]->url;
