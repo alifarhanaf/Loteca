@@ -359,6 +359,7 @@ class AgentController extends Controller
 
                         // End Here
                         $user = User::find($user_id);
+                        $user['phone'] = $user->contacts[0]->phone;
                        
                         $ff = $user->coins;
                         $ee = $ff - $pp;
@@ -596,6 +597,7 @@ class AgentController extends Controller
 
                         // End Here
                         $user = User::find($user_id);
+                        $user['phone'] = $user->contacts[0]->phone;
                        
                         $ff = $user->coins;
                         $ee = $ff - $pp;
@@ -817,6 +819,7 @@ $withD->save();
 
             // End Here
             $user = User::find($user_id);
+            $user['phone'] = $user->contacts[0]->phone;
            
             $ff = $user->coins;
             $ee = $ff - $pp;
