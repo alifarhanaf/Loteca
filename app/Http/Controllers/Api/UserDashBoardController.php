@@ -2,9 +2,10 @@
 
 namespace App\Http\Controllers\Api;
 
-use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
 use App\Models\RoundUser;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 
 class UserDashBoardController extends Controller
@@ -32,7 +33,8 @@ class UserDashBoardController extends Controller
         $userDetail['whatsapp'] = $user->contacts[0]->whatsapp;
         $userDetail['images'] = $user->images[0]->url;
 
-        $totalBetsRecords = RoundUser::where('user_id',$user->id)->get();
+        // $totalBetsRecords = RoundUser::where('user_id',$user->id)->get();
+        $totalBetsRecords = DB::table('round_user')->where('user_id',$user->id)->get();
         $totalBetsPlaced = count($totalBetsRecords);
 
 
