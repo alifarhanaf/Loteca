@@ -63,8 +63,8 @@ class UserDashBoardController extends Controller
             "message" => "Success",
             "data" => array(
                 "totalBetsPlaced" => $totalBetsPlaced,
-                "totalActiveBetsPlaced" => $closed,
-                "totalClosedBetsPlaced" => $active,
+                "totalActiveBetsPlaced" => $active,
+                "totalClosedBetsPlaced" => $closed,
                 // "weekly_data" => $weekly_data,
                 // "monthly_data" => $monthly_data,
                 // "all_time_data" => $all_time_data,
