@@ -113,7 +113,7 @@ class LeaderBoardController extends Controller
                 dd($count,$ccount);
                 if($count > 0 ){
                     $usera['image'] = $usera->images[0]->url;
-                $usera['Winning Coins'] = $count*10;
+                $usera['Winning Coins'] = $count;
                 if(!in_array($usera, $multipleWinners, true)){
                     array_push($multipleWinners,$usera);
                 }
@@ -131,7 +131,7 @@ class LeaderBoardController extends Controller
                 
                 if($ccount > 0 ){
                 $userb['image'] = $userb->images[0]->url;
-                $userb['Winning Coins'] = $ccount*10;
+                $userb['Winning Coins'] = $ccount;
                 if(!in_array($userb, $multipleWinnersMonthly, true)){
                     array_push($multipleWinnersMonthly,$userb);
                 }
@@ -424,7 +424,7 @@ public function leaderC(){
             $usera = User::where('id',$points[$i])->with('images')->first();
             if($totalPoints > 0 ){
                 $usera['image'] = $usera->images[0]->url;
-            $usera['Winning Coins'] = $totalPoints*10;
+            $usera['Winning Coins'] = $totalPoints;
             if(!in_array($usera, $multipleWinners, true)){
                 array_push($multipleWinners,$usera);
             }
@@ -504,7 +504,7 @@ public function leaderC(){
             $userz = User::where('id',$pointz[$i])->with('images')->first();
             if($totalPointz > 0 ){
                 $userz['image'] = $userz->images[0]->url;
-            $userz['Winning Coins'] = $totalPointz*10;
+            $userz['Winning Coins'] = $totalPointz;
             if(!in_array($userz, $multipleWinnersMonthly, true)){
                 array_push($multipleWinnersMonthly,$userz);
             }
