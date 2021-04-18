@@ -58,10 +58,29 @@ class UserDashBoardController extends Controller
         $totalPoints=0;
         $pointsEarned=0;
         $points = Point::where('user_id',$user->id)->get();
-        foreach($points as $pt){
-            $totalPoints = $totalPoints + $pt->total_points;
-            $pointsEarned = $pointsEarned + $pt->points;
+        if($points){
+            foreach($points as $pt){
+                $totalPoints = $totalPoints + $pt->total_points;
+                $pointsEarned = $pointsEarned + $pt->points;
+            }
+        }else{
+            $totalPoints=0;
+            $pointsEarned=0;
         }
+        
+
+        $totalCoinsWon = 0;
+        $winners = Winner::where('user_id',$user->id)->get();
+        if($winners){
+            foreach($winners as $wi){
+                $totalCoinsWon = $totalCoinsWon + $wi->prize;
+
+            }
+
+        }else{
+            $totalCoinsWon = 0;
+        }
+        
 
 
         $data = array(
@@ -74,7 +93,7 @@ class UserDashBoardController extends Controller
                 "totalClosedBetsPlaced" => $closed,
                 "totalPointsBettedFor" => $totalPoints,
                 "pointsEarned" => $pointsEarned,
-                // "all_time_data" => $all_time_data,
+                "totalCoinsWon" => $totalCoinsWon,
                 "user" => $userDetail,
                 // "available_for_withdraw" => intval($afw),
     
@@ -83,8 +102,7 @@ class UserDashBoardController extends Controller
             return response()->json($data,200);
 
 
-        $userDetail['id'] = $user->id;
-        $userDetail['id'] = $user->id;
+        
         
     }
 }
