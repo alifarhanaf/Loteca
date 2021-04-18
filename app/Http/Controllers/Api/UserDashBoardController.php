@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Models\RoundUser;
 use Illuminate\Support\Facades\Auth;
 
 class UserDashBoardController extends Controller
@@ -13,7 +14,7 @@ class UserDashBoardController extends Controller
         $userDetail = [];
         $userDetail['id'] = $user->id;
         $userDetail['name'] = $user->name;
-        $userDetail['email'] = $user->id;
+        $userDetail['email'] = $user->email;
         if($user->email_verified_at == null){
             $userDetail['verified'] = false;
         }else{
@@ -31,12 +32,16 @@ class UserDashBoardController extends Controller
         $userDetail['whatsapp'] = $user->contacts[0]->whatsapp;
         $userDetail['images'] = $user->images[0]->url;
 
+        $totalBetsRecords = RoundUser::where('user_id',$user->id)->get();
+        $totalBetsPlaced = count($totalBetsRecords);
+
+
         $data = array(
             "status"=>200,
             "response"=>"true",
             "message" => "Success",
             "data" => array(
-                // "daily_data" => $daily_data,
+                "totalBetsPlaced" => $totalBetsPlaced,
                 // "weekly_data" => $weekly_data,
                 // "monthly_data" => $monthly_data,
                 // "all_time_data" => $all_time_data,
