@@ -2,12 +2,13 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Models\Point;
 use App\Models\Round;
+use App\Models\Winner;
 use App\Models\RoundUser;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
-use App\Models\Winner;
 use Illuminate\Support\Facades\Auth;
 
 class UserDashBoardController extends Controller
@@ -38,7 +39,6 @@ class UserDashBoardController extends Controller
         // $totalBetsRecords = RoundUser::where('user_id',$user->id)->get();
         $totalBetsRecords = DB::table('round_user')->where('user_id',$user->id)->get();
         $totalBetsPlaced = count($totalBetsRecords);
-        // $roundIds = [];
         $active=0;
         $closed=0;
 
@@ -55,6 +55,13 @@ class UserDashBoardController extends Controller
 
             }
         }
+        $totalPoints=0;
+        $pointsEarned=0;
+        $points = Point::where('user_id',$user->id)->get();
+        foreach($points as $pt){
+            $totalPoints = $totalPoints + $pt->total_points;
+            $pointsEarned = $pointsEarned + $pt->points;
+        }
 
 
         $data = array(
@@ -65,8 +72,8 @@ class UserDashBoardController extends Controller
                 "totalBetsPlaced" => $totalBetsPlaced,
                 "totalActiveBetsPlaced" => $active,
                 "totalClosedBetsPlaced" => $closed,
-                // "weekly_data" => $weekly_data,
-                // "monthly_data" => $monthly_data,
+                "totalPointsBettedFor" => $totalPoints,
+                "pointsEarned" => $pointsEarned,
                 // "all_time_data" => $all_time_data,
                 "user" => $userDetail,
                 // "available_for_withdraw" => intval($afw),
