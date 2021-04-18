@@ -105,7 +105,7 @@ class CoinController extends Controller
 
     }
     public function coinsRecord(){
-        $coinsTransfer = CoinTransfer::where('sender_id',Auth::user()->id)->get();
+        $coinsTransfer = CoinTransfer::where('sender_id',Auth::user()->id)->orderBy('created_at', 'desc')->get();
         $arr = [];
         $i = 0;
         foreach($coinsTransfer as $ct){
@@ -137,7 +137,7 @@ class CoinController extends Controller
         return response()->json($data,200);
     }
     public function userCoinsRecord(){
-        $coinsTransfer = CoinTransfer::where('receiver_id',Auth::user()->id)->get();
+        $coinsTransfer = CoinTransfer::where('receiver_id',Auth::user()->id)->orderBy('created_at', 'desc')->get();
         $arr = [];
         $i = 0;
         foreach($coinsTransfer as $ct){
