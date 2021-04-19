@@ -498,6 +498,8 @@ class RoundController extends Controller
                                 $ansArray[$k]['team_a'] = $game->team_a;
                                 $ansArray[$k]['team_b'] = $game->team_b;
                                 $ansArray[$k]['winner'] = $userAnswers[$k]->answer;
+                                $ansArray[$k]['championship'] = $game->name;
+                                $ansArray[$k]['happening_date'] = $game->happening_date;
                 
                             }
                         $round = Round::where('id', $round_id)->first();
@@ -632,6 +634,8 @@ class RoundController extends Controller
                                 $ansArray[$k]['team_a'] = $game->team_a;
                                 $ansArray[$k]['team_b'] = $game->team_b;
                                 $ansArray[$k]['winner'] = $userAnswers[$k]->answer;
+                                $ansArray[$k]['championship'] = $game->name;
+                                $ansArray[$k]['happening_date'] = $game->happening_date;
                 
                             }
                     $round = Round::where('id', $round_id)->first();
@@ -753,6 +757,8 @@ class RoundController extends Controller
                                 $ansArray[$k]['team_a'] = $game->team_a;
                                 $ansArray[$k]['team_b'] = $game->team_b;
                                 $ansArray[$k]['winner'] = $userAnswers[$k]->answer;
+                                $ansArray[$k]['championship'] = $game->name;
+                                $ansArray[$k]['happening_date'] = $game->happening_date;
                 
                             }
             $round = Round::where('id', $round_id)->first();
