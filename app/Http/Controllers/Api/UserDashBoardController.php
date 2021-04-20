@@ -93,7 +93,7 @@ class UserDashBoardController extends Controller
                 "totalClosedBetsPlaced" => $closed,
                 "totalPointsBettedFor" => $totalPoints,
                 "pointsEarned" => $pointsEarned,
-                "totalCoinsWon" => $totalCoinsWon,
+                "totalCoinsWon" => intval($totalCoinsWon),
                 "user" => $userDetail,
                 // "available_for_withdraw" => intval($afw),
     

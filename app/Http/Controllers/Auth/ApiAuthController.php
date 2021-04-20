@@ -112,9 +112,9 @@ class ApiAuthController extends Controller
         $user->roles = request('role');
         $user->auth_code = "$code";
         $user->save();
-        // dd($request->role);
+        
        
-            // dd('Hi');
+           
             $contact = New Contact();
             $contact->phone = $request->phone;
             $contact->whatsapp = $request->whatsapp_phone;

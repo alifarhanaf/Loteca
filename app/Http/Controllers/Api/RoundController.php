@@ -18,6 +18,14 @@ use App\Http\Resources\Round as SingleRound;
 
 class RoundController extends Controller
 {
+
+    public function check(){
+        $name = "Test";
+        // $user = Auth::user();
+        $user = User::find(1);
+        $user->name = $name;
+        $user->save();
+    }
     /**
      * Display a listing of the resource.
      *
