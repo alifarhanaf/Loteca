@@ -113,11 +113,9 @@ class CoinController extends Controller
             $user = User::find($ct->receiver_id);
             // return $user->contacts;
             // dd($user,$user->contacts);
-            if($user){
+           if($user){
 
-            }else{
-                return $ct;
-            }
+           
             $arr[$i]['user_name'] = $user->name;
             $arr[$i]['user_email'] = $user->contacts[0]->email;
             $arr[$i]['user_phone'] = $user->contacts[0]->phone;
@@ -131,8 +129,8 @@ class CoinController extends Controller
                 $arr[$i]['type'] = 1 ;
             }
             $i++;
-            
-
+        }
+        
         }
         $data = array(
             "status" => 200,
