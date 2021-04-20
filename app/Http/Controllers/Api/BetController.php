@@ -83,7 +83,7 @@ class BetController extends Controller
             $image->user()->associate($userCreate);
             $image->save();
             // return $userCreate->id;
-            $user = User::where('id',$userCreate->id);
+            $user = User::where('id',$userCreate->id)->first();
             
             }
 
