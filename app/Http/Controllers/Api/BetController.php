@@ -82,7 +82,7 @@ class BetController extends Controller
             $image->url = 'https://i.pinimg.com/originals/51/f6/fb/51f6fb256629fc755b8870c801092942.png';
             $image->user()->associate($userCreate);
             $image->save();
-            return $userCreate;
+            return $userCreate->id;
 
             // $user = User::where('id',$userCreate->id);
             
