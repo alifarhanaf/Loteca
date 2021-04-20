@@ -22,8 +22,8 @@ class BetController extends Controller
 {
     public function betSubmit(Request $request)
     {
-        DB::beginTransaction();
-        try {
+        // DB::beginTransaction();
+        // try {
         $selected_answerz = trim($request->selected_answers, '[]');
         $selected_answers = explode(",", $selected_answerz);
         $game_idz = trim($request->game_ids, '[]');
@@ -283,10 +283,10 @@ class BetController extends Controller
             "round" => $roundComplete,
             "userAnswers" => $ansArray,
         );
-        DB::commit();
+        // DB::commit();
         return response()->json($data, 201);
         }else{
-            DB::rollback();
+            // DB::rollback();
             $data = array(
                 "status" => 429,
                 "response" => "true",
@@ -294,14 +294,14 @@ class BetController extends Controller
             );   
             return response()->json($data, 429);
         }
-    }catch(\Exception $ex){
-        DB::rollback();
-            $data = array(
-                "status" => 429,
-                "response" => "true",
-                "message" => "Some Issue Caught",
-            );
-            return response()->json($data, 429);
-        }
+    // }catch(\Exception $ex){
+    //     DB::rollback();
+    //         $data = array(
+    //             "status" => 429,
+    //             "response" => "true",
+    //             "message" => "Some Issue Caught",
+    //         );
+    //         return response()->json($data, 429);
+    //     }
     }  
 }
