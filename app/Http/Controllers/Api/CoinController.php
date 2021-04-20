@@ -129,6 +129,21 @@ class CoinController extends Controller
                 $arr[$i]['type'] = 1 ;
             }
             $i++;
+        }else{
+            $arr[$i]['user_name'] = "User Deleted";
+            $arr[$i]['user_email'] = "N/A";
+            $arr[$i]['user_phone'] = "N/A";
+            $arr[$i]['user_whatsapp'] = "N/A";
+            $arr[$i]['image'] = "https://i.pinimg.com/originals/51/f6/fb/51f6fb256629fc755b8870c801092942.png";
+            $arr[$i]['transferred_coins'] = "N/A" ;
+            $arr[$i]['transfer_date'] = "N/A" ;
+            if($ct->withdraw == 0){
+                $arr[$i]['type'] = 0 ;
+            }else{
+                $arr[$i]['type'] = 1 ;
+            }
+            $i++;
+
         }
         
         }
