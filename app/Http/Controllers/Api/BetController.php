@@ -177,6 +177,7 @@ class BetController extends Controller
                 }else{
                     $insertTotalComission = new WithDraw();
                     $insertTotalComission->total_comission = $totalComission;
+                    $insertTotalComission->user_id = $agent->id;
                     $insertTotalComission->save();
                 }
             }
