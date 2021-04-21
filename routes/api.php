@@ -36,6 +36,7 @@ Route::post('/arrayCheck','Api\RoundController@arrayCheck');
 
 Route::middleware('auth:api')->group( function(){
     Route::post('/submitBet','Api\BetController@betSubmit');
+    Route::get('/lastResultsList','Api\ResultController@resultsList');
     // Route::get('/user', 'Auth\ApiAuthController@user')->name('user.info');
     Route::get('/mainRound','Api\RoundController@index');
     Route::post('/submitResult','Api\RoundController@betSubmit');

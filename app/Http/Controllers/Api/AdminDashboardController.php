@@ -563,13 +563,9 @@ class AdminDashboardController extends Controller
     }
     public function alr(){
         // $a = 0 ;
-        $s = 0 ;
-        for($a=1;$a<=50;$a+=3){
-            $s = $s+$a;
-        }
-        return $s;
+        $lastThreeClosedRounds = Round::select('name','starting_date','ending_date')->latest()->where('status',2)->take(3)->get();
 
-
+        return $lastThreeClosedRounds;
         
 
 
