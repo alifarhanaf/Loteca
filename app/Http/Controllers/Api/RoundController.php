@@ -19,21 +19,10 @@ use App\Http\Resources\Round as SingleRound;
 class RoundController extends Controller
 {
 
-    public function check(){
-        $name = "Test";
-        // $user = Auth::user();
-        $user = User::find(1);
-        $user->name = $name;
-        $user->save();
-    }
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+    
     public function index()
     {
-        // $round = Round::where('id',1)->first();
+        
         $now = Carbon::now();
         $now->toDateString();
 
@@ -419,473 +408,479 @@ class RoundController extends Controller
         //
     }
 
-    public function betSubmit(Request $request)
-    {
-        DB::beginTransaction();
-        // try {
-        $selected_answerz = trim($request->selected_answers, '[]');
-        $selected_answers = explode(",", $selected_answerz);
-        $game_idz = trim($request->game_ids, '[]');
-        $game_ids = explode(",", $game_idz);
-        // dd($game_idz);
-        $round_id = $request->round_id;
-        $package_id = $request->package_id;
-        $pk = Package::where('id',$package_id)->first();
-        $ck = Package::find($pk->id);
-        $ck->accumulative_price = $pk->accumulative_price + $pk->participation_fee;
-        $ck->save();
-       
-        $user = Auth::user();
-        $submitDate = Carbon::now();
-        // $submitDate->toDateTimeString(); 
-                        
-
-
-        if (count($user->rounds) > 0) {
-            $arr = [];
-            foreach ($user->rounds as $rads) {
-                array_push($arr, $rads->id);
-            } //EndForeach
-            if (!empty($arr)) {
-                // if (in_array("$round_id", $arr)) {
-                    // DB::rollback();
-                    // $data = array(
-                    //     "status" => 409,
-                    //     "response" => "true",
-                    //     "message" => "Record Already Present",
-
-                    // );
-                    // return response()->json($data, 409);
-                    
-                // } else {
-                    $round = Round::where('id', $round_id)->first();
-                    $package = Package::where('id', $package_id)->first();
-                    $pp = $package->participation_fee;
-                    $cc = $user->coins;
-                    if ($cc >= $pp) {
-                        $new_cc = $cc - $pp;
-                        $data = User::find($user->id);
-                        $data->coins = $new_cc;
-                        $data->save();
-                        $userz = User::find($user->id);
-                        DB::table('round_user')->insert([
-                            'round_id' => $round_id,
-                            'user_id' => $user->id,
-                            'created_at' => $submitDate,
-                            'updated_at' => $submitDate,
-                            
-
-                        ]);
-                        // $userz->rounds()->attach($round_id);
-                        
-                        
-
-                        for ($i = 0; $i < count($round->games); $i++) {
-                            DB::table('bid_results')->insert([
-                                'round_id' => $round_id,
-                                'user_id' => Auth::user()->id,
-                                'game_id' => $game_ids[$i],
-                                'answer' => $selected_answers[$i],
-                                'package_id' => $package_id,
-                                'created_at' => $submitDate,
-                                'updated_at' => $submitDate
-
-                            ]);
-                        } //End For Loop
-                        // $points = $this->answerCheck($round_id,$package_id);
-
-                        $userAnswers = DB::table('bid_results')
-                            ->where('user_id', $user->id)
-                            ->where('round_id', $round_id)
-                            ->where('created_at',$submitDate)->get();
-                            $ansArray = [];
-                            for($k=0;$k<count($userAnswers);$k++){
-                                $game = Game::where('id',$userAnswers[$k]->game_id)->first();
-                                
-                                $ansArray[$k]['id'] = $userAnswers[$k]->id;
-                                $ansArray[$k]['team_a'] = $game->team_a;
-                                $ansArray[$k]['team_b'] = $game->team_b;
-                                $ansArray[$k]['winner'] = $userAnswers[$k]->answer;
-                                $ansArray[$k]['championship'] = $game->name;
-                                $ansArray[$k]['happening_date'] = $game->happening_date;
-                
-                            }
-                        $round = Round::where('id', $round_id)->first();
-                        $now = Carbon::now();
-                        $now->toDateString(); 
-                        $bet_date = $now;
-                        
-                        
-                        // $bet_date = $userAnswers[0]->created_at;
-                        $games = $round->games;
-                        $packages = $round->packages;
-                        foreach($games as $game){
-
-                            $game['widegtSwitch0']= null ;
-                            $game['widegtSwitch1']= null ;
-                            $game['widegtSwitch2']= null ;
-                            
-                        //     $ressult1 = DB::table('bid_results')
-                        // ->where('user_id', $user->id)
-                        // ->where('round_id', $round->id)
-                        // ->where('game_id', $game->id)
-                        // ->get();
-                        
-                        // $gta =  str_replace(' ', '', $game->team_a);
-                        // $gtb = str_replace(' ', '', $game->team_b);
-                        // $gtd = 'Draw';
-                        // $gto = str_replace(' ', '', $ressult1[0]->answer);
-                        // if(strtoupper($gta) == strtoupper($gto)){
-                        //     $game['widegtSwitch0']= true ;
-                        //     $game['widegtSwitch1']= false ;
-                        //     $game['widegtSwitch2']= false ;
-                        // }else if(strtoupper($gtb) == strtoupper($gto)){
-                        //     $game['widegtSwitch0']= false ;
-                        //     $game['widegtSwitch1']= false ;
-                        //     $game['widegtSwitch2']= true ;
-                        // }else if(strtoupper($gtd) == strtoupper($gto)){
-                        //     $game['widegtSwitch0']= false ;
-                        //     $game['widegtSwitch1']= true ;
-                        //     $game['widegtSwitch2']= false ;
-                        // }
-                    }
-
-                        $roundComplete = array(
-                            'id' => $round->id,
-                            'name' => $round->name,
-                            'starting_date' => $round->starting_date,
-                            'ending_date' => $round->ending_date,
-                            'created_at' => $round->created_at,
-                            'updated_at' => $round->updated_at,
-                            'packages' => $packages,
-                            'selected_package' => $pk,
-                            'games' => $games,
-
-                        );
-                        $user = User::find(Auth::user()->id);
-                        $user['phone'] = $user->contacts[0]->phone;
-
-                        $data = array(
-                            "status" => 200,
-                            "response" => "true",
-                            "message" => "Record Inserted",
-                            "bid" => true,
-                            "bet_date" => $bet_date,
-                            "user" => $user,
-                            "round" => $roundComplete,
-                            "userAnswers" => $ansArray,
-
-
-
-                        );
-                        DB::commit();
-                        return response()->json($data, 201);
-                    } else {
-                        DB::rollback();
-                        $data = array(
-                            "status" => 429,
-                            "response" => "true",
-                            "message" => "You Don't have enough Coins",
-
-                        );
-                        
-                        return response()->json($data, 429);
-                    } //EndCoinsCheckCondition
-                    
-                // Bracket Here
-                //EndRecordCheckCondition
-            } else {
-                $round = Round::where('id', $round_id)->first();
-                $package = Package::where('id', $package_id)->first();
-                $pp = $package->participation_fee;
-                $cc = $user->coins;
-                if ($cc >= $pp) {
-                    $new_cc = $cc - $pp;
-                    $data = User::find($user->id);
-                    $data->coins = $new_cc;
-                    $data->save();
-
-                    $userz = User::find($user->id);
-                    DB::table('round_user')->insert([
-                        'round_id' => $round_id,
-                        'user_id' => $user->id,
-                        'created_at' => $submitDate,
-                        'updated_at' => $submitDate,
-                        
-
-                    ]);
-                    
-
-                    for ($i = 0; $i < count($round->games); $i++) {
-                        DB::table('bid_results')->insert([
-                            'round_id' => $round_id,
-                            'user_id' => Auth::user()->id,
-                            'game_id' => $game_ids[$i],
-                            'answer' => $selected_answers[$i],
-                            'package_id' => $package_id,
-                            'created_at' => $submitDate,
-                            'updated_at' => $submitDate,
-
-                        ]);
-                    }
-                    // $points = $this->answerCheck($round_id,$package_id);
-
-                    $userAnswers = DB::table('bid_results')
-                        ->where('user_id', $user->id)
-                        ->where('round_id', $round_id)
-                        ->where('created_at', $submitDate)->get();
-                        $ansArray = [];
-                            for($k=0;$k<count($userAnswers);$k++){
-                                $game = Game::where('id',$userAnswers[$k]->game_id)->first();
-                                
-                                $ansArray[$k]['id'] = $userAnswers[$k]->id;
-                                $ansArray[$k]['team_a'] = $game->team_a;
-                                $ansArray[$k]['team_b'] = $game->team_b;
-                                $ansArray[$k]['winner'] = $userAnswers[$k]->answer;
-                                $ansArray[$k]['championship'] = $game->name;
-                                $ansArray[$k]['happening_date'] = $game->happening_date;
-                
-                            }
-                    $round = Round::where('id', $round_id)->first();
-                    $now = Carbon::now();
-                        $now->toDateString();
-                        $bet_date = $now;
-                    // $bet_date = $userAnswers[0]->created_at;
-                    $games = $round->games;
-                    $packages = $round->packages;
-                    foreach($games as $game){
-                        $game['widegtSwitch0']= null ;
-                        $game['widegtSwitch1']= null ;
-                        $game['widegtSwitch2']= null ;
-                        
-                    //     $ressult1 = DB::table('bid_results')
-                    // ->where('user_id', $user->id)
-                    // ->where('round_id', $round->id)
-                    // ->where('game_id', $game->id)
-                    // ->get();
-                    
-                    // $gta =  str_replace(' ', '', $game->team_a);
-                    // $gtb = str_replace(' ', '', $game->team_b);
-                    // $gtd = 'Draw';
-                    // $gto = str_replace(' ', '', $ressult1[0]->answer);
-                    // if(strtoupper($gta) == strtoupper($gto)){
-                    //     $game['widegtSwitch0']= true ;
-                    //     $game['widegtSwitch1']= false ;
-                    //     $game['widegtSwitch2']= false ;
-                    // }else if(strtoupper($gtb) == strtoupper($gto)){
-                    //     $game['widegtSwitch0']= false ;
-                    //     $game['widegtSwitch1']= false ;
-                    //     $game['widegtSwitch2']= true ;
-                    // }else if(strtoupper($gtd) == strtoupper($gto)){
-                    //     $game['widegtSwitch0']= false ;
-                    //     $game['widegtSwitch1']= true ;
-                    //     $game['widegtSwitch2']= false ;
-                    // }
-                }
-
-                    $roundComplete = array(
-                        'id' => $round->id,
-                        'name' => $round->name,
-                        'starting_date' => $round->starting_date,
-                        'ending_date' => $round->ending_date,
-                        'created_at' => $round->created_at,
-                        'updated_at' => $round->updated_at,
-                        'packages' => $packages,
-                        'selected_package' => $pk,
-                        'games' => $games,
-                    );
-                    $user = User::find(Auth::user()->id);
-                    $user['phone'] = $user->contacts[0]->phone;
-                    $data = array(
-                        "status" => 200,
-                        "response" => "true",
-                        "message" => "Record Inserted",
-                        "bid" => true,
-                        "bet_date" => $bet_date,
-                        "user" => $user,
-                        "round" => $roundComplete,
-                        "userAnswers" => $ansArray,
-                    );
-                    DB::commit();
-                    return response()->json($data, 201);
-                } else {
-                    DB::rollback();
-                    $data = array(
-                        "status" => 429,
-                        "response" => "true",
-                        "message" => "You Don't have enough Coins",
-                    );
-                    
-                    return response()->json($data, 429);
-                }
-            }
-        }
-        $round = Round::where('id', $round_id)->first();
-        $package = Package::where('id', $package_id)->first();
-        $pp = $package->participation_fee;
-        $cc = $user->coins;
-        if ($cc >= $pp) {
-            $new_cc = $cc - $pp;
-            $data = User::find($user->id);
-            $data->coins = $new_cc;
-            $data->save();
-            $userz = User::find($user->id);
-            DB::table('round_user')->insert([
-                'round_id' => $round_id,
-                'user_id' => $user->id,
-                'created_at' => $submitDate,
-                'updated_at' => $submitDate,
-                
-
-            ]);
-           
-
-            for ($i = 0; $i < count($round->games); $i++) {
-                DB::table('bid_results')->insert([
-                    'round_id' => $round_id,
-                    'user_id' => Auth::user()->id,
-                    'game_id' => $game_ids[$i],
-                    'answer' => $selected_answers[$i],
-                    'package_id' => $package_id,
-                    'created_at' => $submitDate,
-                    'updated_at' => $submitDate,
-
-                ]);
-            }
-            // $points = $this->answerCheck($round_id,$package_id);
-            $userAnswers = DB::table('bid_results')
-                ->where('user_id', $user->id)
-                ->where('round_id', $round_id)
-                ->where('created_at', $submitDate)->get();
-                $ansArray = [];
-                            for($k=0;$k<count($userAnswers);$k++){
-                                $game = Game::where('id',$userAnswers[$k]->game_id)->first();
-                                
-                                $ansArray[$k]['id'] = $userAnswers[$k]->id;
-                                $ansArray[$k]['team_a'] = $game->team_a;
-                                $ansArray[$k]['team_b'] = $game->team_b;
-                                $ansArray[$k]['winner'] = $userAnswers[$k]->answer;
-                                $ansArray[$k]['championship'] = $game->name;
-                                $ansArray[$k]['happening_date'] = $game->happening_date;
-                
-                            }
-            $round = Round::where('id', $round_id)->first();
-            $now = Carbon::now();
-                        $now->toDateString();
-                        $bet_date = $now;
-            // $bet_date = $userAnswers[0]->created_at;
-            $games = $round->games;
-            $packages = $round->packages;
-            foreach($games as $game){
-                $game['widegtSwitch0']= null ;
-                $game['widegtSwitch1']= null ;
-                $game['widegtSwitch2']= null ;
-              
-            //     $ressult1 = DB::table('bid_results')
-            // ->where('user_id', $user->id)
-            // ->where('round_id', $round->id)
-            // ->where('game_id', $game->id)
-            // ->get();
-           
-            // $gta =  str_replace(' ', '', $game->team_a);
-            // $gtb = str_replace(' ', '', $game->team_b);
-            // $gtd = 'Draw';
-            // $gto = str_replace(' ', '', $ressult1[0]->answer);
-            // if(strtoupper($gta) == strtoupper($gto)){
-            //     $game['widegtSwitch0']= true ;
-            //     $game['widegtSwitch1']= false ;
-            //     $game['widegtSwitch2']= false ;
-            // }else if(strtoupper($gtb) == strtoupper($gto)){
-            //     $game['widegtSwitch0']= false ;
-            //     $game['widegtSwitch1']= false ;
-            //     $game['widegtSwitch2']= true ;
-            // }else if(strtoupper($gtd) == strtoupper($gto)){
-            //     $game['widegtSwitch0']= false ;
-            //     $game['widegtSwitch1']= true ;
-            //     $game['widegtSwitch2']= false ;
-            // }
-        }
-
-            $roundComplete = array(
-                'id' => $round->id,
-                'name' => $round->name,
-                'starting_date' => $round->starting_date,
-                'ending_date' => $round->ending_date,
-                'created_at' => $round->created_at,
-                'updated_at' => $round->updated_at,
-                'packages' => $packages,
-                'selected_package' => $pk,
-                'games' => $games,
-            );
-            $user = User::find(Auth::user()->id);
-            $user['phone'] = $user->contacts[0]->phone;
-            $data = array(
-                "status" => 200,
-                "response" => "true",
-                "message" => "Record Inserted",
-                "bid" => true,
-                "bet_date" => $bet_date,
-                "user" => $user,
-                "round" => $roundComplete,
-                "userAnswers" => $ansArray,
-            );
-            DB::commit();
-            return response()->json($data, 201);
-        } else {
-            DB::rollback();
-            $data = array(
-                "status" => 429,
-                "response" => "true",
-                "message" => "You Don't have enough Coins",
-            );
-            
-            return response()->json($data, 429);
-        }
-
-
-        // DB::commit();
-        // return redirect()->back()->with('message', 'success'); 
-        // } catch (\Exception $ex) {
-        //     DB::rollback();
-        //     return redirect()->back()->with('message',$ex->getMessage());
-        // }
-    }
     
 
-    public function answerCheck($round_id,$package_id){
-        // dd($round_id);
 
-        $user_id = Auth::user()->id;
+
+
+
+    // public function betSubmit(Request $request)
+    // {
+    //     DB::beginTransaction();
+    //     // try {
+    //     $selected_answerz = trim($request->selected_answers, '[]');
+    //     $selected_answers = explode(",", $selected_answerz);
+    //     $game_idz = trim($request->game_ids, '[]');
+    //     $game_ids = explode(",", $game_idz);
+    //     // dd($game_idz);
+    //     $round_id = $request->round_id;
+    //     $package_id = $request->package_id;
+    //     $pk = Package::where('id',$package_id)->first();
+    //     $ck = Package::find($pk->id);
+    //     $ck->accumulative_price = $pk->accumulative_price + $pk->participation_fee;
+    //     $ck->save();
        
-        $userAnswers = DB::table('bid_results')
-        ->where('user_id', $user_id)
-        ->where('round_id', $round_id)->get();
-        // dd($userAnswers);
-        $round = Round::where('id',$round_id)->first();
-        $totalGames = count($round->games);
-        $i = 0;
-        foreach($userAnswers as $UA){
-         
-            $gm = Game::where('id',$UA->game_id)->first();
-            $gameAnswer0 = $gm->results->Answer;
-            // dd($gameAnswer0 . $UA->answer);
-            if($gameAnswer0 === $UA->answer){
+    //     $user = Auth::user();
+    //     $submitDate = Carbon::now();
+    //     // $submitDate->toDateTimeString(); 
+                        
+
+
+    //     if (count($user->rounds) > 0) {
+    //         $arr = [];
+    //         foreach ($user->rounds as $rads) {
+    //             array_push($arr, $rads->id);
+    //         } //EndForeach
+    //         if (!empty($arr)) {
+    //             // if (in_array("$round_id", $arr)) {
+    //                 // DB::rollback();
+    //                 // $data = array(
+    //                 //     "status" => 409,
+    //                 //     "response" => "true",
+    //                 //     "message" => "Record Already Present",
+
+    //                 // );
+    //                 // return response()->json($data, 409);
+                    
+    //             // } else {
+    //                 $round = Round::where('id', $round_id)->first();
+    //                 $package = Package::where('id', $package_id)->first();
+    //                 $pp = $package->participation_fee;
+    //                 $cc = $user->coins;
+    //                 if ($cc >= $pp) {
+    //                     $new_cc = $cc - $pp;
+    //                     $data = User::find($user->id);
+    //                     $data->coins = $new_cc;
+    //                     $data->save();
+    //                     $userz = User::find($user->id);
+    //                     DB::table('round_user')->insert([
+    //                         'round_id' => $round_id,
+    //                         'user_id' => $user->id,
+    //                         'created_at' => $submitDate,
+    //                         'updated_at' => $submitDate,
+                            
+
+    //                     ]);
+    //                     // $userz->rounds()->attach($round_id);
+                        
+                        
+
+    //                     for ($i = 0; $i < count($round->games); $i++) {
+    //                         DB::table('bid_results')->insert([
+    //                             'round_id' => $round_id,
+    //                             'user_id' => Auth::user()->id,
+    //                             'game_id' => $game_ids[$i],
+    //                             'answer' => $selected_answers[$i],
+    //                             'package_id' => $package_id,
+    //                             'created_at' => $submitDate,
+    //                             'updated_at' => $submitDate
+
+    //                         ]);
+    //                     } //End For Loop
+    //                     // $points = $this->answerCheck($round_id,$package_id);
+
+    //                     $userAnswers = DB::table('bid_results')
+    //                         ->where('user_id', $user->id)
+    //                         ->where('round_id', $round_id)
+    //                         ->where('created_at',$submitDate)->get();
+    //                         $ansArray = [];
+    //                         for($k=0;$k<count($userAnswers);$k++){
+    //                             $game = Game::where('id',$userAnswers[$k]->game_id)->first();
+                                
+    //                             $ansArray[$k]['id'] = $userAnswers[$k]->id;
+    //                             $ansArray[$k]['team_a'] = $game->team_a;
+    //                             $ansArray[$k]['team_b'] = $game->team_b;
+    //                             $ansArray[$k]['winner'] = $userAnswers[$k]->answer;
+    //                             $ansArray[$k]['championship'] = $game->name;
+    //                             $ansArray[$k]['happening_date'] = $game->happening_date;
                 
-                $i++;
-                // dd($i);
-            }
-        }//EndForeach
-        $point = new Point();
-        $point->round_id = $round_id;
-        $point->user_id = $user_id;
-        $point->package_id = $package_id;
-        $point->points = $i;
-        $point->total_points = $totalGames;
-        $point->save();
+    //                         }
+    //                     $round = Round::where('id', $round_id)->first();
+    //                     $now = Carbon::now();
+    //                     $now->toDateString(); 
+    //                     $bet_date = $now;
+                        
+                        
+    //                     // $bet_date = $userAnswers[0]->created_at;
+    //                     $games = $round->games;
+    //                     $packages = $round->packages;
+    //                     foreach($games as $game){
 
-        return true;
+    //                         $game['widegtSwitch0']= null ;
+    //                         $game['widegtSwitch1']= null ;
+    //                         $game['widegtSwitch2']= null ;
+                            
+    //                     //     $ressult1 = DB::table('bid_results')
+    //                     // ->where('user_id', $user->id)
+    //                     // ->where('round_id', $round->id)
+    //                     // ->where('game_id', $game->id)
+    //                     // ->get();
+                        
+    //                     // $gta =  str_replace(' ', '', $game->team_a);
+    //                     // $gtb = str_replace(' ', '', $game->team_b);
+    //                     // $gtd = 'Draw';
+    //                     // $gto = str_replace(' ', '', $ressult1[0]->answer);
+    //                     // if(strtoupper($gta) == strtoupper($gto)){
+    //                     //     $game['widegtSwitch0']= true ;
+    //                     //     $game['widegtSwitch1']= false ;
+    //                     //     $game['widegtSwitch2']= false ;
+    //                     // }else if(strtoupper($gtb) == strtoupper($gto)){
+    //                     //     $game['widegtSwitch0']= false ;
+    //                     //     $game['widegtSwitch1']= false ;
+    //                     //     $game['widegtSwitch2']= true ;
+    //                     // }else if(strtoupper($gtd) == strtoupper($gto)){
+    //                     //     $game['widegtSwitch0']= false ;
+    //                     //     $game['widegtSwitch1']= true ;
+    //                     //     $game['widegtSwitch2']= false ;
+    //                     // }
+    //                 }
+
+    //                     $roundComplete = array(
+    //                         'id' => $round->id,
+    //                         'name' => $round->name,
+    //                         'starting_date' => $round->starting_date,
+    //                         'ending_date' => $round->ending_date,
+    //                         'created_at' => $round->created_at,
+    //                         'updated_at' => $round->updated_at,
+    //                         'packages' => $packages,
+    //                         'selected_package' => $pk,
+    //                         'games' => $games,
+
+    //                     );
+    //                     $user = User::find(Auth::user()->id);
+    //                     $user['phone'] = $user->contacts[0]->phone;
+
+    //                     $data = array(
+    //                         "status" => 200,
+    //                         "response" => "true",
+    //                         "message" => "Record Inserted",
+    //                         "bid" => true,
+    //                         "bet_date" => $bet_date,
+    //                         "user" => $user,
+    //                         "round" => $roundComplete,
+    //                         "userAnswers" => $ansArray,
+
+
+
+    //                     );
+    //                     DB::commit();
+    //                     return response()->json($data, 201);
+    //                 } else {
+    //                     DB::rollback();
+    //                     $data = array(
+    //                         "status" => 429,
+    //                         "response" => "true",
+    //                         "message" => "You Don't have enough Coins",
+
+    //                     );
+                        
+    //                     return response()->json($data, 429);
+    //                 } //EndCoinsCheckCondition
+                    
+    //             // Bracket Here
+    //             //EndRecordCheckCondition
+    //         } else {
+    //             $round = Round::where('id', $round_id)->first();
+    //             $package = Package::where('id', $package_id)->first();
+    //             $pp = $package->participation_fee;
+    //             $cc = $user->coins;
+    //             if ($cc >= $pp) {
+    //                 $new_cc = $cc - $pp;
+    //                 $data = User::find($user->id);
+    //                 $data->coins = $new_cc;
+    //                 $data->save();
+
+    //                 $userz = User::find($user->id);
+    //                 DB::table('round_user')->insert([
+    //                     'round_id' => $round_id,
+    //                     'user_id' => $user->id,
+    //                     'created_at' => $submitDate,
+    //                     'updated_at' => $submitDate,
+                        
+
+    //                 ]);
+                    
+
+    //                 for ($i = 0; $i < count($round->games); $i++) {
+    //                     DB::table('bid_results')->insert([
+    //                         'round_id' => $round_id,
+    //                         'user_id' => Auth::user()->id,
+    //                         'game_id' => $game_ids[$i],
+    //                         'answer' => $selected_answers[$i],
+    //                         'package_id' => $package_id,
+    //                         'created_at' => $submitDate,
+    //                         'updated_at' => $submitDate,
+
+    //                     ]);
+    //                 }
+    //                 // $points = $this->answerCheck($round_id,$package_id);
+
+    //                 $userAnswers = DB::table('bid_results')
+    //                     ->where('user_id', $user->id)
+    //                     ->where('round_id', $round_id)
+    //                     ->where('created_at', $submitDate)->get();
+    //                     $ansArray = [];
+    //                         for($k=0;$k<count($userAnswers);$k++){
+    //                             $game = Game::where('id',$userAnswers[$k]->game_id)->first();
+                                
+    //                             $ansArray[$k]['id'] = $userAnswers[$k]->id;
+    //                             $ansArray[$k]['team_a'] = $game->team_a;
+    //                             $ansArray[$k]['team_b'] = $game->team_b;
+    //                             $ansArray[$k]['winner'] = $userAnswers[$k]->answer;
+    //                             $ansArray[$k]['championship'] = $game->name;
+    //                             $ansArray[$k]['happening_date'] = $game->happening_date;
+                
+    //                         }
+    //                 $round = Round::where('id', $round_id)->first();
+    //                 $now = Carbon::now();
+    //                     $now->toDateString();
+    //                     $bet_date = $now;
+    //                 // $bet_date = $userAnswers[0]->created_at;
+    //                 $games = $round->games;
+    //                 $packages = $round->packages;
+    //                 foreach($games as $game){
+    //                     $game['widegtSwitch0']= null ;
+    //                     $game['widegtSwitch1']= null ;
+    //                     $game['widegtSwitch2']= null ;
+                        
+    //                 //     $ressult1 = DB::table('bid_results')
+    //                 // ->where('user_id', $user->id)
+    //                 // ->where('round_id', $round->id)
+    //                 // ->where('game_id', $game->id)
+    //                 // ->get();
+                    
+    //                 // $gta =  str_replace(' ', '', $game->team_a);
+    //                 // $gtb = str_replace(' ', '', $game->team_b);
+    //                 // $gtd = 'Draw';
+    //                 // $gto = str_replace(' ', '', $ressult1[0]->answer);
+    //                 // if(strtoupper($gta) == strtoupper($gto)){
+    //                 //     $game['widegtSwitch0']= true ;
+    //                 //     $game['widegtSwitch1']= false ;
+    //                 //     $game['widegtSwitch2']= false ;
+    //                 // }else if(strtoupper($gtb) == strtoupper($gto)){
+    //                 //     $game['widegtSwitch0']= false ;
+    //                 //     $game['widegtSwitch1']= false ;
+    //                 //     $game['widegtSwitch2']= true ;
+    //                 // }else if(strtoupper($gtd) == strtoupper($gto)){
+    //                 //     $game['widegtSwitch0']= false ;
+    //                 //     $game['widegtSwitch1']= true ;
+    //                 //     $game['widegtSwitch2']= false ;
+    //                 // }
+    //             }
+
+    //                 $roundComplete = array(
+    //                     'id' => $round->id,
+    //                     'name' => $round->name,
+    //                     'starting_date' => $round->starting_date,
+    //                     'ending_date' => $round->ending_date,
+    //                     'created_at' => $round->created_at,
+    //                     'updated_at' => $round->updated_at,
+    //                     'packages' => $packages,
+    //                     'selected_package' => $pk,
+    //                     'games' => $games,
+    //                 );
+    //                 $user = User::find(Auth::user()->id);
+    //                 $user['phone'] = $user->contacts[0]->phone;
+    //                 $data = array(
+    //                     "status" => 200,
+    //                     "response" => "true",
+    //                     "message" => "Record Inserted",
+    //                     "bid" => true,
+    //                     "bet_date" => $bet_date,
+    //                     "user" => $user,
+    //                     "round" => $roundComplete,
+    //                     "userAnswers" => $ansArray,
+    //                 );
+    //                 DB::commit();
+    //                 return response()->json($data, 201);
+    //             } else {
+    //                 DB::rollback();
+    //                 $data = array(
+    //                     "status" => 429,
+    //                     "response" => "true",
+    //                     "message" => "You Don't have enough Coins",
+    //                 );
+                    
+    //                 return response()->json($data, 429);
+    //             }
+    //         }
+    //     }
+    //     $round = Round::where('id', $round_id)->first();
+    //     $package = Package::where('id', $package_id)->first();
+    //     $pp = $package->participation_fee;
+    //     $cc = $user->coins;
+    //     if ($cc >= $pp) {
+    //         $new_cc = $cc - $pp;
+    //         $data = User::find($user->id);
+    //         $data->coins = $new_cc;
+    //         $data->save();
+    //         $userz = User::find($user->id);
+    //         DB::table('round_user')->insert([
+    //             'round_id' => $round_id,
+    //             'user_id' => $user->id,
+    //             'created_at' => $submitDate,
+    //             'updated_at' => $submitDate,
+                
+
+    //         ]);
+           
+
+    //         for ($i = 0; $i < count($round->games); $i++) {
+    //             DB::table('bid_results')->insert([
+    //                 'round_id' => $round_id,
+    //                 'user_id' => Auth::user()->id,
+    //                 'game_id' => $game_ids[$i],
+    //                 'answer' => $selected_answers[$i],
+    //                 'package_id' => $package_id,
+    //                 'created_at' => $submitDate,
+    //                 'updated_at' => $submitDate,
+
+    //             ]);
+    //         }
+    //         // $points = $this->answerCheck($round_id,$package_id);
+    //         $userAnswers = DB::table('bid_results')
+    //             ->where('user_id', $user->id)
+    //             ->where('round_id', $round_id)
+    //             ->where('created_at', $submitDate)->get();
+    //             $ansArray = [];
+    //                         for($k=0;$k<count($userAnswers);$k++){
+    //                             $game = Game::where('id',$userAnswers[$k]->game_id)->first();
+                                
+    //                             $ansArray[$k]['id'] = $userAnswers[$k]->id;
+    //                             $ansArray[$k]['team_a'] = $game->team_a;
+    //                             $ansArray[$k]['team_b'] = $game->team_b;
+    //                             $ansArray[$k]['winner'] = $userAnswers[$k]->answer;
+    //                             $ansArray[$k]['championship'] = $game->name;
+    //                             $ansArray[$k]['happening_date'] = $game->happening_date;
+                
+    //                         }
+    //         $round = Round::where('id', $round_id)->first();
+    //         $now = Carbon::now();
+    //                     $now->toDateString();
+    //                     $bet_date = $now;
+    //         // $bet_date = $userAnswers[0]->created_at;
+    //         $games = $round->games;
+    //         $packages = $round->packages;
+    //         foreach($games as $game){
+    //             $game['widegtSwitch0']= null ;
+    //             $game['widegtSwitch1']= null ;
+    //             $game['widegtSwitch2']= null ;
+              
+    //         //     $ressult1 = DB::table('bid_results')
+    //         // ->where('user_id', $user->id)
+    //         // ->where('round_id', $round->id)
+    //         // ->where('game_id', $game->id)
+    //         // ->get();
+           
+    //         // $gta =  str_replace(' ', '', $game->team_a);
+    //         // $gtb = str_replace(' ', '', $game->team_b);
+    //         // $gtd = 'Draw';
+    //         // $gto = str_replace(' ', '', $ressult1[0]->answer);
+    //         // if(strtoupper($gta) == strtoupper($gto)){
+    //         //     $game['widegtSwitch0']= true ;
+    //         //     $game['widegtSwitch1']= false ;
+    //         //     $game['widegtSwitch2']= false ;
+    //         // }else if(strtoupper($gtb) == strtoupper($gto)){
+    //         //     $game['widegtSwitch0']= false ;
+    //         //     $game['widegtSwitch1']= false ;
+    //         //     $game['widegtSwitch2']= true ;
+    //         // }else if(strtoupper($gtd) == strtoupper($gto)){
+    //         //     $game['widegtSwitch0']= false ;
+    //         //     $game['widegtSwitch1']= true ;
+    //         //     $game['widegtSwitch2']= false ;
+    //         // }
+    //     }
+
+    //         $roundComplete = array(
+    //             'id' => $round->id,
+    //             'name' => $round->name,
+    //             'starting_date' => $round->starting_date,
+    //             'ending_date' => $round->ending_date,
+    //             'created_at' => $round->created_at,
+    //             'updated_at' => $round->updated_at,
+    //             'packages' => $packages,
+    //             'selected_package' => $pk,
+    //             'games' => $games,
+    //         );
+    //         $user = User::find(Auth::user()->id);
+    //         $user['phone'] = $user->contacts[0]->phone;
+    //         $data = array(
+    //             "status" => 200,
+    //             "response" => "true",
+    //             "message" => "Record Inserted",
+    //             "bid" => true,
+    //             "bet_date" => $bet_date,
+    //             "user" => $user,
+    //             "round" => $roundComplete,
+    //             "userAnswers" => $ansArray,
+    //         );
+    //         DB::commit();
+    //         return response()->json($data, 201);
+    //     } else {
+    //         DB::rollback();
+    //         $data = array(
+    //             "status" => 429,
+    //             "response" => "true",
+    //             "message" => "You Don't have enough Coins",
+    //         );
+            
+    //         return response()->json($data, 429);
+    //     }
+
+
+    //     // DB::commit();
+    //     // return redirect()->back()->with('message', 'success'); 
+    //     // } catch (\Exception $ex) {
+    //     //     DB::rollback();
+    //     //     return redirect()->back()->with('message',$ex->getMessage());
+    //     // }
+    // }
+    
+
+    // public function answerCheck($round_id,$package_id){
+    //     // dd($round_id);
+
+    //     $user_id = Auth::user()->id;
+       
+    //     $userAnswers = DB::table('bid_results')
+    //     ->where('user_id', $user_id)
+    //     ->where('round_id', $round_id)->get();
+    //     // dd($userAnswers);
+    //     $round = Round::where('id',$round_id)->first();
+    //     $totalGames = count($round->games);
+    //     $i = 0;
+    //     foreach($userAnswers as $UA){
+         
+    //         $gm = Game::where('id',$UA->game_id)->first();
+    //         $gameAnswer0 = $gm->results->Answer;
+    //         // dd($gameAnswer0 . $UA->answer);
+    //         if($gameAnswer0 === $UA->answer){
+                
+    //             $i++;
+    //             // dd($i);
+    //         }
+    //     }//EndForeach
+    //     $point = new Point();
+    //     $point->round_id = $round_id;
+    //     $point->user_id = $user_id;
+    //     $point->package_id = $package_id;
+    //     $point->points = $i;
+    //     $point->total_points = $totalGames;
+    //     $point->save();
+
+    //     return true;
        
 
 
-    }
+    // }
 }

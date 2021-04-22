@@ -135,8 +135,8 @@ class CoinController extends Controller
             $arr[$i]['user_phone'] = "N/A";
             $arr[$i]['user_whatsapp'] = "N/A";
             $arr[$i]['image'] = "https://i.pinimg.com/originals/51/f6/fb/51f6fb256629fc755b8870c801092942.png";
-            $arr[$i]['transferred_coins'] = "N/A" ;
-            $arr[$i]['transfer_date'] = "N/A" ;
+            $arr[$i]['transferred_coins'] = $ct->sent_coins ;
+            $arr[$i]['transfer_date'] = $ct->created_at ;
             if($ct->withdraw == 0){
                 $arr[$i]['type'] = 0 ;
             }else{
