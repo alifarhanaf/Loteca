@@ -28,7 +28,7 @@ Route::post('/resetPasswordCode','Auth\ApiAuthController@changePasswordCode');
 Route::post('/updatePassword','Auth\ApiAuthController@updatePassword');
 
 
-Route::post('/test','Api\AdminDashboardController@testz');
+Route::get('/test','Api\AdminDashboardController@testz');
 Route::post('/arrayCheck','Api\RoundController@arrayCheck');
 
 
