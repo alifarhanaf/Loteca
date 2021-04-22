@@ -53,11 +53,11 @@ class MyLeaguesController extends Controller
        
         $round_id = $request->round_id;
         $betting_date = $request->betting_date;
-        $user = Auth::user();
+        $mainUser = Auth::user();
         $round = Round::where('id',$round_id)->first();
         if($round->status == 1){
             $userAnswers = DB::table('bid_results')
-                        ->where('user_id', $user->id)
+                        ->where('user_id', $mainUser->id)
                         ->where('round_id', $round_id)
                         ->where('created_at',$betting_date)->get();
             $userSelectedAnswers = [];
@@ -111,7 +111,7 @@ class MyLeaguesController extends Controller
             for($i=0;$i<count($firstCategoryWinnerIds);$i++){
                 $user = User::where('id',$firstCategoryWinnerIds[$i])->first();
                 $user['image'] = $user->images[0]->url;
-                $user['winning_coins'] = $firstCategoryWinnerPrizes[$i];
+                $user['winningCoins'] = $firstCategoryWinnerPrizes[$i];
                 array_push($firstPackageWinners,$user);
             }
             $secondPackageWinners = [];
@@ -140,8 +140,9 @@ class MyLeaguesController extends Controller
                 $gameResults[$i]['team_b'] = $games[$i]->team_b;
                 $gameResults[$i]['winner'] = $games[$i]->results->Answer;
             }
+            
             $userAnswers = DB::table('bid_results')
-                        ->where('user_id', $user->id)
+                        ->where('user_id', $mainUser->id)
                         ->where('round_id', $round_id)
                         ->where('created_at',$betting_date)->get();
             $userSelectedAnswers = [];
