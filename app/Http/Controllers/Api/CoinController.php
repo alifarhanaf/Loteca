@@ -79,7 +79,11 @@ class CoinController extends Controller
             }
             
             $agent = Auth::user();
+            $agent['phone'] = $agent->contacts[0]->phone;
             $updatedUser = User::where('email',$request->email)->first();
+            $updatedUser['phone'] = $updatedUser->contacts[0]->phone;
+            unset($agent->contacts);
+            unset($updatedUser->contacts);
 
             $data = array(
                 "status" => 200,
