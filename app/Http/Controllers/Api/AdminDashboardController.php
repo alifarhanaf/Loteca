@@ -7,9 +7,11 @@ use Carbon\Carbon;
 use App\Models\Point;
 use App\Models\Round;
 use App\Models\WithDraw;
+use App\Models\AppComission;
 use App\Models\CoinTransfer;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Models\Package;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 
@@ -563,12 +565,78 @@ class AdminDashboardController extends Controller
     }
     public function alr(){
         // $a = 0 ;
+        $points = Point::where('round_id',1)->where('package_id',1)->orderBy('points', 'desc')->get();
+        $second = Point::where('round_id',1)->where('package_id',1)
+        ->orderBy('points', 'desc')
+        ->pluck('points');
+        $points = json_decode(json_encode($second), true);
+        // return $points;
+        $points = array_values(array_unique($points)) ;
+      
+        $all = array();
+        foreach($points as $key=>$value){
+        $all[] = $value['points'];
+        }
+
+        rsort($all);
+        return $all[1];
+        return $second;
+
+        $package = Package::select('accumulative_price')->where('id',3)->first();
+        $package = $package->accumulative_price;
+        // return $package ;
+        $companyPercentage = AppComission::select('app_comission')->first();
+        $companyPercentage = $companyPercentage->app_comission;
+        // return $companyPercentage;
+        $new_width = ($package / 100) * $companyPercentage;
+        return $new_width;
         $lastThreeClosedRounds = Round::select('name','starting_date','ending_date')->latest()->where('status',2)->take(3)->get();
 
         return $lastThreeClosedRounds;
         
 
 
+    }
+    public function testz(){
+        $round = Round::where('id',64)->first();
+        $packages = $round->packages;
+        for ($i = 0; $i < count($packages); $i++) {
+            $multipleWinners = [];
+            $multipleWinnersDates = [];
+            $points = Point::where('round_id',64)->where('package_id',$packages[$i]->id)->orderBy('points', 'desc')->get();
+            $pluckPoints = Point::where('round_id',64)->where('package_id',$packages[$i]->id)->orderBy('points', 'desc')->pluck('points');
+            $pointValues = json_decode(json_encode($pluckPoints), true);
+            // return $points;
+            $pointValues = array_values(array_unique($pointValues)) ;
+            foreach($points as $pt){
+                if(array_key_exists(0,$pointValues) && $pt->points == $pointValues[0]){    
+                    array_push($multipleWinners[$i]["JackOne"],$pt->user->id); 
+                    array_push($multipleWinnersDates[$i]["JackOne"],$pt->created_at); 
+                }elseif(array_key_exists(1,$pointValues) && $pt->points == $pointValues[1]){
+
+                    array_push($multipleWinners[$i]["JackTwo"],$pt->user->id); 
+                    array_push($multipleWinnersDates[$i]["JackTwo"],$pt->created_at); 
+                }elseif(array_key_exists(2,$pointValues) && $pt->points == $pointValues[2]){
+
+                    array_push($multipleWinners[$i]["JackThree"],$pt->user->id); 
+                    array_push($multipleWinnersDates[$i]["JackThree"],$pt->created_at); 
+                }
+
+
+
+                
+                
+            }
+            
+            
+          
+        }
+        $data = array(
+            "Ids" => $multipleWinners,
+            "Dates" => $multipleWinnersDates
+
+        );
+        return response()->json($data,200);
     }
 
     
