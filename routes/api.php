@@ -66,7 +66,7 @@ Route::middleware('auth:api')->group( function(){
     Route::post('/confirmEmail','Auth\ApiAuthController@confirmEmail');
     //League APIs
     Route::get('/participatedleagues', 'Api\MyLeaguesController@participatedleagues');
-    Route::post('/leagueDetails', 'Api\MyLeaguesController@leagueDetails');
+    Route::post('/leagueDetails', 'Api\LeaderBoardController@closedLeague');
     
 
 });
