@@ -41,7 +41,7 @@ Route::middleware('auth:api')->group( function(){
     Route::get('/mainRound','Api\RoundController@index');
     Route::post('/submitResult','Api\RoundController@betSubmit');
     Route::get('/lastRoundResult', 'Api\RoundController@llr');
-    Route::get('/participatedleagues', 'Api\RoundController@participatedleagues');
+    
     // Route::get('/leaderBoard', 'Api\LeaderBoardController@leaderB');
     Route::post('/updateProfile', 'Api\ProfileController@updateUser')->name('profileUpdate.api');
     Route::get('/leaderBoard', 'Api\LeaderBoardController@leaderC');
@@ -55,7 +55,7 @@ Route::middleware('auth:api')->group( function(){
     Route::get('/coins_record','Api\CoinController@coinsRecord');
     Route::get('/user_coins_record','Api\CoinController@userCoinsRecord');
     Route::post('/winner','Api\LeaderBoardController@winner');
-    Route::post('/leagueDetails', 'Api\LeaderBoardController@closedLeague');
+    
     Route::post('/activeLeague', 'Api\MyLeagueController@activeLeague');
     Route::post('/mainRoundForAgent','Api\AgentController@index');
     Route::post('/ValidateUser','Api\AgentController@ValidateUser');
@@ -64,6 +64,9 @@ Route::middleware('auth:api')->group( function(){
     // Route::post('/resendCode','Auth\ApiAuthController@resendCode');
     Route::get('/resendCode','Auth\ApiAuthController@resendCode');
     Route::post('/confirmEmail','Auth\ApiAuthController@confirmEmail');
+    //League APIs
+    Route::get('/participatedleagues', 'Api\MyLeaguesController@participatedleagues');
+    Route::post('/leagueDetails', 'Api\MyLeaguesController@leagueDetails');
     
 
 });

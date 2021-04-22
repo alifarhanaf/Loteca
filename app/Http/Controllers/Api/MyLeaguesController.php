@@ -11,20 +11,45 @@ use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 
-class ResultController extends Controller
+class MyLeaguesController extends Controller
 {
-    public function resultsList(){
-        $lastThreeClosedRounds = Round::select('id','name','starting_date','ending_date')->latest()->where('status',2)->take(3)->get();
+    public function participatedleagues()
+    {
+        $user = Auth::user();
+        $userLeagues = DB::table('round_user')->where('user_id',$user->id)->orderBy('created_at', 'desc')->get();
+        if($userLeagues){
+        $userLeagueIds = [];
+        $userLeagueDates = [];
+        foreach($userLeagues as $userLeague){
+            array_push($userLeagueIds, $userLeague->round_id);
+            array_push($userLeagueDates, $userLeague->created_at);
+        }
+        $userRounds = [];
+        for($i=0;$i<count($userLeagueIds);$i++){
+            $round = Round::where('id',$userLeagueIds[$i])->first();
+            $round['betting_date'] = $userLeagueDates[$i];
+            array_push($userRounds,$round);
+        }
+        $data = array(
+            "status" => 200,
+            "response" => "true",
+            "message" => "Result Received",
+            "participatedLeagues" => $userRounds,
+        );
+        return response()->json($data, 200);
+        }else{
             $data = array(
                 "status" => 200,
                 "response" => "true",
                 "message" => "Result Received",
-                "lastClosedRounds" => $lastThreeClosedRounds,
+                "participatedLeagues" => [],
             );
-        return response()->json($data, 200);
+            return response()->json($data, 200);
+        }
+        
     }
 
-    public function resultDetails(Request $request){
+    public function leagueDetails(Request $request){
        
         $round_id = $request->round_id;
         $betting_date = $request->betting_date;
@@ -154,7 +179,4 @@ class ResultController extends Controller
         
         
     }
-        
-
-    
 }
