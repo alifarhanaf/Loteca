@@ -722,10 +722,24 @@ class AdminDashboardController extends Controller
             $firstJackPotTotalWinners = count($arr[$i]['FirstJackPotUserIds']);
             $secondJackPotTotalWinners = count($arr[$i]['SecondJackPotUserIds']);
             $thirdJackPotTotalWinners = count($arr[$i]['ThirdJackPotUserIds']);
-
-            $firstJackPotPrizePerHead = $firstJackPotPrizeVlue/$firstJackPotTotalWinners;
-            $secondJackPotPrizePerHead = $secondJackPotPrizeVlue/$secondJackPotTotalWinners;
-            $thirdJackPotPrizePerHead = $thirdJackPotPrizeVlue/$thirdJackPotTotalWinners;
+            if($firstJackPotTotalWinners > 0){
+                $firstJackPotPrizePerHead = $firstJackPotPrizeVlue/$firstJackPotTotalWinners;
+            }else{
+                $firstJackPotPrizePerHead = $firstJackPotPrizeVlue;
+            }
+            if($secondJackPotTotalWinners > 0){
+                $secondJackPotPrizePerHead = $secondJackPotPrizeVlue/$secondJackPotTotalWinners;
+            }else{
+                $secondJackPotPrizePerHead = $secondJackPotPrizeVlue;
+            }
+            if($thirdJackPotTotalWinners > 0){
+                $thirdJackPotPrizePerHead = $thirdJackPotPrizeVlue/$thirdJackPotTotalWinners;
+            }else{
+                $firstJackPotPrizePerHead = $thirdJackPotPrizeVlue;
+            }
+            
+            
+            
 
 
             // $CoinPerHead = $totalCoinsApplied/$winnersTotal;
