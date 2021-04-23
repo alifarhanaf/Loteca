@@ -598,28 +598,35 @@ class AdminDashboardController extends Controller
 
     }
     public function testz(){
+        $arr = [];
+        $datz = [];
         $round = Round::where('id',64)->first();
         $packages = $round->packages;
         for ($i = 0; $i < count($packages); $i++) {
-            $multipleWinners = [];
-            $multipleWinnersDates = [];
+            $FirstJackPot = [];
+            $FirstJackPotDates = [];
+            $SecondJackPot = [];
+            $SecondJackPotDates = [];
+            $ThirdJackPot = [];
+            $ThirdJackPotDates = [];
             $points = Point::where('round_id',64)->where('package_id',$packages[$i]->id)->orderBy('points', 'desc')->get();
             $pluckPoints = Point::where('round_id',64)->where('package_id',$packages[$i]->id)->orderBy('points', 'desc')->pluck('points');
             $pointValues = json_decode(json_encode($pluckPoints), true);
             // return $points;
             $pointValues = array_values(array_unique($pointValues)) ;
             foreach($points as $pt){
+
                 if(array_key_exists(0,$pointValues) && $pt->points == $pointValues[0]){    
-                    array_push($multipleWinners[$i]["JackOne"],$pt->user->id); 
-                    array_push($multipleWinnersDates[$i]["JackOne"],$pt->created_at); 
+                    array_push($FirstJackPot,$pt->user->id); 
+                    array_push($FirstJackPotDates,$pt->created_at); 
                 }elseif(array_key_exists(1,$pointValues) && $pt->points == $pointValues[1]){
 
-                    array_push($multipleWinners[$i]["JackTwo"],$pt->user->id); 
-                    array_push($multipleWinnersDates[$i]["JackTwo"],$pt->created_at); 
+                    array_push($SecondJackPot,$pt->user->id); 
+                    array_push($SecondJackPotDates,$pt->created_at); 
                 }elseif(array_key_exists(2,$pointValues) && $pt->points == $pointValues[2]){
 
-                    array_push($multipleWinners[$i]["JackThree"],$pt->user->id); 
-                    array_push($multipleWinnersDates[$i]["JackThree"],$pt->created_at); 
+                    array_push($ThirdJackPot,$pt->user->id); 
+                    array_push($ThirdJackPotDates,$pt->created_at); 
                 }
 
 
@@ -627,13 +634,19 @@ class AdminDashboardController extends Controller
                 
                 
             }
+            $arr[$i]['FirstJackPotUserIds'] =  $FirstJackPot;
+            $datz[$i]['FirstJackPotUserDates'] =  $FirstJackPotDates;
+            $arr[$i]['SecondJackPotUserIds'] =  $SecondJackPot;
+            $datz[$i]['SecondJackPotUserDates'] =  $SecondJackPotDates;
+            $arr[$i]['ThirdJackPotUserIds'] =  $ThirdJackPot;
+            $datz[$i]['ThirdJackPotUserDates'] =  $ThirdJackPotDates;
             
             
           
         }
         $data = array(
-            "Ids" => $multipleWinners,
-            "Dates" => $multipleWinnersDates
+            "Ids" => $arr,
+            "Dates" => $datz
 
         );
         return response()->json($data,200);
