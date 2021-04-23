@@ -615,25 +615,36 @@ class AdminDashboardController extends Controller
             // return $points;
             $pointValues = array_values(array_unique($pointValues)) ;
             foreach($points as $pt){
+                // if(!in_array($pt->user->id, $FirstJackPot, true) && !in_array($pt->user->id, $FirstJackPot, true) && !in_array($pt->user->id, $FirstJackPot, true)){
+                    
+                // }
 
-                if(array_key_exists(0,$pointValues) && $pt->points == $pointValues[0]){    
-                    array_push($FirstJackPot,$pt->user->id); 
-                    array_push($FirstJackPotDates,$pt->created_at); 
+                if(array_key_exists(0,$pointValues) && $pt->points == $pointValues[0]){   
+                    if(!in_array($pt->user->id, $FirstJackPot, true)){
+                        array_push($FirstJackPot,$pt->user->id); 
+                        array_push($FirstJackPotDates,$pt->created_at);
+                    }
+                     
                 }elseif(array_key_exists(1,$pointValues) && $pt->points == $pointValues[1]){
-
-                    array_push($SecondJackPot,$pt->user->id); 
-                    array_push($SecondJackPotDates,$pt->created_at); 
+                    if(!in_array($pt->user->id, $SecondJackPot, true)){
+                        array_push($SecondJackPot,$pt->user->id); 
+                        array_push($SecondJackPotDates,$pt->created_at); 
+                    }
                 }elseif(array_key_exists(2,$pointValues) && $pt->points == $pointValues[2]){
-
+                    if(!in_array($pt->user->id, $ThirdJackPot, true)){
                     array_push($ThirdJackPot,$pt->user->id); 
                     array_push($ThirdJackPotDates,$pt->created_at); 
+                    }
                 }
-
-
-
-                
-                
             }
+            // $FirstJackPot = array_values(array_unique($FirstJackPot)) ;
+            // $FirstJackPotDates = array_values(array_unique($FirstJackPotDates)) ;
+            // $SecondJackPot = array_values(array_unique($SecondJackPot)) ;
+            // $FirstJackPot = array_values(array_unique($FirstJackPot)) ;
+            // $FirstJackPot = array_values(array_unique($FirstJackPot)) ;
+            // $FirstJackPot = array_values(array_unique($FirstJackPot)) ;
+            
+
             $arr[$i]['FirstJackPotUserIds'] =  $FirstJackPot;
             $datz[$i]['FirstJackPotUserDates'] =  $FirstJackPotDates;
             $arr[$i]['SecondJackPotUserIds'] =  $SecondJackPot;
