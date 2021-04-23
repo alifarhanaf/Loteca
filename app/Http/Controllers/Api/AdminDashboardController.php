@@ -4,14 +4,18 @@ namespace App\Http\Controllers\Api;
 
 use App\User;
 use Carbon\Carbon;
+use App\Models\Game;
 use App\Models\Point;
 use App\Models\Round;
+use App\Models\Winner;
+use App\Models\Package;
 use App\Models\WithDraw;
 use App\Models\AppComission;
 use App\Models\CoinTransfer;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
-use App\Models\Package;
+use App\Models\JackPots;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 
@@ -598,10 +602,72 @@ class AdminDashboardController extends Controller
 
     }
     public function testz(){
+        
+       //Parameters From API
+       $round_id = 64;
+       $round = Round::where('id',$round_id)->first();
+       $packages = $round->packages;
+       $totalGames = count($round->games);
+       $roundUsers = DB::table('round_user')->where('round_id',$round_id)->get();
+       $roundUserIds = [];
+       $roundUserDates = [];
+       foreach($roundUsers as $ru){
+        array_push($roundUserIds,$ru->user_id);
+        array_push($roundUserDates,$ru->created_at);
+       }
+       $roundUsersDetails = [];
+        for($i=0;$i<count($roundUserIds);$i++){
+            $user = User::where('id',$roundUserIds[$i])->first();
+            array_push($roundUsersDetails,$user);
+        }
+        $j = 0;
+        foreach($roundUsersDetails as $rud ){
+        
+
+        $userAnswers = DB::table('bid_results')
+        ->where('user_id', $rud->id)
+        ->where('round_id', $round_id)
+        ->where('created_at',$roundUserDates[$j])->get();
+        
+        $i = 0;
+        foreach($userAnswers as $UA){
+         
+            $gm = Game::where('id',$UA->game_id)->first();
+            if($gm->results){
+               $gameAnswer = $gm->results->Answer;
+               $originalAnswer =  str_replace(' ', '', $gameAnswer);
+               $userAnswer = str_replace(' ', '', $UA->answer);
+              
+            if(strtoupper($originalAnswer) == strtoupper($userAnswer)){
+                
+                $i++;
+                
+            }
+        }else{
+            return redirect()->back()->with('error','You have Not Added Game Results Yet.     Kindly Add Answers First.');
+        }
+        }
+        $userAnswerInArray = $userAnswers->toArray();
+        
+
+        $pointsChecker = [];
+        array_push($pointsChecker,$i); 
+        // $point = new Point();
+        // $point->round_id = $round_id;
+        // $point->user_id = $rud->id;
+        // $point->package_id = $userAnswerInArray[0]->package_id;
+        // $point->points = $i;
+        // $point->total_points = $totalGames;
+        // $point->save();
+        $j++;
+
+        
+        }
+        
+        
         $arr = [];
         $datz = [];
-        $round = Round::where('id',64)->first();
-        $packages = $round->packages;
+        
         for ($i = 0; $i < count($packages); $i++) {
             $FirstJackPot = [];
             $FirstJackPotDates = [];
@@ -609,22 +675,17 @@ class AdminDashboardController extends Controller
             $SecondJackPotDates = [];
             $ThirdJackPot = [];
             $ThirdJackPotDates = [];
-            $points = Point::where('round_id',64)->where('package_id',$packages[$i]->id)->orderBy('points', 'desc')->get();
-            $pluckPoints = Point::where('round_id',64)->where('package_id',$packages[$i]->id)->orderBy('points', 'desc')->pluck('points');
+            $points = Point::where('round_id',$round_id)->where('package_id',$packages[$i]->id)->orderBy('points', 'desc')->get();
+            $pluckPoints = Point::where('round_id',$round_id)->where('package_id',$packages[$i]->id)->orderBy('points', 'desc')->pluck('points');
             $pointValues = json_decode(json_encode($pluckPoints), true);
             // return $points;
             $pointValues = array_values(array_unique($pointValues)) ;
             foreach($points as $pt){
-                // if(!in_array($pt->user->id, $FirstJackPot, true) && !in_array($pt->user->id, $FirstJackPot, true) && !in_array($pt->user->id, $FirstJackPot, true)){
-                    
-                // }
-
                 if(array_key_exists(0,$pointValues) && $pt->points == $pointValues[0]){   
                     if(!in_array($pt->user->id, $FirstJackPot, true)){
                         array_push($FirstJackPot,$pt->user->id); 
                         array_push($FirstJackPotDates,$pt->created_at);
                     }
-                     
                 }elseif(array_key_exists(1,$pointValues) && $pt->points == $pointValues[1]){
                     if(!in_array($pt->user->id, $SecondJackPot, true)){
                         array_push($SecondJackPot,$pt->user->id); 
@@ -637,14 +698,6 @@ class AdminDashboardController extends Controller
                     }
                 }
             }
-            // $FirstJackPot = array_values(array_unique($FirstJackPot)) ;
-            // $FirstJackPotDates = array_values(array_unique($FirstJackPotDates)) ;
-            // $SecondJackPot = array_values(array_unique($SecondJackPot)) ;
-            // $FirstJackPot = array_values(array_unique($FirstJackPot)) ;
-            // $FirstJackPot = array_values(array_unique($FirstJackPot)) ;
-            // $FirstJackPot = array_values(array_unique($FirstJackPot)) ;
-            
-
             $arr[$i]['FirstJackPotUserIds'] =  $FirstJackPot;
             $datz[$i]['FirstJackPotUserDates'] =  $FirstJackPotDates;
             $arr[$i]['SecondJackPotUserIds'] =  $SecondJackPot;
@@ -655,10 +708,80 @@ class AdminDashboardController extends Controller
             
           
         }
+        for ($i = 0; $i < count($packages); $i++) {
+            $totalCoinsApplied = $packages[$i]->accumulative_price;
+            $companyPercentage = AppComission::select('app_comission')->first();
+            $companyPercentage =  $companyPercentage->app_comission;
+            $companyAmount = ($totalCoinsApplied / 100) * $companyPercentage;
+            $remainingAmount = $totalCoinsApplied - $companyAmount;
+            $jackpots = JackPots::select('first_jackpot','second_jackpot','third_jackpot')->first();
+            $firstJackPotPrizeVlue = ($remainingAmount / 100) * $jackpots->first_jackpot;
+            $secondJackPotPrizeVlue = ($remainingAmount / 100) * $jackpots->second_jackpot;
+            $thirdJackPotPrizeVlue = ($remainingAmount / 100) * $jackpots->third_jackpot;
+
+            $firstJackPotTotalWinners = count($arr[$i]['FirstJackPotUserIds']);
+            $secondJackPotTotalWinners = count($arr[$i]['SecondJackPotUserIds']);
+            $thirdJackPotTotalWinners = count($arr[$i]['ThirdJackPotUserIds']);
+
+            $firstJackPotPrizePerHead = $firstJackPotPrizeVlue/$firstJackPotTotalWinners;
+            $secondJackPotPrizePerHead = $secondJackPotPrizeVlue/$secondJackPotTotalWinners;
+            $thirdJackPotPrizePerHead = $thirdJackPotPrizeVlue/$thirdJackPotTotalWinners;
+
+
+            // $CoinPerHead = $totalCoinsApplied/$winnersTotal;
+
+            // for($j=0;$j<count($arr[$i]['FirstJackPotUserIds']);$j++){
+            //     $points = Point::where('round_id',$round_id)->where('package_id',$packages[$i]->id)->where('user_id',$arr[$i]['FirstJackPotUserIds'][$j])->where('created_at',$datz[$i]['FirstJackPotUserDates'][$j])->first();
+            //     $points->winning_coins = $firstJackPotPrizePerHead;
+            //     $points->save();
+            //     $winner = new Winner();
+            //     $winner->round_id = $round_id;
+            //     $winner->user_id = $arr[$i]['FirstJackPotUserIds'][$j];
+            //     $winner->package_id = $packages[$i]->id;
+            //     $winner->prize = $firstJackPotPrizePerHead;
+            //     $winner->jackpot_id = '0';
+            //     $winner->save();
+            // }
+            // for($j=0;$j<count($arr[$i]['SecondJackPotUserIds']);$j++){
+            //     $points = Point::where('round_id',$round_id)->where('package_id',$packages[$i]->id)->where('user_id',$arr[$i]['SecondJackPotUserIds'][$j])->where('created_at',$datz[$i]['SecondJackPotUserDates'][$j])->first();
+            //     $points->winning_coins = $secondJackPotPrizePerHead;
+            //     $points->save();
+            //     $winner = new Winner();
+            //     $winner->round_id = $round_id;
+            //     $winner->user_id = $arr[$i]['SecondJackPotUserIds'][$j];
+            //     $winner->package_id = $packages[$i]->id;
+            //     $winner->prize = $secondJackPotPrizePerHead;
+            //     $winner->jackpot_id = '1';
+            //     $winner->save();
+            // }
+            // for($j=0;$j<count($arr[$i]['ThirdJackPotUserIds']);$j++){
+            //     $points = Point::where('round_id',$round_id)->where('package_id',$packages[$i]->id)->where('user_id',$arr[$i]['ThirdJackPotUserIds'][$j])->where('created_at',$datz[$i]['ThirdJackPotUserDates'][$j])->first();
+            //     $points->winning_coins = $thirdJackPotPrizePerHead;
+            //     $points->save();
+            //     $winner = new Winner();
+            //     $winner->round_id = $round_id;
+            //     $winner->user_id = $arr[$i]['ThirdJackPotUserIds'][$j];
+            //     $winner->package_id = $packages[$i]->id;
+            //     $winner->prize = $thirdJackPotPrizePerHead;
+            //     $winner->jackpot_id = '0';
+            //     $winner->save();
+            // }
+           
+            
+
+        }
+
+
+
+
         $data = array(
             "Ids" => $arr,
-            "Dates" => $datz
-
+            "Dates" => $datz,
+            "prize1" => $firstJackPotPrizePerHead,
+            "prize2" => $secondJackPotPrizePerHead,
+            "prize3" => $thirdJackPotPrizePerHead,
+            "scoredPoints" => $pointsChecker,
+ 
         );
         return response()->json($data,200);
     }

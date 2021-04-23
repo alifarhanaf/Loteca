@@ -205,8 +205,6 @@ class DashboardController extends Controller
         $roundUsers = DB::table('round_user')->where('round_id',$round_id)->get();
         $roundUsersIds = [];
         $roundUserDates = [];
-        $test = [];
-        $test1 = [];
         foreach($roundUsers as $ru){
             array_push($roundUsersIds,$ru->user_id);
             array_push($roundUserDates,$ru->created_at);
