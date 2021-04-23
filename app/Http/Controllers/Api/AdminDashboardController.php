@@ -796,9 +796,8 @@ class AdminDashboardController extends Controller
         $data = array(
             "Ids" => $arr,
             "Dates" => $datz,
-            "prize1" => $firstJackPotPrizePerHead,
-            "prize2" => $secondJackPotPrizePerHead,
-            "prize3" => $thirdJackPotPrizePerHead,
+            "prizes" => $prizeChecker,
+            
             "scoredPoints" => $pointsChecker,
  
         );
