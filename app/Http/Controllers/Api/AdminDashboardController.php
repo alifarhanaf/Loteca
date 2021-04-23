@@ -620,6 +620,7 @@ class AdminDashboardController extends Controller
             $user = User::where('id',$roundUserIds[$i])->first();
             array_push($roundUsersDetails,$user);
         }
+        $pointsChecker = [];
         $j = 0;
         foreach($roundUsersDetails as $rud ){
         
@@ -650,7 +651,7 @@ class AdminDashboardController extends Controller
         $userAnswerInArray = $userAnswers->toArray();
         
 
-        $pointsChecker = [];
+        
         array_push($pointsChecker,$i); 
         // $point = new Point();
         // $point->round_id = $round_id;
@@ -667,7 +668,6 @@ class AdminDashboardController extends Controller
         
         $arr = [];
         $datz = [];
-        
         for ($i = 0; $i < count($packages); $i++) {
             $FirstJackPot = [];
             $FirstJackPotDates = [];
@@ -708,6 +708,7 @@ class AdminDashboardController extends Controller
             
           
         }
+        $prizeChecker = [];
         for ($i = 0; $i < count($packages); $i++) {
             $totalCoinsApplied = $packages[$i]->accumulative_price;
             $companyPercentage = AppComission::select('app_comission')->first();
@@ -735,9 +736,13 @@ class AdminDashboardController extends Controller
             if($thirdJackPotTotalWinners > 0){
                 $thirdJackPotPrizePerHead = $thirdJackPotPrizeVlue/$thirdJackPotTotalWinners;
             }else{
-                $firstJackPotPrizePerHead = $thirdJackPotPrizeVlue;
+                $thirdJackPotPrizePerHead = $thirdJackPotPrizeVlue;
             }
-            
+
+            $prizeChecker[$i]['firstJackPotPrizePerHead'] = $firstJackPotPrizePerHead;
+            $prizeChecker[$i]['secondJackPotPrizePerHead'] = $secondJackPotPrizePerHead;
+            $prizeChecker[$i]['thirdJackPotPrizePerHead'] = $thirdJackPotPrizePerHead;
+
             
             
 
