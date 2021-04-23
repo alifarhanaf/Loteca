@@ -601,10 +601,14 @@ class AdminDashboardController extends Controller
 
 
     }
-    public function testz(){
+    public function testz($id){
+        $winner = Winner::where('round_id',$id)->first();
+        if($winner){
+            return redirect()->back()->with('error','Already Finalized This Round.');
+        }
         
        //Parameters From API
-       $round_id = 64;
+       $round_id = $id;
        $round = Round::where('id',$round_id)->first();
        $packages = $round->packages;
        $totalGames = count($round->games);
@@ -623,49 +627,35 @@ class AdminDashboardController extends Controller
         $pointsChecker = [];
         $j = 0;
         foreach($roundUsersDetails as $rud ){
-        
-
         $userAnswers = DB::table('bid_results')
         ->where('user_id', $rud->id)
         ->where('round_id', $round_id)
         ->where('created_at',$roundUserDates[$j])->get();
-        
         $i = 0;
         foreach($userAnswers as $UA){
-         
             $gm = Game::where('id',$UA->game_id)->first();
             if($gm->results){
                $gameAnswer = $gm->results->Answer;
                $originalAnswer =  str_replace(' ', '', $gameAnswer);
                $userAnswer = str_replace(' ', '', $UA->answer);
-              
             if(strtoupper($originalAnswer) == strtoupper($userAnswer)){
-                
-                $i++;
-                
+                $i++;  
             }
         }else{
             return redirect()->back()->with('error','You have Not Added Game Results Yet.     Kindly Add Answers First.');
         }
         }
         $userAnswerInArray = $userAnswers->toArray();
-        
-
-        
         array_push($pointsChecker,$i); 
-        // $point = new Point();
-        // $point->round_id = $round_id;
-        // $point->user_id = $rud->id;
-        // $point->package_id = $userAnswerInArray[0]->package_id;
-        // $point->points = $i;
-        // $point->total_points = $totalGames;
-        // $point->save();
+        $point = new Point();
+        $point->round_id = $round_id;
+        $point->user_id = $rud->id;
+        $point->package_id = $userAnswerInArray[0]->package_id;
+        $point->points = $i;
+        $point->total_points = $totalGames;
+        $point->save();
         $j++;
-
-        
         }
-        
-        
         $arr = [];
         $datz = [];
         for ($i = 0; $i < count($packages); $i++) {
@@ -704,9 +694,6 @@ class AdminDashboardController extends Controller
             $datz[$i]['SecondJackPotUserDates'] =  $SecondJackPotDates;
             $arr[$i]['ThirdJackPotUserIds'] =  $ThirdJackPot;
             $datz[$i]['ThirdJackPotUserDates'] =  $ThirdJackPotDates;
-            
-            
-          
         }
         $prizeChecker = [];
         for ($i = 0; $i < count($packages); $i++) {
@@ -719,7 +706,6 @@ class AdminDashboardController extends Controller
             $firstJackPotPrizeVlue = ($remainingAmount / 100) * $jackpots->first_jackpot;
             $secondJackPotPrizeVlue = ($remainingAmount / 100) * $jackpots->second_jackpot;
             $thirdJackPotPrizeVlue = ($remainingAmount / 100) * $jackpots->third_jackpot;
-
             $firstJackPotTotalWinners = count($arr[$i]['FirstJackPotUserIds']);
             $secondJackPotTotalWinners = count($arr[$i]['SecondJackPotUserIds']);
             $thirdJackPotTotalWinners = count($arr[$i]['ThirdJackPotUserIds']);
@@ -739,69 +725,44 @@ class AdminDashboardController extends Controller
                 $thirdJackPotPrizePerHead = round($thirdJackPotPrizeVlue);
             }
 
-            $prizeChecker[$i]['firstJackPotPrizePerHead'] = $firstJackPotPrizePerHead;
-            $prizeChecker[$i]['secondJackPotPrizePerHead'] = $secondJackPotPrizePerHead;
-            $prizeChecker[$i]['thirdJackPotPrizePerHead'] = $thirdJackPotPrizePerHead;
-
-            
-            
-
-
-            // $CoinPerHead = $totalCoinsApplied/$winnersTotal;
-
-            // for($j=0;$j<count($arr[$i]['FirstJackPotUserIds']);$j++){
-            //     $points = Point::where('round_id',$round_id)->where('package_id',$packages[$i]->id)->where('user_id',$arr[$i]['FirstJackPotUserIds'][$j])->where('created_at',$datz[$i]['FirstJackPotUserDates'][$j])->first();
-            //     $points->winning_coins = $firstJackPotPrizePerHead;
-            //     $points->save();
-            //     $winner = new Winner();
-            //     $winner->round_id = $round_id;
-            //     $winner->user_id = $arr[$i]['FirstJackPotUserIds'][$j];
-            //     $winner->package_id = $packages[$i]->id;
-            //     $winner->prize = $firstJackPotPrizePerHead;
-            //     $winner->jackpot_id = '0';
-            //     $winner->save();
-            // }
-            // for($j=0;$j<count($arr[$i]['SecondJackPotUserIds']);$j++){
-            //     $points = Point::where('round_id',$round_id)->where('package_id',$packages[$i]->id)->where('user_id',$arr[$i]['SecondJackPotUserIds'][$j])->where('created_at',$datz[$i]['SecondJackPotUserDates'][$j])->first();
-            //     $points->winning_coins = $secondJackPotPrizePerHead;
-            //     $points->save();
-            //     $winner = new Winner();
-            //     $winner->round_id = $round_id;
-            //     $winner->user_id = $arr[$i]['SecondJackPotUserIds'][$j];
-            //     $winner->package_id = $packages[$i]->id;
-            //     $winner->prize = $secondJackPotPrizePerHead;
-            //     $winner->jackpot_id = '1';
-            //     $winner->save();
-            // }
-            // for($j=0;$j<count($arr[$i]['ThirdJackPotUserIds']);$j++){
-            //     $points = Point::where('round_id',$round_id)->where('package_id',$packages[$i]->id)->where('user_id',$arr[$i]['ThirdJackPotUserIds'][$j])->where('created_at',$datz[$i]['ThirdJackPotUserDates'][$j])->first();
-            //     $points->winning_coins = $thirdJackPotPrizePerHead;
-            //     $points->save();
-            //     $winner = new Winner();
-            //     $winner->round_id = $round_id;
-            //     $winner->user_id = $arr[$i]['ThirdJackPotUserIds'][$j];
-            //     $winner->package_id = $packages[$i]->id;
-            //     $winner->prize = $thirdJackPotPrizePerHead;
-            //     $winner->jackpot_id = '0';
-            //     $winner->save();
-            // }
-           
-            
-
+            for($j=0;$j<count($arr[$i]['FirstJackPotUserIds']);$j++){
+                $points = Point::where('round_id',$round_id)->where('package_id',$packages[$i]->id)->where('user_id',$arr[$i]['FirstJackPotUserIds'][$j])->where('created_at',$datz[$i]['FirstJackPotUserDates'][$j])->first();
+                $points->winning_coins = $firstJackPotPrizePerHead;
+                $points->save();
+                $winner = new Winner();
+                $winner->round_id = $round_id;
+                $winner->user_id = $arr[$i]['FirstJackPotUserIds'][$j];
+                $winner->package_id = $packages[$i]->id;
+                $winner->prize = $firstJackPotPrizePerHead;
+                $winner->jackpot_id = '0';
+                $winner->save();
+            }
+            for($j=0;$j<count($arr[$i]['SecondJackPotUserIds']);$j++){
+                $points = Point::where('round_id',$round_id)->where('package_id',$packages[$i]->id)->where('user_id',$arr[$i]['SecondJackPotUserIds'][$j])->where('created_at',$datz[$i]['SecondJackPotUserDates'][$j])->first();
+                $points->winning_coins = $secondJackPotPrizePerHead;
+                $points->save();
+                $winner = new Winner();
+                $winner->round_id = $round_id;
+                $winner->user_id = $arr[$i]['SecondJackPotUserIds'][$j];
+                $winner->package_id = $packages[$i]->id;
+                $winner->prize = $secondJackPotPrizePerHead;
+                $winner->jackpot_id = '1';
+                $winner->save();
+            }
+            for($j=0;$j<count($arr[$i]['ThirdJackPotUserIds']);$j++){
+                $points = Point::where('round_id',$round_id)->where('package_id',$packages[$i]->id)->where('user_id',$arr[$i]['ThirdJackPotUserIds'][$j])->where('created_at',$datz[$i]['ThirdJackPotUserDates'][$j])->first();
+                $points->winning_coins = $thirdJackPotPrizePerHead;
+                $points->save();
+                $winner = new Winner();
+                $winner->round_id = $round_id;
+                $winner->user_id = $arr[$i]['ThirdJackPotUserIds'][$j];
+                $winner->package_id = $packages[$i]->id;
+                $winner->prize = $thirdJackPotPrizePerHead;
+                $winner->jackpot_id = '0';
+                $winner->save();
+            }
         }
-
-
-
-
-        $data = array(
-            "Ids" => $arr,
-            "Dates" => $datz,
-            "prizes" => $prizeChecker,
-            
-            "scoredPoints" => $pointsChecker,
- 
-        );
-        return response()->json($data,200);
+        return redirect()->back()->with('success', 'Round Successfully Finalized',); 
     }
 
     
