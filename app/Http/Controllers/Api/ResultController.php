@@ -622,25 +622,31 @@ class ResultController extends Controller
                 $gameResults[$i]['team_b'] = $games[$i]->team_b;
                 $gameResults[$i]['winner'] = $games[$i]->results->Answer;
             }
+            $leaderBoardUsers = [];
+            $points = DB::table('points')->where('round_id',$round_id)->pluck('user_id');
+            $points = json_decode(json_encode($points), true);
+            $points = array_values(array_unique($points)) ;
+            for ($i = 0; $i < count($points); $i++) {        
+                $cids = DB::table('points')->where('user_id',$points[$i])->where('round_id',$round_id)->max('points');
+                $user = User::where('id',$points[$i])->with('images')->first();
+                $user['image'] = $user->images[0]->url;
+                unset($user->images);
+                $user['points_scored'] = $cids;
+            if(!in_array($user, $leaderBoardUsers, true)){
+                    array_push($leaderBoardUsers,$user);
+            }
+        }
+        $leaderBoardUsers = array_values(array_unique($leaderBoardUsers));
+        $array = collect($leaderBoardUsers)->sortBy('points_scored')->reverse()->toArray();
+        $arraySorted = array_values($array);
 
-            // if (!array_key_exists("0",$finalWinners)){
-            //     $finalWinners[0] = null;
-            // }
-            // if (!array_key_exists("1",$finalWinners)){
-            //     $finalWinners[1] = null;
-            // }
-            // if (!array_key_exists("2",$finalWinners)){
-            //     $finalWinners[2] = null;
-            // }
             $data = array(
                     "status" => 200,
                     "response" => "true",
                     "message" => "Result Received",
                     "winners" => $finalWinners,
-                    // "Second Package Winners" => $finalWinners[1],
-                    // "Third Package Winners" => $finalWinners[2],
                     "answers" => $gameResults,
-                    // "userAnswers" => $userSelectedAnswers,
+                    "leaderBoard" => $arraySorted,
                     "round" => $round,
             );
             return response()->json($data, 200);
