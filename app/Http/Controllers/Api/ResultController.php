@@ -520,18 +520,21 @@ class ResultController extends Controller
             for($i=0;$i<count($firstCategoryFirstJackPotWinnerIds);$i++){
                 $user = User::where('id',$firstCategoryFirstJackPotWinnerIds[$i])->first();
                 $user['image'] = $user->images[0]->url;
+                unset($user->images);
                 $user['winningCoins'] = $firstCategoryFirstJackPotWinnerPrizes[$i];
                 array_push($firstPackageFirstJackPotWinners,$user);
             }
             for($i=0;$i<count($firstCategorySecondJackPotWinnerIds);$i++){
                 $user = User::where('id',$firstCategorySecondJackPotWinnerIds[$i])->first();
                 $user['image'] = $user->images[0]->url;
+                unset($user->images);
                 $user['winningCoins'] = $firstCategorySecondJackPotWinnerPrizes[$i];
                 array_push($firstPackageSecondJackPotWinners,$user);
             }
             for($i=0;$i<count($firstCategoryThirdJackPotWinnerIds);$i++){
                 $user = User::where('id',$firstCategoryThirdJackPotWinnerIds[$i])->first();
                 $user['image'] = $user->images[0]->url;
+                unset($user->images);
                 $user['winningCoins'] = $firstCategoryThirdJackPotWinnerPrizes[$i];
                 array_push($firstPackageThirdJackPotWinners,$user);
             }
@@ -551,18 +554,21 @@ class ResultController extends Controller
             for($i=0;$i<count($secondCategoryFirstJackPotWinnerIds);$i++){
                 $user = User::where('id',$secondCategoryFirstJackPotWinnerIds[$i])->first();
                 $user['image'] = $user->images[0]->url;
+                unset($user->images);
                 $user['winningCoins'] = $secondCategoryFirstJackPotWinnerPrizes[$i];
                 array_push($secondPackageFirstJackPotWinners,$user);
             }
             for($i=0;$i<count($secondCategorySecondJackPotWinnerIds);$i++){
                 $user = User::where('id',$secondCategorySecondJackPotWinnerIds[$i])->first();
                 $user['image'] = $user->images[0]->url;
+                unset($user->images);
                 $user['winningCoins'] = $secondCategorySecondJackPotWinnerPrizes[$i];
                 array_push($secondPackageSecondJackPotWinners,$user);
             }
             for($i=0;$i<count($secondCategoryThirdJackPotWinnerIds);$i++){
                 $user = User::where('id',$secondCategoryThirdJackPotWinnerIds[$i])->first();
                 $user['image'] = $user->images[0]->url;
+                unset($user->images);
                 $user['winningCoins'] = $secondCategoryThirdJackPotWinnerPrizes[$i];
                 array_push($secondPackageThirdJackPotWinners,$user);
             }
@@ -581,18 +587,21 @@ class ResultController extends Controller
             for($i=0;$i<count($thirdCategoryFirstJackPotWinnerIds);$i++){
                 $user = User::where('id',$thirdCategoryFirstJackPotWinnerIds[$i])->first();
                 $user['image'] = $user->images[0]->url;
+                unset($user->images);
                 $user['winningCoins'] = $thirdCategoryFirstJackPotWinnerPrizes[$i];
                 array_push($thirdPackageFirstJackPotWinners,$user);
             }
             for($i=0;$i<count($thirdCategorySecondJackPotWinnerIds);$i++){
                 $user = User::where('id',$thirdCategorySecondJackPotWinnerIds[$i])->first();
                 $user['image'] = $user->images[0]->url;
+                unset($user->images);
                 $user['winningCoins'] = $thirdCategorySecondJackPotWinnerPrizes[$i];
                 array_push($thirdPackageSecondJackPotWinners,$user);
             }
             for($i=0;$i<count($thirdCategoryThirdJackPotWinnerIds);$i++){
                 $user = User::where('id',$thirdCategoryThirdJackPotWinnerIds[$i])->first();
                 $user['image'] = $user->images[0]->url;
+                unset($user->images);
                 $user['winningCoins'] = $thirdCategoryThirdJackPotWinnerPrizes[$i];
                 array_push($thirdPackageThirdJackPotWinners,$user);
             }
