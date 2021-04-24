@@ -175,10 +175,7 @@ class MyLeaguesController extends Controller
                     "round" => $round,
             );
             return response()->json($data, 200);
-       
         }
-        
-        
     }
 
     public function leaderBoardForSingleRound($id){

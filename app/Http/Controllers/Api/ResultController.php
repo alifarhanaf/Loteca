@@ -447,6 +447,197 @@ class ResultController extends Controller
 
     // }
 
+
+    public function resultScreenDetails($id){
+       
+        $round_id = $id;
+        $mainUser = Auth::user();
+        $round = Round::where('id',$round_id)->first();
+            $packages = $round->packages;
+            $firstCategoryWinners = Winner::where('round_id',$round_id)->where('package_id',$packages[0]->id)->get();
+            $firstCategoryFirstJackPotWinnerIds = [];
+            $firstCategorySecondJackPotWinnerIds = [];
+            $firstCategoryThirdJackPotWinnerIds = [];
+            $firstCategoryFirstJackPotWinnerPrizes = [];
+            $firstCategorySecondJackPotWinnerPrizes = [];
+            $firstCategoryThirdJackPotWinnerPrizes = [];
+            foreach($firstCategoryWinners as $ws1){
+                if($ws1->jackpot_id == 0){
+                    array_push($firstCategoryFirstJackPotWinnerIds,$ws1->user_id);
+                    array_push($firstCategoryFirstJackPotWinnerPrizes,$ws1->prize);
+                }elseif($ws1->jackpot_id == 1){
+                    array_push($firstCategorySecondJackPotWinnerIds,$ws1->user_id);
+                    array_push($firstCategorySecondJackPotWinnerPrizes,$ws1->prize);
+                }elseif($ws1->jackpot_id == 2){
+                    array_push($firstCategoryThirdJackPotWinnerIds,$ws1->user_id);
+                    array_push($firstCategoryThirdJackPotWinnerPrizes,$ws1->prize);
+                }
+            }
+            $secondCategoryWinners = Winner::where('round_id',$round_id)->where('package_id',$packages[1]->id)->get();
+            $secondCategoryFirstJackPotWinnerIds = [];
+            $secondCategorySecondJackPotWinnerIds = [];
+            $secondCategoryThirdJackPotWinnerIds = [];
+            $secondCategoryFirstJackPotWinnerPrizes = [];
+            $secondCategorySecondJackPotWinnerPrizes = [];
+            $secondCategoryThirdJackPotWinnerPrizes = [];
+            foreach($secondCategoryWinners as $ws2){
+                if($ws1->jackpot_id == 0){
+                    array_push($secondCategoryFirstJackPotWinnerIds,$ws2->user_id);
+                    array_push($secondCategoryFirstJackPotWinnerPrizes,$ws2->prize);
+                }elseif($ws1->jackpot_id == 1){
+                    array_push($secondCategorySecondJackPotWinnerIds,$ws2->user_id);
+                    array_push($secondCategorySecondJackPotWinnerPrizes,$ws2->prize);
+                }elseif($ws1->jackpot_id == 2){
+                    array_push($secondCategoryThirdJackPotWinnerIds,$ws2->user_id);
+                    array_push($secondCategoryThirdJackPotWinnerPrizes,$ws2->prize);
+                }
+            }
+            $thirdCategoryWinners = Winner::where('round_id',$round_id)->where('package_id',$packages[2]->id)->get();
+            $thirdCategoryFirstJackPotWinnerIds = [];
+            $thirdCategorySecondJackPotWinnerIds = [];
+            $thirdCategoryThirdJackPotWinnerIds = [];
+            $thirdCategoryFirstJackPotWinnerPrizes = [];
+            $thirdCategorySecondJackPotWinnerPrizes = [];
+            $thirdCategoryThirdJackPotWinnerPrizes = [];
+            foreach($thirdCategoryWinners as $ws3){
+                if($ws1->jackpot_id == 0){
+                    array_push($thirdCategoryFirstJackPotWinnerIds,$ws3->user_id);
+                    array_push($thirdCategoryFirstJackPotWinnerPrizes,$ws3->prize);
+                }elseif($ws1->jackpot_id == 1){
+                    array_push($thirdCategorySecondJackPotWinnerIds,$ws3->user_id);
+                    array_push($thirdCategorySecondJackPotWinnerPrizes,$ws3->prize);
+                }elseif($ws1->jackpot_id == 2){
+                    array_push($thirdCategoryThirdJackPotWinnerIds,$ws3->user_id);
+                    array_push($thirdCategoryThirdJackPotWinnerPrizes,$ws3->prize);
+                }
+            }
+
+            $finalWinners= [];
+            $firstPackageWinners= [];
+            $firstPackageFirstJackPotWinners = [];
+            $firstPackageSecondJackPotWinners = [];
+            $firstPackageThirdJackPotWinners = [];
+            for($i=0;$i<count($firstCategoryFirstJackPotWinnerIds);$i++){
+                $user = User::where('id',$firstCategoryFirstJackPotWinnerIds[$i])->first();
+                $user['image'] = $user->images[0]->url;
+                $user['winningCoins'] = $firstCategoryFirstJackPotWinnerPrizes[$i];
+                array_push($firstPackageFirstJackPotWinners,$user);
+            }
+            for($i=0;$i<count($firstCategorySecondJackPotWinnerIds);$i++){
+                $user = User::where('id',$firstCategorySecondJackPotWinnerIds[$i])->first();
+                $user['image'] = $user->images[0]->url;
+                $user['winningCoins'] = $firstCategorySecondJackPotWinnerPrizes[$i];
+                array_push($firstPackageSecondJackPotWinners,$user);
+            }
+            for($i=0;$i<count($firstCategoryThirdJackPotWinnerIds);$i++){
+                $user = User::where('id',$firstCategoryThirdJackPotWinnerIds[$i])->first();
+                $user['image'] = $user->images[0]->url;
+                $user['winningCoins'] = $firstCategoryThirdJackPotWinnerPrizes[$i];
+                array_push($firstPackageThirdJackPotWinners,$user);
+            }
+            $firstPackageWinners['firstJackPotWinners'] = $firstPackageFirstJackPotWinners;
+            $firstPackageWinners['secondJackPotWinners'] = $firstPackageSecondJackPotWinners;
+            $firstPackageWinners['thirdJackPotWinners'] = $firstPackageThirdJackPotWinners;
+
+
+            
+            
+
+            $secondPackageWinners = [];
+            $secondPackageFirstJackPotWinners = [];
+            $secondPackageSecondJackPotWinners = [];
+            $secondPackageThirdJackPotWinners = [];
+
+            for($i=0;$i<count($secondCategoryFirstJackPotWinnerIds);$i++){
+                $user = User::where('id',$secondCategoryFirstJackPotWinnerIds[$i])->first();
+                $user['image'] = $user->images[0]->url;
+                $user['winningCoins'] = $secondCategoryFirstJackPotWinnerPrizes[$i];
+                array_push($secondPackageFirstJackPotWinners,$user);
+            }
+            for($i=0;$i<count($secondCategorySecondJackPotWinnerIds);$i++){
+                $user = User::where('id',$secondCategorySecondJackPotWinnerIds[$i])->first();
+                $user['image'] = $user->images[0]->url;
+                $user['winningCoins'] = $secondCategorySecondJackPotWinnerPrizes[$i];
+                array_push($secondPackageSecondJackPotWinners,$user);
+            }
+            for($i=0;$i<count($secondCategoryThirdJackPotWinnerIds);$i++){
+                $user = User::where('id',$secondCategoryThirdJackPotWinnerIds[$i])->first();
+                $user['image'] = $user->images[0]->url;
+                $user['winningCoins'] = $secondCategoryThirdJackPotWinnerPrizes[$i];
+                array_push($secondPackageThirdJackPotWinners,$user);
+            }
+            $secondPackageWinners['firstJackPotWinners'] = $secondPackageFirstJackPotWinners;
+            $secondPackageWinners['secondJackPotWinners'] = $secondPackageSecondJackPotWinners;
+            $secondPackageWinners['thirdJackPotWinners'] = $secondPackageThirdJackPotWinners;
+
+
+            $thirdPackageWinners = [];
+            $thirdPackageFirstJackPotWinners = [];
+            $thirdPackageSecondJackPotWinners = [];
+            $thirdPackageThirdJackPotWinners = [];
+
+
+
+            for($i=0;$i<count($thirdCategoryFirstJackPotWinnerIds);$i++){
+                $user = User::where('id',$thirdCategoryFirstJackPotWinnerIds[$i])->first();
+                $user['image'] = $user->images[0]->url;
+                $user['winningCoins'] = $thirdCategoryFirstJackPotWinnerPrizes[$i];
+                array_push($thirdPackageFirstJackPotWinners,$user);
+            }
+            for($i=0;$i<count($thirdCategorySecondJackPotWinnerIds);$i++){
+                $user = User::where('id',$thirdCategorySecondJackPotWinnerIds[$i])->first();
+                $user['image'] = $user->images[0]->url;
+                $user['winningCoins'] = $thirdCategorySecondJackPotWinnerPrizes[$i];
+                array_push($thirdPackageSecondJackPotWinners,$user);
+            }
+            for($i=0;$i<count($thirdCategoryThirdJackPotWinnerIds);$i++){
+                $user = User::where('id',$thirdCategoryThirdJackPotWinnerIds[$i])->first();
+                $user['image'] = $user->images[0]->url;
+                $user['winningCoins'] = $thirdCategoryThirdJackPotWinnerPrizes[$i];
+                array_push($thirdPackageThirdJackPotWinners,$user);
+            }
+            $thirdPackageWinners['firstJackPotWinners'] = $thirdPackageFirstJackPotWinners;
+            $thirdPackageWinners['secondJackPotWinners'] = $thirdPackageSecondJackPotWinners;
+            $thirdPackageWinners['thirdJackPotWinners'] = $thirdPackageThirdJackPotWinners;
+
+
+            $finalWinners['firstPackageWinners'] = $firstPackageWinners;
+            $finalWinners['secondPackageWinners'] = $secondPackageWinners;
+            $finalWinners['thirdPackageWinners'] = $thirdPackageWinners;
+
+            $games = $round->games;
+            $gameResults = [];
+            for ($i = 0; $i < count($games); $i++) {
+                $gameResults[$i]['id'] = $games[$i]->id;
+                $gameResults[$i]['team_a'] = $games[$i]->team_a;
+                $gameResults[$i]['team_b'] = $games[$i]->team_b;
+                $gameResults[$i]['winner'] = $games[$i]->results->Answer;
+            }
+
+            // if (!array_key_exists("0",$finalWinners)){
+            //     $finalWinners[0] = null;
+            // }
+            // if (!array_key_exists("1",$finalWinners)){
+            //     $finalWinners[1] = null;
+            // }
+            // if (!array_key_exists("2",$finalWinners)){
+            //     $finalWinners[2] = null;
+            // }
+            $data = array(
+                    "status" => 200,
+                    "response" => "true",
+                    "message" => "Result Received",
+                    "winners" => $finalWinners,
+                    // "Second Package Winners" => $finalWinners[1],
+                    // "Third Package Winners" => $finalWinners[2],
+                    "answers" => $gameResults,
+                    // "userAnswers" => $userSelectedAnswers,
+                    "round" => $round,
+            );
+            return response()->json($data, 200);
+        
+    }
+
         
 
     

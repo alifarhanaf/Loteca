@@ -758,7 +758,7 @@ class AdminDashboardController extends Controller
                 $winner->user_id = $arr[$i]['ThirdJackPotUserIds'][$j];
                 $winner->package_id = $packages[$i]->id;
                 $winner->prize = $thirdJackPotPrizePerHead;
-                $winner->jackpot_id = '0';
+                $winner->jackpot_id = '2';
                 $winner->save();
             }
         }
