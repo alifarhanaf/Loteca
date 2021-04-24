@@ -448,9 +448,9 @@ class ResultController extends Controller
     // }
 
 
-    public function resultScreenDetails($id){
+    public function resultScreenDetails(Request $request){
        
-        $round_id = $id;
+        $round_id = $request->round_id;;
         $mainUser = Auth::user();
         $round = Round::where('id',$round_id)->first();
             $packages = $round->packages;
