@@ -481,13 +481,13 @@ class ResultController extends Controller
             $secondCategorySecondJackPotWinnerPrizes = [];
             $secondCategoryThirdJackPotWinnerPrizes = [];
             foreach($secondCategoryWinners as $ws2){
-                if($ws1->jackpot_id == 0){
+                if($ws2->jackpot_id == 0){
                     array_push($secondCategoryFirstJackPotWinnerIds,$ws2->user_id);
                     array_push($secondCategoryFirstJackPotWinnerPrizes,$ws2->prize);
-                }elseif($ws1->jackpot_id == 1){
+                }elseif($ws2->jackpot_id == 1){
                     array_push($secondCategorySecondJackPotWinnerIds,$ws2->user_id);
                     array_push($secondCategorySecondJackPotWinnerPrizes,$ws2->prize);
-                }elseif($ws1->jackpot_id == 2){
+                }elseif($ws2->jackpot_id == 2){
                     array_push($secondCategoryThirdJackPotWinnerIds,$ws2->user_id);
                     array_push($secondCategoryThirdJackPotWinnerPrizes,$ws2->prize);
                 }
@@ -500,13 +500,13 @@ class ResultController extends Controller
             $thirdCategorySecondJackPotWinnerPrizes = [];
             $thirdCategoryThirdJackPotWinnerPrizes = [];
             foreach($thirdCategoryWinners as $ws3){
-                if($ws1->jackpot_id == 0){
+                if($ws3->jackpot_id == 0){
                     array_push($thirdCategoryFirstJackPotWinnerIds,$ws3->user_id);
                     array_push($thirdCategoryFirstJackPotWinnerPrizes,$ws3->prize);
-                }elseif($ws1->jackpot_id == 1){
+                }elseif($ws3->jackpot_id == 1){
                     array_push($thirdCategorySecondJackPotWinnerIds,$ws3->user_id);
                     array_push($thirdCategorySecondJackPotWinnerPrizes,$ws3->prize);
-                }elseif($ws1->jackpot_id == 2){
+                }elseif($ws3->jackpot_id == 2){
                     array_push($thirdCategoryThirdJackPotWinnerIds,$ws3->user_id);
                     array_push($thirdCategoryThirdJackPotWinnerPrizes,$ws3->prize);
                 }
