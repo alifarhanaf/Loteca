@@ -119,7 +119,7 @@ class CoinController extends Controller
             // dd($user,$user->contacts);
            if($user){
 
-           
+            $arr[$i]['record_id'] = $ct->id;
             $arr[$i]['user_name'] = $user->name;
             $arr[$i]['user_email'] = $user->contacts[0]->email;
             $arr[$i]['user_phone'] = $user->contacts[0]->phone;
@@ -129,6 +129,7 @@ class CoinController extends Controller
             $arr[$i]['transfer_date'] = $ct->created_at ;
             $i++;
         }else{
+            $arr[$i]['record_id'] = $ct->id;
             $arr[$i]['user_name'] = "User Deleted";
             $arr[$i]['user_email'] = "N/A";
             $arr[$i]['user_phone'] = "N/A";
@@ -157,6 +158,7 @@ class CoinController extends Controller
         foreach($coinsTransfer as $ct){
             $user = User::find($ct->receiver_id);
            if($user){
+            $arr[$i]['record_id'] = $ct->id;
             $arr[$i]['user_name'] = $user->name;
             $arr[$i]['user_email'] = $user->contacts[0]->email;
             $arr[$i]['user_phone'] = $user->contacts[0]->phone;
@@ -166,6 +168,7 @@ class CoinController extends Controller
             $arr[$i]['bet_date'] = $ct->created_at ;
             $i++;
         }else{
+            $arr[$i]['record_id'] = $ct->id;
             $arr[$i]['user_name'] = "User Deleted";
             $arr[$i]['user_email'] = "N/A";
             $arr[$i]['user_phone'] = "N/A";
@@ -184,6 +187,10 @@ class CoinController extends Controller
 
         );
         return response()->json($data,200);
+    }
+    public function ticketDate(Request $request){
+        $round_id
+
     }
     public function userCoinsRecord(){
         $coinsTransfer = CoinTransfer::where('receiver_id',Auth::user()->id)->orderBy('created_at', 'desc')->get();
