@@ -162,8 +162,8 @@ class CoinController extends Controller
             $arr[$i]['user_phone'] = $user->contacts[0]->phone;
             $arr[$i]['user_whatsapp'] = $user->contacts[0]->whatsapp;
             $arr[$i]['image'] = $user->images[0]->url;
-            $arr[$i]['transferred_coins'] = $ct->sent_coins ;
-            $arr[$i]['transfer_date'] = $ct->created_at ;
+            $arr[$i]['coins_used'] = $ct->sent_coins ;
+            $arr[$i]['bet_date'] = $ct->created_at ;
             $i++;
         }else{
             $arr[$i]['user_name'] = "User Deleted";
@@ -171,8 +171,8 @@ class CoinController extends Controller
             $arr[$i]['user_phone'] = "N/A";
             $arr[$i]['user_whatsapp'] = "N/A";
             $arr[$i]['image'] = "https://i.pinimg.com/originals/51/f6/fb/51f6fb256629fc755b8870c801092942.png";
-            $arr[$i]['transferred_coins'] = $ct->sent_coins ;
-            $arr[$i]['transfer_date'] = $ct->created_at ;
+            $arr[$i]['coins_used'] = $ct->sent_coins ;
+            $arr[$i]['bet_date'] = $ct->created_at ;
             $i++;
         }
         }
