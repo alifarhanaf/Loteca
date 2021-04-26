@@ -109,7 +109,7 @@ class CoinController extends Controller
 
     }
     public function coinsRecord(){
-        $coinsTransfer = CoinTransfer::where('sender_id',Auth::user()->id)->orderBy('created_at', 'desc')->get();
+        $coinsTransfer = CoinTransfer::where('sender_id',Auth::user()->id)->where('withdraw',0)->orderBy('created_at', 'desc')->get();
         $arr = [];
         $i = 0;
         foreach($coinsTransfer as $ct){
@@ -127,11 +127,6 @@ class CoinController extends Controller
             $arr[$i]['image'] = $user->images[0]->url;
             $arr[$i]['transferred_coins'] = $ct->sent_coins ;
             $arr[$i]['transfer_date'] = $ct->created_at ;
-            if($ct->withdraw == 0){
-                $arr[$i]['type'] = 0 ;
-            }else{
-                $arr[$i]['type'] = 1 ;
-            }
             $i++;
         }else{
             $arr[$i]['user_name'] = "User Deleted";
@@ -141,15 +136,45 @@ class CoinController extends Controller
             $arr[$i]['image'] = "https://i.pinimg.com/originals/51/f6/fb/51f6fb256629fc755b8870c801092942.png";
             $arr[$i]['transferred_coins'] = $ct->sent_coins ;
             $arr[$i]['transfer_date'] = $ct->created_at ;
-            if($ct->withdraw == 0){
-                $arr[$i]['type'] = 0 ;
-            }else{
-                $arr[$i]['type'] = 1 ;
-            }
             $i++;
 
         }
         
+        }
+        $data = array(
+            "status" => 200,
+            "response" => "true",
+            "message" => "Record Retrieved Successfully" ,
+            "records" => $arr,
+
+        );
+        return response()->json($data,200);
+    }
+    public function userBetsRecord(){
+        $coinsTransfer = CoinTransfer::where('sender_id',Auth::user()->id)->where('withdraw',1)->orderBy('created_at', 'desc')->get();
+        $arr = [];
+        $i = 0;
+        foreach($coinsTransfer as $ct){
+            $user = User::find($ct->receiver_id);
+           if($user){
+            $arr[$i]['user_name'] = $user->name;
+            $arr[$i]['user_email'] = $user->contacts[0]->email;
+            $arr[$i]['user_phone'] = $user->contacts[0]->phone;
+            $arr[$i]['user_whatsapp'] = $user->contacts[0]->whatsapp;
+            $arr[$i]['image'] = $user->images[0]->url;
+            $arr[$i]['transferred_coins'] = $ct->sent_coins ;
+            $arr[$i]['transfer_date'] = $ct->created_at ;
+            $i++;
+        }else{
+            $arr[$i]['user_name'] = "User Deleted";
+            $arr[$i]['user_email'] = "N/A";
+            $arr[$i]['user_phone'] = "N/A";
+            $arr[$i]['user_whatsapp'] = "N/A";
+            $arr[$i]['image'] = "https://i.pinimg.com/originals/51/f6/fb/51f6fb256629fc755b8870c801092942.png";
+            $arr[$i]['transferred_coins'] = $ct->sent_coins ;
+            $arr[$i]['transfer_date'] = $ct->created_at ;
+            $i++;
+        }
         }
         $data = array(
             "status" => 200,
