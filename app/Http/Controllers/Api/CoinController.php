@@ -189,7 +189,7 @@ class CoinController extends Controller
         return response()->json($data,200);
     }
     public function ticketDate(Request $request){
-        $round_id
+        $record_id = $request->record_id;
 
     }
     public function userCoinsRecord(){
