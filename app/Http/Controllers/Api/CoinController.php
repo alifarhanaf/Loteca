@@ -3,9 +3,13 @@
 namespace App\Http\Controllers\Api;
 
 use App\User;
+use App\Models\Game;
+use App\Models\Round;
+use App\Models\Package;
 use App\Models\WithDraw;
 use App\Models\CoinTransfer;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 
@@ -188,8 +192,70 @@ class CoinController extends Controller
         );
         return response()->json($data,200);
     }
-    public function ticketDate(Request $request){
+
+    public function ticketData(Request $request){
         $record_id = $request->record_id;
+        $record = CoinTransfer::where('id',$record_id)->first();
+        $user = User::find($record->receiver_id);
+        $user['phone'] = $user->contacts[0]->phone;
+        $agent = User::find($record->sender_id);
+        $agent['phone']= $agent->contacts[0]->phone;
+        $roundUserRecord = DB::table('round_user')->where('user_id',$record->receiver_id)->where('created_at',$record->created_at)->first();
+        $round_id = $roundUserRecord->round_id ;
+        $round = Round::find($round_id);
+        $packages = $round->packages;
+        $games = $round->games;
+        $userAnswers = DB::table('bid_results')
+                            ->where('user_id', $user->id)
+                            ->where('round_id', $round_id)
+                            ->where('created_at',$record->created_at)->get();
+        $package_id = $userAnswers[0]->package_id; 
+        $package = Package::where('id',$package_id)->first();
+        
+       
+        //User's Selected Answer's Array For Response
+        $ansArray = [];
+        for($k=0;$k<count($userAnswers);$k++){
+        $game = Game::where('id',$userAnswers[$k]->game_id)->first();
+            
+        $ansArray[$k]['id'] = $userAnswers[$k]->id;
+        $ansArray[$k]['team_a'] = $game->team_a;
+        $ansArray[$k]['team_b'] = $game->team_b;
+        $ansArray[$k]['winner'] = $userAnswers[$k]->answer;
+        $ansArray[$k]['championship'] = $game->name;
+        $ansArray[$k]['happening_date'] = $game->happening_date;
+
+        }
+
+
+
+
+        $completeRound = array(
+            'id' => $round->id,
+            'name' => $round->name,
+            'starting_date' => $round->starting_date,
+            'ending_date' => $round->ending_date,
+            'created_at' => $round->created_at,
+            'updated_at' => $round->updated_at,
+            'selected_package' => $package,
+            'packages' => $packages,
+            'games' => $games,
+        );
+
+        $data = array(
+            "status" => 200,
+            "response" => "true",
+            "message" => "Record Retrieved Successfully",
+            "bid" => true,
+            "bet_date" => $record->created_at,
+            "user" => $user,
+            "agent" => $agent,
+            "round" => $completeRound,
+            "userAnswers" => $ansArray,
+        );
+
+        return response()->json($data, 200);
+
 
     }
     public function userCoinsRecord(){
