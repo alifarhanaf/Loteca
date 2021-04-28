@@ -122,7 +122,7 @@ class CoinController extends Controller
         $data = array(
             "status" => 200,
             "response" => "true",
-            "message" => "Coins Sent Successfully" ,
+            "message" => "Coins Data Retrieved Successfully" ,
             "agent" => $agent,
             "user" => $user,
             "coins_transferred" => $record->sent_coins,
