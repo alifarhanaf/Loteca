@@ -112,6 +112,27 @@ class CoinController extends Controller
         
 
     }
+    public function coinSentTicketData(Request $request){
+        $record_id = $request->record_id;
+        $record = CoinTransfer::where('id',$record_id)->first();
+        $user = User::find($record->receiver_id);
+        $user['phone'] = $user->contacts[0]->phone;
+        $agent = User::find($record->sender_id);
+        $agent['phone']= $agent->contacts[0]->phone;
+        $data = array(
+            "status" => 200,
+            "response" => "true",
+            "message" => "Coins Sent Successfully" ,
+            "agent" => $agent,
+            "user" => $user,
+            "coins_transferred" => $record->sent_coins,
+            "transfer_date" => $record->created_at,
+            );
+
+        return response()->json($data, 200);
+
+
+    }
     public function coinsRecord(){
         $coinsTransfer = CoinTransfer::where('sender_id',Auth::user()->id)->orderBy('created_at', 'desc')->get();
         $arr = [];
@@ -122,8 +143,6 @@ class CoinController extends Controller
             if($ct->withdraw == 0 ){
 
                 $user = User::find($ct->receiver_id);
-            // return $user->contacts;
-            // dd($user,$user->contacts);
            if($user){
 
             $arr[$i]['record_id'] = $ct->id;
@@ -189,6 +208,7 @@ class CoinController extends Controller
         );
         return response()->json($data,200);
     }
+    
     public function userBetsRecord(){
         $coinsTransfer = CoinTransfer::where('sender_id',Auth::user()->id)->where('withdraw',1)->orderBy('created_at', 'desc')->get();
         $arr = [];
