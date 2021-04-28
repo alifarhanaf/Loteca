@@ -113,12 +113,15 @@ class CoinController extends Controller
 
     }
     public function coinsRecord(){
-        $coinsTransfer = CoinTransfer::where('sender_id',Auth::user()->id)->where('withdraw',0)->orderBy('created_at', 'desc')->get();
+        $coinsTransfer = CoinTransfer::where('sender_id',Auth::user()->id)->orderBy('created_at', 'desc')->get();
         $arr = [];
+        $arr2 = [];
         $i = 0;
+        $j = 0;
         foreach($coinsTransfer as $ct){
-            
-            $user = User::find($ct->receiver_id);
+            if($ct->withdraw == 0 ){
+
+                $user = User::find($ct->receiver_id);
             // return $user->contacts;
             // dd($user,$user->contacts);
            if($user){
@@ -144,13 +147,44 @@ class CoinController extends Controller
             $i++;
 
         }
+
+            }elseif($ct->withdraw == 1 ){
+                $user = User::find($ct->receiver_id);
+                if($user){
+                 $arr2[$j]['record_id'] = $ct->id;
+                 $arr2[$j]['user_name'] = $user->name;
+                 $arr2[$j]['user_email'] = $user->contacts[0]->email;
+                 $arr2[$j]['user_phone'] = $user->contacts[0]->phone;
+                 $arr2[$j]['user_whatsapp'] = $user->contacts[0]->whatsapp;
+                 $arr2[$j]['image'] = $user->images[0]->url;
+                 $arr2[$j]['coins_used'] = $ct->sent_coins ;
+                 $arr2[$j]['bet_date'] = $ct->created_at ;
+                 $j++;
+             }else{
+                 $arr2[$j]['record_id'] = $ct->id;
+                 $arr2[$j]['user_name'] = "User Deleted";
+                 $arr2[$j]['user_email'] = "N/A";
+                 $arr2[$j]['user_phone'] = "N/A";
+                 $arr2[$j]['user_whatsapp'] = "N/A";
+                 $arr2[$j]['image'] = "https://i.pinimg.com/originals/51/f6/fb/51f6fb256629fc755b8870c801092942.png";
+                 $arr2[$j]['coins_used'] = $ct->sent_coins ;
+                 $arr2[$j]['bet_date'] = $ct->created_at ;
+                 $j++;
+             }
+                
+
+
+            }
+            
+            
         
         }
         $data = array(
             "status" => 200,
             "response" => "true",
             "message" => "Record Retrieved Successfully" ,
-            "records" => $arr,
+            "coin_history" => $arr,
+            "bet_history" => $arr2,
 
         );
         return response()->json($data,200);
