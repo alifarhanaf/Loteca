@@ -54,7 +54,7 @@ Route::middleware('auth:api')->group( function(){
     Route::post('/sendCoins','Api\CoinController@sendCoins');
     Route::get('/coins_record','Api\CoinController@coinsRecord');
     Route::get('/user_bets_record','Api\CoinController@userBetsRecord');
-    Route::post('/bet_ticket_detail','Api\CoinController@ticketData');
+    Route::post('/bet_ticket_detail','Api\CoinController@betTicketData');
     Route::get('/user_coins_record','Api\CoinController@userCoinsRecord');
     Route::post('/winner','Api\LeaderBoardController@winner');
     

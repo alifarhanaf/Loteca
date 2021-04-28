@@ -227,7 +227,7 @@ class CoinController extends Controller
         return response()->json($data,200);
     }
 
-    public function ticketData(Request $request){
+    public function betTicketData(Request $request){
         $record_id = $request->record_id;
         $record = CoinTransfer::where('id',$record_id)->first();
         $user = User::find($record->receiver_id);
