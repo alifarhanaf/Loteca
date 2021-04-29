@@ -33,12 +33,16 @@ class AgentController extends Controller
         $user =  User::where('id',$id)->first();
         $user->contacts;
         $user->images;
+        $user->withdraws;
         
         // return $user->roles;
         
 
         
             if($user->roles == '2'){
+                $totalComission = $user->withdraws->total_comission;
+                $withDrawComission = $user->withdraws->withdraw_comission;
+                $availableComission = $totalComission - $withDrawComission;
                 $comm = $user->comissions->where('default',1)->first();
             $com_percentage = $comm->comission_percentage;
                 //Here
@@ -362,7 +366,83 @@ class AgentController extends Controller
             
             
             }
+            //Coin History Start Here
+            
+                $coinsTransfer = CoinTransfer::where('sender_id',$id)->where('withdraw',0)->orderBy('created_at', 'desc')->get();
+                $arr = [];
+                $i = 0;
+                foreach($coinsTransfer as $ct){
+                    
         
+                   $userReceived = User::find($ct->receiver_id);
+                   if($userReceived){
+        
+                    $arr[$i]['record_id'] = $ct->id;
+                    $arr[$i]['user_name'] = $userReceived->name;
+                    $arr[$i]['user_email'] = $userReceived->contacts[0]->email;
+                    $arr[$i]['user_phone'] = $userReceived->contacts[0]->phone;
+                    $arr[$i]['user_whatsapp'] = $userReceived->contacts[0]->whatsapp;
+                    $arr[$i]['image'] = $userReceived->images[0]->url;
+                    $arr[$i]['transferred_coins'] = $ct->sent_coins ;
+                    $arr[$i]['transfer_date'] = $ct->created_at ;
+                    $i++;
+                }else{
+                    $arr[$i]['record_id'] = $ct->id;
+                    $arr[$i]['user_name'] = "User Deleted";
+                    $arr[$i]['user_email'] = "N/A";
+                    $arr[$i]['user_phone'] = "N/A";
+                    $arr[$i]['user_whatsapp'] = "N/A";
+                    $arr[$i]['image'] = "https://i.pinimg.com/originals/51/f6/fb/51f6fb256629fc755b8870c801092942.png";
+                    $arr[$i]['transferred_coins'] = $ct->sent_coins ;
+                    $arr[$i]['transfer_date'] = $ct->created_at ;
+                    $i++;
+        
+                }
+        
+                }
+                
+            
+            // dd($arr);
+
+            //End Here
+            //Start Here Applied Bets
+            //Coin History Start Here
+            
+            $coinsTransfer = CoinTransfer::where('sender_id',$id)->where('withdraw',1)->orderBy('created_at', 'desc')->get();
+            $arr2 = [];
+            $i = 0;
+            foreach($coinsTransfer as $ct){
+                
+    
+               $userReceived = User::find($ct->receiver_id);
+               if($userReceived){
+    
+                $arr2[$i]['record_id'] = $ct->id;
+                $arr2[$i]['user_name'] = $userReceived->name;
+                $arr2[$i]['user_email'] = $userReceived->contacts[0]->email;
+                $arr2[$i]['user_phone'] = $userReceived->contacts[0]->phone;
+                $arr2[$i]['user_whatsapp'] = $userReceived->contacts[0]->whatsapp;
+                $arr2[$i]['image'] = $userReceived->images[0]->url;
+                $arr2[$i]['coins_used'] = $ct->sent_coins ;
+                $arr2[$i]['bet_date'] = $ct->created_at ;
+                $i++;
+            }else{
+                $arr2[$i]['record_id'] = $ct->id;
+                $arr2[$i]['user_name'] = "User Deleted";
+                $arr2[$i]['user_email'] = "N/A";
+                $arr2[$i]['user_phone'] = "N/A";
+                $arr2[$i]['user_whatsapp'] = "N/A";
+                $arr2[$i]['image'] = "https://i.pinimg.com/originals/51/f6/fb/51f6fb256629fc755b8870c801092942.png";
+                $arr2[$i]['coins_used'] = $ct->sent_coins ;
+                $arr2[$i]['bet_date'] = $ct->created_at ;
+                $i++;
+    
+            }
+    
+            }
+            
+        
+            //End Here
         $data = array(
             "agent" => $user,
             "daily_data" => $daily_data,
@@ -370,6 +450,10 @@ class AgentController extends Controller
             "monthly_data" => $monthly_data,
             "all_time_data" => $all_time_data,
             "comission" => $com_percentage,
+            "availableComission" => $availableComission,
+            "rounds" => $user->rounds,
+            "coin_history" => $arr,
+            "bet_history" => $arr2,
         );
 
         return view('agentProfile')->with($data);

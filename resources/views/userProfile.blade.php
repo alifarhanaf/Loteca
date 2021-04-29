@@ -11,7 +11,7 @@
                     <div class="row m-l-0 m-r-0">
                         <div class="col-sm-4 bg-c-lite-green user-profile">
                             <div class="card-block text-center text-white">
-                                <div class="m-b-25"> <img src="{{$user->images[0]->url}}" class="img-radius" alt="User-Profile-Image"> </div>
+                                <div class="m-b-25"> <img style="height: 290px;width:250px;" src="{{$user->images[0]->url}}" class="img-radius" alt="User-Profile-Image"> </div>
                                 <h6 class="f-w-600">{{$user->name}}</h6>
                                 <p>End User</p> <i class=" mdi mdi-square-edit-outline feather icon-edit m-t-10 f-16"></i>
                                 {{-- <button>

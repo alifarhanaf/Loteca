@@ -15,7 +15,7 @@ use Illuminate\Support\Facades\Auth;
 class ResultController extends Controller
 {
     public function resultsList(){
-        $lastThreeClosedRounds = Round::select('id','name','starting_date','ending_date')->latest()->where('status',2)->take(3)->get();
+        $lastThreeClosedRounds = Round::select('id','name','starting_date','ending_date')->latest()->where('status',2)->get();
             $data = array(
                 "status" => 200,
                 "response" => "true",

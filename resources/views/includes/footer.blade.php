@@ -64,6 +64,22 @@
             lengthMenu: '_MENU_ items/page',
           }
         });
+        $('#example').DataTable({
+          responsive: true,
+          language: {
+            searchPlaceholder: 'Search...',
+            sSearch: '',
+            lengthMenu: '_MENU_ items/page',
+          }
+        });
+        $('#example3').DataTable({
+          responsive: true,
+          language: {
+            searchPlaceholder: 'Search...',
+            sSearch: '',
+            lengthMenu: '_MENU_ items/page',
+          }
+        });
 
 
     $('#azSidebarToggle').on('click', function(e){
