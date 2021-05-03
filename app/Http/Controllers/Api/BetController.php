@@ -109,6 +109,79 @@ class BetController extends Controller
             $userForUpdateCoins->coins = $userRemainingCoins;
             $userForUpdateCoins->save();
             //Record For Agent
+            if($user->roles == 2){
+                $coinTransfer = new CoinTransfer(); 
+                $coinTransfer->sender_id = $user->id;
+                $coinTransfer->receiver_id = $user->id;
+                $coinTransfer->sent_coins = $participation_fee;
+                $coinTransfer->withdraw = 1;
+                $coinTransfer->save();
+
+                $comissions = $user->comissions;
+                $comissionLog = [] ;
+                $comissionArray = json_decode(json_encode($comissions), true);
+                $lastIndex = array_key_last($comissionArray);
+                for($i=0;$i<count($comissions);$i++){
+                    if($i != $lastIndex ){
+                        $dateOne = $comissions[$i]->created_at;
+                        $dateTwo = $comissions[$i+1]->created_at;
+                        $comissionLog[$i]['dateOne'] = $dateOne;
+                        $comissionLog[$i]['dateTwo'] = $dateTwo;
+                        $comissionLog[$i]['percentage'] = $comissions[$i]->comission_percentage;
+                    }else{
+                        $dateOne = $comissions[$i]->created_at;
+                        $dateTwo = null;
+                        $comissionLog[$i]['dateOne'] = $dateOne;
+                        $comissionLog[$i]['dateTwo'] = $dateTwo;
+                        $comissionLog[$i]['percentage'] = $comissions[$i]->comission_percentage;
+                        }
+                }
+                $totalComission = 0;
+                foreach ($comissionLog as $log){
+                    if($log['dateTwo'] == null){
+                        $historyLog = CoinTransfer::where('sender_id', $user->id)->where('withdraw',1)->whereBetween('created_at', [$log['dateOne'], Carbon::now()])->get();
+                    }else{
+                        $historyLog = CoinTransfer::where('sender_id', $user->id)->where('withdraw',1)->whereBetween('created_at', [$log['dateOne'], $log['dateTwo']])->get();
+                    }
+                        $agentComission = 0;
+                        foreach($historyLog as $history){
+                            $sentCoins = $history->sent_coins;
+                            $currentComission = ($sentCoins * $log['percentage'])/100;
+                            $agentComission = $agentComission + $currentComission;
+                            $agentComission = round($agentComission, 1);
+
+                        }
+                        $totalComission = $totalComission+$agentComission;
+                    // }else{
+               
+                    //     $historyLog = CoinTransfer::where('sender_id', $sender->id)->where('withdraw',1)->whereBetween('created_at', [$log['dateOne'], $log['dateTwo']])->get();
+                    //     $agentComission = 0;
+                    //     foreach($historyLog as $history){
+                    //     $sentCoins = $history->sent_coins;
+                    //     $currentComission = ($sentCoins * $log['percentage'])/100;
+                    //     $agentComission = $agentComission + $currentComission;
+                    //     $agentComission = round($agentComission, 1);
+
+                    //     }
+                    //     $totalComission = $totalComission+$agentComission;
+                    // }
+            
+                }
+                //Comission Available For WithDraw Update
+                $commision = WithDraw::where('user_id',$user->id)->first();
+                if($commision){
+                    $comissionUpdate = WithDraw::find($commision->id);
+                    $comissionUpdate->total_comission = $totalComission;
+                    $comissionUpdate->save();
+
+                }else{
+                    $insertTotalComission = new WithDraw();
+                    $insertTotalComission->total_comission = $totalComission;
+                    $insertTotalComission->user_id = $agent->id;
+                    $insertTotalComission->save();
+                }
+
+            }
             if($agent != null){
                 $coinTransfer = new CoinTransfer(); 
                 $coinTransfer->sender_id = $agent->id;
@@ -182,7 +255,6 @@ class BetController extends Controller
                 }
             }
             //Insert Bet Record Against User 
-            
             DB::table('round_user')->insert([
                 'round_id' => $round_id,
                 'user_id' => $user->id,
